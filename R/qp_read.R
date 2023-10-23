@@ -15,7 +15,7 @@ qp_read <- function(x, ...) {
 #' @export
 #' @rdname qp_read
 qp_read.character <- function(x, ...) {
-  mop::read_spectramax(x, ...) |> qp_read.spectramax()
+  mop::read_spectramax(x, ...) |> qp_read()
 }
 
 #' @export
