@@ -55,3 +55,7 @@ qp_read.spectramax <- function(x, ...) {
 
   gp
 }
+
+# TODO:
+# Perform a suite of basic checks to see if the data have all the
+# columns they need
