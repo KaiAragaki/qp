@@ -2,7 +2,7 @@
 
 #' This function will perform some very basic checks to see if the data is
 #' properly formatted
-#' @param x A `gp`, `data.frame`/`tibble`, or character
+#' @param x A `gp`, `data.frame`/`tibble`, `spectramax`, or character
 #' path to a raw SPECTRAmax .xls(x)/.txt
 #' @param ... Unused
 #'
