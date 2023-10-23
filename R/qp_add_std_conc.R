@@ -12,13 +12,24 @@
 #' @return Same type as x, with a `.conc` column
 #' @export
 qp_add_std_conc <- function(x, standard_scale = c(0, 2^((1:7) - 5))) {
+  x$.conc <- NA_real_
   unk <- x[which(x$sample_type != "standard"), ]
-  unk$.conc <- NA_real_
   std <- x[which(x$sample_type == "standard"), ]
+
+  unique_indices <- unique(std$index)
+
+  if (any(is.na(standard_scale[std$index]))) {
+    rlang::abort("standard_scale returned NA when indexed")
+  }
+
+  if (length(unique(std$index)) != length(standard_scale)) {
+    rlang::abort("Number unique indices != length of standard_scale")
+  }
+
+
   std$.conc <- standard_scale[std$index]
   rbind(std, unk)
 }
 
 # TODO should probably add standard scale arg to qp too, where magic
 # number 7's length is based on the lenth of standard scale
-# TODO tests
