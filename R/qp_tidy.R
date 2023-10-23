@@ -12,10 +12,9 @@
 #' @return a `tibble`
 #' @export
 #' @importFrom rlang .data
-qp_tidy <- function(x, replicate_orientation) {
-  n_replicates <- 3
+qp_tidy <- function(x, replicate_orientation,
+                    n_standards = 7, n_replicates = 3) {
   max_samples <- gplate::wells(x) %/% n_replicates
-  n_standards <- 7
   max_unknowns <- max_samples - n_standards
 
   if (replicate_orientation == "v") {
@@ -30,21 +29,18 @@ qp_tidy <- function(x, replicate_orientation) {
     nrow2 <- 1
   }
 
-  x |>
-    gplate::gp_sec(name = "sample_type", nrow, ncol, wrap = TRUE, flow = flow,
-      labels = c("standard", "unknown"), break_sections = FALSE) |>
+  annotated <- x |>
+    gplate::gp_sec(
+      name = "sample_type", nrow, ncol, wrap = TRUE, flow = flow,
+      labels = c("standard", "unknown"), break_sections = FALSE
+    ) |>
     gplate::gp_sec(name = "index", nrow2, ncol2, break_sections = FALSE) |>
-    gplate::gp_serve() |>
-    dplyr::mutate(
-      index = as.numeric(.data$index),
-      conc = ifelse(.data$index > 1, 2^(.data$index - 5), 0),
-      conc = ifelse(
-        .data$sample_type == "standard",
-        .data$conc,
-        NA_real_
-      )
-    )
+    gplate::gp_serve()
+
+  annotated$index <- as.numeric(annotated$index)
+  annotated
 }
+
 
 # TODO User should be allowed to skip this step if index is already provided
 # TODO Perhaps a name more evocative than 'index' would be good
