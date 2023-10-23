@@ -16,8 +16,6 @@ qp_add_std_conc <- function(x, standard_scale = c(0, 2^((1:7) - 5))) {
   unk <- x[which(x$sample_type != "standard"), ]
   std <- x[which(x$sample_type == "standard"), ]
 
-  unique_indices <- unique(std$index)
-
   if (any(is.na(standard_scale[std$index]))) {
     rlang::abort("standard_scale returned NA when indexed")
   }
