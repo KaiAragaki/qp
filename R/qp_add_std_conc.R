@@ -16,17 +16,28 @@ qp_add_std_conc <- function(x, standard_scale = c(0, 2^((1:7) - 5))) {
   unk <- x[which(x$sample_type != "standard"), ]
   std <- x[which(x$sample_type == "standard"), ]
 
-  if (any(is.na(standard_scale[std$index]))) {
-    rlang::abort("standard_scale returned NA when indexed")
-  }
-
-  if (length(unique(std$index)) != length(standard_scale)) {
-    rlang::abort("Number unique indices != length of standard_scale")
-  }
-
+  check_scale(standard_scale)
+  check_std_scale_compat(std, standard_scale)
 
   std$.conc <- standard_scale[std$index]
   rbind(std, unk)
+}
+
+check_scale <- function(x) {
+  if (any(x < 0)) rlang::abort("standards cannot be negative")
+}
+
+check_std_scale_compat <- function(std, scale) {
+  if (any(is.na(scale[std$index])))
+    rlang::abort("standard_scale returned NA when indexed")
+
+  if (length(unique(std$index)) < length(scale)) {
+    rlang::warn("Not all standards in scale used")
+  } else if (length(unique(std$index)) > length(scale)) {
+    rlang::abort(
+      "Length of unique standard incides exceeds length of standard_scale"
+    )
+  }
 }
 
 # TODO should probably add standard scale arg to qp too, where magic
