@@ -35,7 +35,7 @@ check_std_scale_compat <- function(std, scale) {
     rlang::warn("Not all standards in scale used")
   } else if (length(unique(std$index)) > length(scale)) {
     rlang::abort(
-      "Length of unique standard incides exceeds length of standard_scale"
+      "Length of unique standard indices exceeds length of standard_scale"
     )
   }
 }
