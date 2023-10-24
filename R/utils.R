@@ -1,15 +1,3 @@
-# Predict concentrations from standards fit ------------------------------------
-qp_calc_conc <- function(x, fit) {
-  with_predictions <- dplyr::bind_cols(x, .pred = stats::predict(fit, x))
-  with_predictions |>
-    dplyr::mutate(.pred_conc = (2^.data$.pred) - 0.5) |>
-    dplyr::group_by(.data$sample_type, .data$index) |>
-    dplyr::mutate(
-      .pred_conc_mean = mean(.data$.pred_conc[which(f_or_na(.data$is_outlier))])
-    ) |>
-    dplyr::ungroup()
-}
-
 f_or_na <- function(x) {
   !x | is.na(x)
 }

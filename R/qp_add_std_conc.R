@@ -11,7 +11,7 @@
 #' correspond to the first item in `standard_scale`, 2 will be the second, etc.
 #' @return Same type as x, with a `.conc` column
 #' @export
-qp_add_std_conc <- function(x, standard_scale = c(0, 2^((1:7) - 5))) {
+qp_add_std_conc <- function(x, standard_scale = c(0, 2^((2:7) - 5))) {
   x$.conc <- NA_real_
   unk <- x[which(x$sample_type != "standard"), ]
   std <- x[which(x$sample_type == "standard"), ]

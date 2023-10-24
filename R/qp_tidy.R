@@ -43,6 +43,7 @@ qp_tidy <- function(x,
 
   annotated$index <- as.numeric(annotated$index)
   annotated |>
+    dplyr::rename(.abs = paste0("nm", wavelength)) |>
     dplyr::arrange(.data$sample_type, .data$index)
 }
 

@@ -3,14 +3,10 @@
 #' @param x
 #' @param exclude_outliers Which sample types should have outliers excluded from
 #' their mean calculations?
-
-
-
 qp_calc_abs_mean <- function(x,
-                             exclude_outliers = c(
-                               "all", "standards", "samples", "none")
-                             ) {
-  rlang::arg_match(exclude_outliers)
+                             exclude_outliers =
+                               c("all", "standards", "samples", "none")) {
+  exclude_outliers <- rlang::arg_match(exclude_outliers)
   standards <- x |>
     dplyr::filter(.data$sample_type == "standard") |>
     calc_mean(exclude_outliers %in% c("all", "standards"))
@@ -20,19 +16,19 @@ qp_calc_abs_mean <- function(x,
   rbind(standards, unknowns)
 }
 
-calc_mean <- function(df, remove_outliers) {
+calc_mean <- function(df, exclude_outliers) {
   df <- dplyr::group_by(df, .data$sample_type, .data$index)
-  if (remove_outliers) {
+  if (exclude_outliers) {
     df <- df |>
       dplyr::mutate(
-        is_outlier = mark_outlier(.data$value),
-        mean = mean(.data$value[!.data$is_outlier], na.rm = TRUE)
+        .is_outlier = mark_outlier(.data$.abs),
+        .mean = mean(.data$.abs[!.data$.is_outlier], na.rm = TRUE)
       )
   } else {
     df <- df |>
       dplyr::mutate(
-        is_outlier = NA,
-        mean = mean(.data$value, na.rm = TRUE)
+        .is_outlier = NA,
+        .mean = mean(.data$.abs, na.rm = TRUE)
       )
   }
   df <- dplyr::ungroup(df)

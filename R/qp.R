@@ -20,13 +20,13 @@ qp <- function(x,
                replicate_orientation = c("h", "v"),
                sample_names = NULL,
                remove_empty = TRUE,
-               exclude_outliers = c("all", "samples", "standards", "none"),
+               ignore_outliers = c("all", "samples", "standards", "none"),
                standard_scale = c(0, 2^((1:7) - 5)),
                n_replicates = 3,
                wavelength = 562) {
 
   replicate_orientation <- rlang::arg_match(replicate_orientation)
-  exclude_outliers <- rlang::arg_match(exclude_outliers)
+  ignore_outliers <- rlang::arg_match(ignore_outliers)
 
   x <- qp_tidy(
     x,
@@ -36,7 +36,7 @@ qp <- function(x,
     wavelength = wavelength
   )
   x <- qp_add_std_conc(x, standard_scale)
-  x <- qp_calc_abs_mean(x, exclude_outliers)
+  x <- qp_calc_abs_mean(x, ignore_outliers)
   x$.log2_abs <- log2(x$.abs)
   fit <- qp_fit(x)
   x <- qp_calc_conc(x, fit)
@@ -55,10 +55,11 @@ qp <- function(x,
   }
 
   qp <- x |>
-    dplyr::mutate(.sample_name = ifelse(
-                    .data$sample_type == "unknown",
-                    .sample_names[.data$index],
-                    paste("Standard", .data$index))
-                  )
+    dplyr::mutate(
+             .sample_name = ifelse(
+               .data$sample_type == "unknown",
+               .data$.sample_names[.data$index],
+               paste("Standard", .data$index))
+           )
   list(fit = fit, qp = qp, gp = abs)
 }
