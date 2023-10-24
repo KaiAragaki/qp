@@ -41,6 +41,5 @@ qp_tidy <- function(x, replicate_orientation,
   annotated
 }
 
-
 # TODO User should be allowed to skip this step if index is already provided
 # TODO Perhaps a name more evocative than 'index' would be good
