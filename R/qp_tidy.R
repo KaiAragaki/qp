@@ -7,7 +7,7 @@
 #'   upper left corner. Whether this is from from left to right or top to bottom
 #'   can be specified in 'replicate orientation'. Note that 'replicate
 #'   orientation' specified the direction that REPLICATES lie, NOT the direction
-#'   the samples flow (which will be opposite).
+#'   the samples flow (which will be perpendicular to the replicates).
 #'
 #' @return a `tibble`
 #' @export
