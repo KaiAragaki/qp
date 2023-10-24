@@ -4,6 +4,7 @@
 #' properly formatted
 #' @param x A `gp`, `data.frame`/`tibble`, `spectramax`, or character
 #' path to a raw SPECTRAmax .xls(x)/.txt
+#' @param wavelength Numeric. For SPECTRAmax files, the wavelength captured.
 #' @param ... Unused
 #'
 #' @return A `gp`
@@ -14,8 +15,8 @@ qp_read <- function(x, ...) {
 
 #' @export
 #' @rdname qp_read
-qp_read.character <- function(x, ...) {
-  mop::read_spectramax(x, ...) |> qp_read()
+qp_read.character <- function(x, wavelength = 562, ...) {
+  mop::read_spectramax(x, ...) |> qp_read(wavelength = wavelength)
 }
 
 #' @export
@@ -32,28 +33,16 @@ qp_read.gp <- function(x, ...) {
 
 #' @export
 #' @rdname qp_read
-qp_read.spectramax <- function(x, ...) {
-  if (!(562 %in% x$wavelengths)) {
-    rlang::warn("x$wavelengths does not contain 562")
-  }
+qp_read.spectramax <- function(x, wavelength = 562, ...) {
+  if (!(wavelength %in% x$wavelengths))
+    rlang::abort("Specified wavelength not present in data")
 
   plate_index <- which(sapply(x$data, \(x) x$type == "Plate"))
 
-  if (length(plate_index) != 1) {
+  if (length(plate_index) != 1)
     rlang::abort("Supplied data does not include 1 (and only 1) plate")
-  }
 
-  gp <- x$data[[plate_index]]$data
-
-  if ("value" %in% colnames(gplate::well_data(gp))) {
-    rlang::abort("SPECTRAmax has an unexpected 'value' column")
-  } else {
-    wd <- gplate::well_data(gp)
-    wd$value <- wd$nm562
-    gp$well_data <- wd
-  }
-
-  gp
+  x$data[[plate_index]]$data
 }
 
 # TODO:
