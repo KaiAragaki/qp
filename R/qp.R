@@ -20,19 +20,24 @@ qp <- function(x,
                replicate_orientation = c("h", "v"),
                sample_names = NULL,
                remove_empty = TRUE,
-               remove_outliers = c("all", "samples", "standards", "none")) {
+               exclude_outliers = c("all", "samples", "standards", "none"),
                standard_scale = c(0, 2^((1:7) - 5))) {
 
   replicate_orientation <- rlang::arg_match(replicate_orientation)
-  remove_outliers <- rlang::arg_match(remove_outliers)
+  exclude_outliers <- rlang::arg_match(exclude_outliers)
 
   abs <- qp_read(x)
-  abs_tidy <- qp_tidy(abs, replicate_orientation)
-  mean_abs <- qp_calc_abs_mean(abs_tidy, remove_outliers)
+  abs <- qp_tidy(
+    abs,
+    replicate_orientation,
     n_standards = length(standard_scale)
   )
   abs <- qp_add_std_conc(abs, standard_scale)
+  abs <- qp_calc_abs_mean(abs, exclude_outliers)
+  abs$.log2_abs <- log2(abs$value)
+
   fit <- qp_fit(mean_abs)
+
   conc <- qp_calc_conc(mean_abs, fit)
 
   if (remove_empty) {
@@ -54,6 +59,5 @@ qp <- function(x,
                     sample_names[.data$index],
                     paste("Standard", .data$index))
                   )
-
   list(fit = fit, qp = qp, gp = abs)
 }
