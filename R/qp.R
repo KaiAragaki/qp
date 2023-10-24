@@ -21,42 +21,43 @@ qp <- function(x,
                sample_names = NULL,
                remove_empty = TRUE,
                exclude_outliers = c("all", "samples", "standards", "none"),
-               standard_scale = c(0, 2^((1:7) - 5))) {
+               standard_scale = c(0, 2^((1:7) - 5)),
+               n_replicates = 3,
+               wavelength = 562) {
 
   replicate_orientation <- rlang::arg_match(replicate_orientation)
   exclude_outliers <- rlang::arg_match(exclude_outliers)
 
-  abs <- qp_read(x)
-  abs <- qp_tidy(
-    abs,
+  x <- qp_tidy(
+    x,
     replicate_orientation,
-    n_standards = length(standard_scale)
+    n_standards = length(standard_scale),
+    n_replicates = n_replicates,
+    wavelength = wavelength
   )
-  abs <- qp_add_std_conc(abs, standard_scale)
-  abs <- qp_calc_abs_mean(abs, exclude_outliers)
-  abs$.log2_abs <- log2(abs$value)
-
-  fit <- qp_fit(mean_abs)
-
-  conc <- qp_calc_conc(mean_abs, fit)
+  x <- qp_add_std_conc(x, standard_scale)
+  x <- qp_calc_abs_mean(x, exclude_outliers)
+  x$.log2_abs <- log2(x$.abs)
+  fit <- qp_fit(x)
+  x <- qp_calc_conc(x, fit)
 
   if (remove_empty) {
     conc <- dplyr::filter(
-      conc, .data$.pred_conc > 0 | .data$sample_type == "standard"
+      x, .data$.pred_conc > 0 | .data$sample_type == "standard"
     )
   }
 
   if (!is.null(sample_names)) {
     # Will return "NA" instead of erroring if sample names < # samples
-    length(sample_names) <- max(conc$index, na.rm = TRUE)
+    length(sample_names) <- max(x$index, na.rm = TRUE)
   } else {
-    sample_names <- as.character(1:max(conc$index, na.rm = TRUE))
+    sample_names <- as.character(1:max(x$index, na.rm = TRUE))
   }
 
-  qp <- conc |>
-    dplyr::mutate(sample_name = ifelse(
+  qp <- x |>
+    dplyr::mutate(.sample_name = ifelse(
                     .data$sample_type == "unknown",
-                    sample_names[.data$index],
+                    .sample_names[.data$index],
                     paste("Standard", .data$index))
                   )
   list(fit = fit, qp = qp, gp = abs)
