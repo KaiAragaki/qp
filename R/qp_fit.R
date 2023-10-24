@@ -1,9 +1,5 @@
 #' Fit an lm using standards absorbances
-#'
-#'
-#'
 #' @param x A data.frame. See details.
-#'
 #' @details The supplied dataframe must have the following columns:
 #' - `sample_type`. Character. If not 'standard', assumed to be a sample
 #' - `.is_outlier`. Boolean. If TRUE, assumed to be outlier and removed from
@@ -11,8 +7,6 @@
 #' - `.conc`. Numeric. Known concentration of standard.
 #' - `.log2_abs`. Numeric. The log2 of the absorbances of 562
 #' The function creates a new column
-#'
-#'
 #' @return An `lm`
 
 qp_fit <- function(x) {
