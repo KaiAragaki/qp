@@ -12,10 +12,14 @@
 #' @return a `tibble`
 #' @export
 #' @importFrom rlang .data
-qp_tidy <- function(x, replicate_orientation,
-                    n_standards = 7, n_replicates = 3) {
+qp_tidy <- function(x,
+                    replicate_orientation,
+                    n_standards = 7,
+                    n_replicates = 3,
+                    wavelength = 562) {
   max_samples <- gplate::wells(x) %/% n_replicates
   max_unknowns <- max_samples - n_standards
+  x <- qp_read(x, wavelength)
 
   if (replicate_orientation == "v") {
     nrow <- nrow2 <- n_replicates
@@ -38,7 +42,8 @@ qp_tidy <- function(x, replicate_orientation,
     gplate::gp_serve()
 
   annotated$index <- as.numeric(annotated$index)
-  annotated
+  annotated |>
+    dplyr::arrange(.data$sample_type, .data$index)
 }
 
 # TODO User should be allowed to skip this step if index is already provided
