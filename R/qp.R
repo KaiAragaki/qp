@@ -21,6 +21,7 @@ qp <- function(x,
                sample_names = NULL,
                remove_empty = TRUE,
                remove_outliers = c("all", "samples", "standards", "none")) {
+               standard_scale = c(0, 2^((1:7) - 5))) {
 
   replicate_orientation <- rlang::arg_match(replicate_orientation)
   remove_outliers <- rlang::arg_match(remove_outliers)
@@ -28,6 +29,9 @@ qp <- function(x,
   abs <- qp_read(x)
   abs_tidy <- qp_tidy(abs, replicate_orientation)
   mean_abs <- qp_calc_abs_mean(abs_tidy, remove_outliers)
+    n_standards = length(standard_scale)
+  )
+  abs <- qp_add_std_conc(abs, standard_scale)
   fit <- qp_fit(mean_abs)
   conc <- qp_calc_conc(mean_abs, fit)
 
