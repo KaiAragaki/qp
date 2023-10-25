@@ -21,7 +21,7 @@ qp <- function(x,
                sample_names = NULL,
                remove_empty = TRUE,
                ignore_outliers = c("all", "samples", "standards", "none"),
-               standard_scale = c(0, 2^((1:7) - 5)),
+               standard_scale = c(0, 2^((2:7) - 5)),
                n_replicates = 3,
                wavelength = 562) {
 
