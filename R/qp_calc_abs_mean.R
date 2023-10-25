@@ -1,28 +1,36 @@
 #' Calculate absorbance means with optional outlier removal
 #'
 #' @param x A `data.frame`. See details.
-#' @param ignore_outliers Character. Which sample types should have outliers
-#' excluded from their mean calculations?
-#' @importFrom rlang .data
+#' @param ignore_outliers Which sample types should have outliers ignored from
+#'   their mean calculations?
 #'
-#' @details The supplied `data.frame` must include the following columns:
-#' - `sample_type`, which should contain only either "standard" or "unknown"
+#' @details Input `data.frame` must contian the following columns:
+#' - `sample_type`. Character. Must contain values either "standard" or
+#'   "unknown"
+#' - `index`. Numeric. Denotes sample number.
+#' - `.abs`. Numeric. Contains absorbance values.
+#'
+#' @return a `tibble` with an `.is_outlier` column and a `.mean` column
+#'
+#' @export
+#' @importFrom rlang .data
 qp_calc_abs_mean <- function(x,
-                             ignore_outliers =
-                               c("all", "standards", "samples", "none")) {
-  exclude_outliers <- rlang::arg_match(exclude_outliers)
+                             ignore_outliers = c(
+                               "all", "standards", "samples", "none")
+                             ) {
+  ignore_outliers <- rlang::arg_match(ignore_outliers)
   standards <- x |>
     dplyr::filter(.data$sample_type == "standard") |>
-    calc_mean(exclude_outliers %in% c("all", "standards"))
+    calc_mean(ignore_outliers %in% c("all", "standards"))
   unknowns <- x |>
     dplyr::filter(.data$sample_type == "unknown") |>
-    calc_mean(exclude_outliers %in% c("all", "samples"))
+    calc_mean(ignore_outliers %in% c("all", "samples"))
   rbind(standards, unknowns)
 }
 
-calc_mean <- function(df, exclude_outliers) {
+calc_mean <- function(df, ignore_outliers) {
   df <- dplyr::group_by(df, .data$sample_type, .data$index)
-  if (exclude_outliers) {
+  if (ignore_outliers) {
     df <- df |>
       dplyr::mutate(
         .is_outlier = mark_outlier(.data$.abs),
