@@ -26,11 +26,11 @@ qp(
 \item{remove_empty}{Should wells that have less absorbance than the lowest
 standard be dropped?}
 
-\item{ignore_outliers}{Character. From which group - samples or standards - should
-outliers be detected and removed?}
+\item{ignore_outliers}{Character. From which group - samples or standards -
+should outliers be detected and removed?}
 
-\item{standard_scale}{Numeric. Known concentrations of standards, in the order
-they appear.}
+\item{standard_scale}{Numeric. Known concentrations of standards, in the
+order they appear.}
 
 \item{n_replicates}{Numeric. The number of techinical replicates.}
 

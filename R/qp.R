@@ -6,10 +6,10 @@
 #' @param sample_names Character vector of sample names.
 #' @param remove_empty Should wells that have less absorbance than the lowest
 #'   standard be dropped?
-#' @param ignore_outliers Character. From which group - samples or standards - should
-#'   outliers be detected and removed?
-#' @param standard_scale Numeric. Known concentrations of standards, in the order
-#'  they appear.
+#' @param ignore_outliers Character. From which group - samples or standards -
+#'   should outliers be detected and removed?
+#' @param standard_scale Numeric. Known concentrations of standards, in the
+#'   order they appear.
 #' @param n_replicates Numeric. The number of techinical replicates.
 #' @param wavelength Numeric. The wavelength absorbance was captured.
 #' @details If `x` is a `spectramax`, the standards must start in the upper left
