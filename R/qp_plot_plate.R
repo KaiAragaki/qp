@@ -6,9 +6,7 @@
 #' @export
 #' @importFrom rlang .data
 #' @examples
-#' x <- expand.grid(.row = 1:8, .col = 1:12)
-#' x$.abs <- 1:96
-#' make_qp_plate_view(x)
+#' qp_plot_plate(absorbances)
 qp_plot_plate <- function(x) {
   ggplot2::ggplot(x, ggplot2::aes(
     x = .data$.col,
