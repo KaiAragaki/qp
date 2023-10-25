@@ -1,10 +1,14 @@
 #' Calculate absorbance means with optional outlier removal
 #'
-#' @param x
-#' @param exclude_outliers Which sample types should have outliers excluded from
-#' their mean calculations?
+#' @param x A `data.frame`. See details.
+#' @param ignore_outliers Character. Which sample types should have outliers
+#' excluded from their mean calculations?
+#' @importFrom rlang .data
+#'
+#' @details The supplied `data.frame` must include the following columns:
+#' - `sample_type`, which should contain only either "standard" or "unknown"
 qp_calc_abs_mean <- function(x,
-                             exclude_outliers =
+                             ignore_outliers =
                                c("all", "standards", "samples", "none")) {
   exclude_outliers <- rlang::arg_match(exclude_outliers)
   standards <- x |>
