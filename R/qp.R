@@ -66,7 +66,7 @@ qp <- function(x,
     dplyr::mutate(
       .sample_name = ifelse(
         .data$sample_type == "unknown",
-        .data$.sample_names[.data$index],
+        sample_names[.data$index],
         paste("Standard", .data$index)
       )
     )
