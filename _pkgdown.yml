@@ -11,7 +11,10 @@ reference:
       Functions used in `qp` that can be called individually
     contents:
     - starts_with("qp_")
+  - title: "Visualization"
+    contents:
+    - qp_plot_plate
+    - qp_plot_standards
   - title: "Miscellaneous"
     contents:
-    - make_qp_plate_view
-    - make_qp_standard_plot
+    - qp_calc_dil
