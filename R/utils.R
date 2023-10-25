@@ -24,24 +24,6 @@ qp_calc_dil <- function(x, target_conc, target_vol) {
   x
 }
 
-# Visualization ----------------------------------------------------------------
-#' View the absorbances of an analyzed `qp` as they were on the plate
-#'
-#' @param x The output of `qp()`
-#'
-#' @return a `ggplot`
-#' @export
-make_qp_plate_view <- function(x) {
-  x$gp |>
-    gplate::gp_plot(.data$value) +
-    ggplot2::geom_point(ggplot2::aes(color = .data$value), size = 20) +
-    ggplot2::geom_text(
-               ggplot2::aes(label = round(.data$value, 2)),
-               color = "black"
-             ) +
-    ggplot2::scale_color_gradient(low = "darkseagreen1", high = "mediumpurple3")
-}
-
 #' View an absorbance/concentration plot
 #'
 #' @param x The output of `qp()`
