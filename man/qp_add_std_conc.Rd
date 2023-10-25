@@ -26,6 +26,7 @@ Input is expected to have two columns:
 \item \code{sample_type}: A character vector denoting which samples are standards
 with "standard". All other values will be considered unknowns.
 \item \code{index}: A numeric column denoting the sample number. Index 1 will
-correspond to the first item in \code{standard_scale}, 2 will be the second, etc.
+correspond to the first item in \code{standard_scale}, 2 will be the second,
+etc.
 }
 }

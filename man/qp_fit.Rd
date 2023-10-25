@@ -10,7 +10,8 @@ qp_fit(x)
 \item{x}{A data.frame. See details.}
 }
 \value{
-An \code{lm}
+An \code{lm} object fit with the formula \code{.log2_conc ~ .log2_abs}, fit
+using non-outlier standards
 }
 \description{
 Fit an lm using standards absorbances
@@ -18,11 +19,11 @@ Fit an lm using standards absorbances
 \details{
 The supplied dataframe must have the following columns:
 \itemize{
-\item \code{.sample_type}. Character. If not 'standard', assumed to be a sample
+\item \code{sample_type}. Character. If not 'standard', assumed to be a sample
 \item \code{.is_outlier}. Boolean. If TRUE, assumed to be outlier and removed from
 fitting. If FALSE or NA, used for fitting.
 \item \code{.conc}. Numeric. Known concentration of standard.
-\item \code{.log2_abs}. Numeric. The log2 of the absorbances of 562
-The function creates a new column
+\item \code{.log2_abs}. Numeric. The log2 of the absorbances
+The function creates a new column \code{.log2_conc}, or log2(\code{.conc} + 0.5)
 }
 }

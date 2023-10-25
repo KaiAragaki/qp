@@ -2,25 +2,53 @@
 % Please edit documentation in R/qp_tidy.R
 \name{qp_tidy}
 \alias{qp_tidy}
-\title{Wrangle qp \code{gp} according to replicate orientation}
+\alias{qp_tidy.character}
+\alias{qp_tidy.spectramax}
+\alias{qp_tidy.gp}
+\alias{qp_tidy.default}
+\title{Read in and wrangle protein quantification data}
 \usage{
-qp_tidy(x, replicate_orientation, n_standards = 7, n_replicates = 3)
+qp_tidy(x, ...)
+
+\method{qp_tidy}{character}(x, ...)
+
+\method{qp_tidy}{spectramax}(
+  x,
+  replicate_orientation = c("h", "v"),
+  n_standards = 7,
+  n_replicates = 3,
+  wavelength = 562,
+  ...
+)
+
+\method{qp_tidy}{gp}(x, ...)
+
+\method{qp_tidy}{default}(x, ...)
 }
 \arguments{
-\item{x}{A \code{gp}}
+\item{x}{A \code{gp}, \code{data.frame}/\code{tibble}, \code{spectramax}, or character
+path to a raw SPECTRAmax .xls(x)/.txt}
 
-\item{replicate_orientation}{Either 'h' or 'v' - see Details.}
+\item{replicate_orientation}{Character. Specified the direction the
+\emph{replicates} lie, not the direction the samples flow (which will be
+perpendicular to \code{replicate_orientation}).}
+
+\item{wavelength}{Numeric. For SPECTRAmax files and objects, the
+wavelength measured. Otherwise, ignored.}
+
+\item{n_standards.}{Numeric. The number of different concentrations of
+standards. Does not include replicates.}
+
+\item{n_replicates.}{Numeric. The number of replicates per sample.}
 }
 \value{
-a \code{tibble}
+a \code{data.frame}
 }
 \description{
-Wrangle qp \code{gp} according to replicate orientation
+Read in and wrangle protein quantification data
 }
 \details{
-The standards must be in ascending concentration starting in the
-upper left corner. Whether this is from from left to right or top to bottom
-can be specified in 'replicate orientation'. Note that 'replicate
-orientation' specified the direction that REPLICATES lie, NOT the direction
-the samples flow (which will be opposite).
+\code{qp} assumes that if you read in data not in a \code{spectramax} file
+or object, you probably have a custom workflow in mind - therefore, tidying
+will be minimal and mostly focused on checking for validity.
 }

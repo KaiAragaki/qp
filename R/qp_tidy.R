@@ -79,7 +79,7 @@ qp_tidy.spectramax <- function(x,
 }
 
 
-#' @rdname gp_tidy
+#' @rdname qp_tidy
 #' @export
 qp_tidy.gp <- function(x, ...) {
   x <- gplate::gp_serve(x)
