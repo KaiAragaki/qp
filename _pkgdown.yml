@@ -10,7 +10,12 @@ reference:
     desc: >
       Functions used in `qp` that can be called individually
     contents:
-    - starts_with("qp_")
+    - qp_tidy
+    - qp_add_std_conc
+    - qp_calc_abs_mean
+    - qp_calc_conc
+    - qp_fit
+    - qp_remove_empty
   - title: "Visualization"
     contents:
     - qp_plot_plate
