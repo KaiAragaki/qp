@@ -23,7 +23,7 @@ qp_calc_conc <- function(x,
                          group_cols = c("sample_type", "index")) {
   with_predictions <- dplyr::bind_cols(x, .pred = stats::predict(fit, x))
   conc <- with_predictions |>
-    dplyr::mutate(.pred_conc = log2(.data$.pred + 0.5)) |>
+    dplyr::mutate(.pred_conc = 2^(.data$.pred) - 0.5) |>
     dplyr::group_by(dplyr::across(dplyr::any_of(group_cols)))
 
   if (ignore_outliers) {
