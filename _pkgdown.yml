@@ -2,3 +2,16 @@ url: https://kaiaragaki.github.io/qp/
 template:
   bootstrap: 5
 
+reference:
+  - title: "All in one function"
+    contents:
+    - qp
+  - title: "Individual functions"
+    desc: >
+      Functions used in `qp` that can be called individually
+    contents:
+    - starts_with("qp_")
+  - title: "Miscellaneous"
+    contents:
+    - make_qp_plate_view
+    - make_qp_standard_plot

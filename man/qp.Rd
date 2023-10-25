@@ -25,6 +25,16 @@ qp(
 
 \item{remove_empty}{Should wells that have less absorbance than the lowest
 standard be dropped?}
+
+\item{ignore_outliers}{Character. From which group - samples or standards - should
+outliers be detected and removed?}
+
+\item{standard_scale}{Numeric. Known concentrations of standards, in the order
+they appear.}
+
+\item{n_replicates}{Numeric. The number of techinical replicates.}
+
+\item{wavelength}{Numeric. The wavelength absorbance was captured.}
 }
 \value{
 a \code{tibble}
@@ -33,9 +43,14 @@ a \code{tibble}
 Quantify protein concentration from a MicroBCA assay
 }
 \details{
-The standards must be in ascending concentration starting in the
-upper left corner. Whether this is from from left to right or top to bottom
-can be specified in 'replicate orientation'. Note that 'replicate
-orientation' specified the direction that REPLICATES lie, NOT the direction
-the samples flow (which will be opposite).
+If \code{x} is a \code{spectramax}, the standards must start in the upper left
+corner in the order dictated by \code{standard_scale}. Whether this is from from
+left to right or top to bottom can be specified in \code{replicate_orientation}.
+Note that \code{replicate_orientation} specified the direction that REPLICATES
+lie, NOT the direction the samples flow (which will be perpendicular to
+the replicates).
+
+Note: \code{replicate_orientation}, \code{n_replicates}, and \code{wavelength} will
+be silently ignored if \code{x} is not a \code{spectramax} or path to a
+\code{spectramax}
 }
