@@ -115,8 +115,8 @@ check_validity <- function(x) {
 
   if (any(x$.abs < 0)) rlang::warn("Negative values found in .abs")
 
-  if (any(is.na(c(x$sample_type, x$.abs))))
-    # index can have NA values if there isn't enough space for a
-    # whole replicate
-    rlang::warn("NA values found in `sample_type` and/or `.abs`")
+  if (any(is.na(x$.abs)))
+    rlang::warn("NA values found in `.abs`")
+    # index and sample type can have NA values
+    # if there aren't enough space for a whole replicate
 }
