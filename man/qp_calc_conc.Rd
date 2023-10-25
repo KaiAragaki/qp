@@ -16,11 +16,11 @@ qp_calc_conc(
 
 \item{fit}{An \code{lm} object used to predict concentrations}
 
+\item{ignore_outliers}{Boolean. Should outliers be considered when
+calculating the mean? See details.}
+
 \item{group_cols}{Character vector. Columns to group by before
 taking the mean.}
-
-\item{ignore_outliers.}{Boolean. Should outliers be considered when
-calculating the mean? See details.}
 }
 \value{
 Returns a \code{tibble} with columns:

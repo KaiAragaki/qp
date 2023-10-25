@@ -1,7 +1,7 @@
 #' Predict concentrations from standards fit
 #' @param x A data.frame. See details.
 #' @param fit An `lm` object used to predict concentrations
-#' @param ignore_outliers. Boolean. Should outliers be considered when
+#' @param ignore_outliers Boolean. Should outliers be considered when
 #' calculating the mean? See details.
 #' @param group_cols Character vector. Columns to group by before
 #' taking the mean.

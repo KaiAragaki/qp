@@ -50,7 +50,7 @@ calc_mean <- function(df, ignore_outliers) {
 mark_suspect <- function(nums) {
   # Marking a suspect with 2 or fewer samples doesn't make sense
   na_index <- which(!is.na(nums))
-  no_na <- na.omit(nums)
+  no_na <- stats::na.omit(nums)
   if (length(no_na) <= 2) return(rep(FALSE, length(nums)))
   hc <- stats::hclust(stats::dist(no_na))
   no_na_index <- abs(hc$merge[length(no_na) -1, 1])
@@ -66,7 +66,7 @@ mark_outlier <- function(nums) {
   no_suspect <- nums[!marked]
   suspect <- nums[marked]
   mean_no_suspect <- mean(no_suspect, na.rm = TRUE)
-  sd_no_suspect <- sd(no_suspect, na.rm = TRUE)
+  sd_no_suspect <- stats::sd(no_suspect, na.rm = TRUE)
   suspect_is_outlier <- abs(suspect - mean_no_suspect) > (3 * sd_no_suspect)
   if (suspect_is_outlier) {
     return(marked)

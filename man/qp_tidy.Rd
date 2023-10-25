@@ -29,17 +29,19 @@ qp_tidy(x, ...)
 \item{x}{A \code{gp}, \code{data.frame}/\code{tibble}, \code{spectramax}, or character
 path to a raw SPECTRAmax .xls(x)/.txt}
 
+\item{...}{Arguments passed to relevant methods.}
+
 \item{replicate_orientation}{Character. Specified the direction the
 \emph{replicates} lie, not the direction the samples flow (which will be
 perpendicular to \code{replicate_orientation}).}
 
-\item{wavelength}{Numeric. For SPECTRAmax files and objects, the
-wavelength measured. Otherwise, ignored.}
-
-\item{n_standards.}{Numeric. The number of different concentrations of
+\item{n_standards}{Numeric. The number of different concentrations of
 standards. Does not include replicates.}
 
-\item{n_replicates.}{Numeric. The number of replicates per sample.}
+\item{n_replicates}{Numeric. The number of replicates per sample.}
+
+\item{wavelength}{Numeric. For SPECTRAmax files and objects, the
+wavelength measured. Otherwise, ignored.}
 }
 \value{
 a \code{data.frame}

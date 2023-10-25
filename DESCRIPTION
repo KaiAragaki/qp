@@ -1,5 +1,5 @@
 Package: qp
-Title: What the Package Does (One Line, Title Case)
+Title: A toolkit for analyzing protein quantification results
 Version: 0.0.0.9000
 Authors@R: 
     person("Kai", "Aragaki", , "adamaragaki@gmail.com", role = c("aut", "cre"),
@@ -14,3 +14,15 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 URL: https://kaiaragaki.github.io/qp/
+Imports: 
+    dplyr,
+    ggplot2,
+    rlang,
+    gplate,
+    bladdr,
+    mop,
+    tidyr
+Remotes:
+    KaiAragaki/gplate,
+    McConkeyLab/bladdr,
+    KaiAragaki/mop

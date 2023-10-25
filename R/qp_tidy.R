@@ -5,11 +5,12 @@
 #' @param replicate_orientation Character. Specified the direction the
 #'   *replicates* lie, not the direction the samples flow (which will be
 #'   perpendicular to `replicate_orientation`).
-#' @param n_standards. Numeric. The number of different concentrations of
+#' @param n_standards Numeric. The number of different concentrations of
 #'   standards. Does not include replicates.
-#' @param n_replicates. Numeric. The number of replicates per sample.
+#' @param n_replicates Numeric. The number of replicates per sample.
 #' @param wavelength Numeric. For SPECTRAmax files and objects, the
 #'   wavelength measured. Otherwise, ignored.
+#' @param ... Arguments passed to relevant methods.
 #
 #' @details `qp` assumes that if you read in data not in a `spectramax` file
 #'   or object, you probably have a custom workflow in mind - therefore, tidying
