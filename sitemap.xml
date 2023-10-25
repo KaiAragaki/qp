@@ -19,12 +19,6 @@
     <loc>https://kaiaragaki.github.io/qp/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/make_qp_plate_view.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/make_qp_standard_plot.html</loc>
-  </url>
-  <url>
     <loc>https://kaiaragaki.github.io/qp/reference/qp.html</loc>
   </url>
   <url>
@@ -41,6 +35,12 @@
   </url>
   <url>
     <loc>https://kaiaragaki.github.io/qp/reference/qp_fit.html</loc>
+  </url>
+  <url>
+    <loc>https://kaiaragaki.github.io/qp/reference/qp_plot_plate.html</loc>
+  </url>
+  <url>
+    <loc>https://kaiaragaki.github.io/qp/reference/qp_plot_standards.html</loc>
   </url>
   <url>
     <loc>https://kaiaragaki.github.io/qp/reference/qp_remove_empty.html</loc>
