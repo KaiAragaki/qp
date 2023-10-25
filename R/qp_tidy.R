@@ -112,7 +112,7 @@ check_validity <- function(x) {
     )
   }
 
-  if (!any(x$.abs < 0)) rlang::warn("Negative values found in .abs")
+  if (any(x$.abs < 0)) rlang::warn("Negative values found in .abs")
 
   if (any(is.na(c(x$sample_type, x$index, x$.abs))))
     rlang::warn("NA values found in `sample_type`, `index`, and/or `.abs`")
