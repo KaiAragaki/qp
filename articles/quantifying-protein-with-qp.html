@@ -99,16 +99,14 @@ analyzing protein quantification data using <code>qp</code>.</p>
 <p>The standard <code>qp</code> workflow is based off <a href="https://kai.quarto.pub/bok/western-blot.html#protein-quantification" class="external-link">this</a>
 protocol. Provided the protocol is followed, relatively few parameters
 need to be changed from their default.</p>
-<div class="section level3">
-<h3 id="ingesting-data">Ingesting data<a class="anchor" aria-label="anchor" href="#ingesting-data"></a>
-</h3>
 <p>The easiest - and most common - way to read in your data is by
 providing a path to your SPECTRAmax file output. These <code>.txt</code>
 files are some of the most…creatively…formatted files I’ve come
 across.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"absorbances.txt"</span>, package <span class="op">=</span> <span class="st">"qp"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"absorbances.txt"</span>, package <span class="op">=</span> <span class="st">"qp"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "##BLOCKS= 2          "                                                                                            </span></span>
 <span><span class="co">#&gt;  [2] "Plate:\tPlate#1\t1.3\tPlateFormat\tEndpoint\tAbsorbance\tRaw\tFALSE\t1\t\t\t\t\t\t1\t562\t1\t12\t96\t1\t8\tNone\t"</span></span>
 <span><span class="co">#&gt;  [3] "\tTemperature(\xa1C)\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t\t"                                                  </span></span>
@@ -127,21 +125,31 @@ across.</p>
 <p>Fortunately, I’ve developed a little package <code>mop</code> that
 reads in lab data like these. This is used in the <code>qp</code>
 function when you provide it a character string.</p>
+<p>Typically when you perform these experiments, <em>you</em> will know
+how it was laid out. In these data I’m providing, though, I’ll need to
+show you how it’s laid out so that you can follow along why I set some
+parameters the way I do.</p>
+<p>This is how the plate looks:</p>
+<pre><code><span><span class="co">#&gt; Please wait. This will take ~10 seconds.</span></span></code></pre>
 <p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
-<p><code>qp</code> comes with a data set from one of these
-experiments:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">absorbances</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
-<span><span class="co">#&gt;    .row  .col   .abs sample_type index</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1     1 0.070<span style="text-decoration: underline;">7</span> standard        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2     1 0.078<span style="text-decoration: underline;">6</span> standard        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3     1 0.071<span style="text-decoration: underline;">4</span> standard        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     1     2 0.079<span style="text-decoration: underline;">5</span> standard        2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     2     2 0.079<span style="text-decoration: underline;">9</span> standard        2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     3     2 0.080<span style="text-decoration: underline;">5</span> standard        2</span></span></code></pre></div>
-</div>
+<p>The samples are laid out in triplicate, horizontally arranged
+replicates in vertical bands that wrap to the next three columns once it
+hits the edge of the plate.</p>
+<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p>Furthermore, I have my seven standards in the top left corner of the
+plate, in ascending concentrations as they flow down the first column.
+The samples follow. The rest of the wells are empty:</p>
+<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p>Since we followed the standard protocol, and since I told you
+replicates were arranged horizontally, analysis is a breeze:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qp.html">qp</a></span><span class="op">(</span><span class="va">f</span>, replicate_orientation <span class="op">=</span> <span class="st">"h"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Please wait. This will take ~10 seconds.</span></span></code></pre></div>
+<p>We can plot our standards and samples simply, using
+<code>qp_plot_standards</code></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/qp_plot_standards.html">qp_plot_standards</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></code></pre></div>
+<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
