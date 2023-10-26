@@ -29,10 +29,10 @@ qp_calc_abs_mean.data.frame <- function(x,
                                           "all", "standards", "samples", "none"
                                         )) {
   ignore_outliers <- rlang::arg_match(ignore_outliers)
-  check_has_cols(x, c("sample_type", "index", "abs"))
+  check_has_cols(x, c("sample_type", "index", ".abs"))
   check_sample_type(x$sample_type)
   check_index(x$index)
-  check_abs(x$abs)
+  check_abs(x$.abs)
 
   standards <- x |>
     dplyr::filter(.data$sample_type == "standard") |>
