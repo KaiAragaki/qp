@@ -109,9 +109,21 @@ across.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"absorbances.txt"</span>, package <span class="op">=</span> <span class="st">"qp"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in file(con, "r"): file("") only supports open = "w+" and open = "w+b":</span></span>
-<span><span class="co">#&gt; using the former</span></span>
-<span><span class="co">#&gt; character(0)</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "##BLOCKS= 2          "                                                                                            </span></span>
+<span><span class="co">#&gt;  [2] "Plate:\tPlate#1\t1.3\tPlateFormat\tEndpoint\tAbsorbance\tRaw\tFALSE\t1\t\t\t\t\t\t1\t562\t1\t12\t96\t1\t8\tNone\t"</span></span>
+<span><span class="co">#&gt;  [3] "\tTemperature(\xa1C)\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t\t"                                                  </span></span>
+<span><span class="co">#&gt;  [4] "\t37.00\t0.0686\t0.0717\t0.0698\t0.2415\t0.228\t0.2273\t0.0475\t0.0459\t0.0485\t0.0487\t0.0474\t0.0464\t\t"       </span></span>
+<span><span class="co">#&gt;  [5] "\t\t0.0825\t0.0832\t0.0835\t0.183\t0.1856\t0.1753\t0.0487\t0.0464\t0.048\t0.0465\t0.0468\t0.047\t\t"              </span></span>
+<span><span class="co">#&gt;  [6] "\t\t0.1023\t0.1004\t0.1017\t0.2175\t0.2137\t0.2168\t0.0475\t0.0471\t0.0475\t0.047\t0.0474\t0.0472\t\t"            </span></span>
+<span><span class="co">#&gt;  [7] "\t\t0.1322\t0.1324\t0.1371\t0.1241\t0.1248\t0.1213\t0.0482\t0.0475\t0.0476\t0.0477\t0.0474\t0.0479\t\t"           </span></span>
+<span><span class="co">#&gt;  [8] "\t\t0.1955\t0.199\t0.1938\t0.0478\t0.0455\t0.0508\t0.046\t0.0465\t0.0479\t0.0512\t0.0477\t0.0465\t\t"             </span></span>
+<span><span class="co">#&gt;  [9] "\t\t0.2963\t0.2878\t0.2974\t0.046\t0.0467\t0.0462\t0.0465\t0.0477\t0.0455\t0.0456\t0.0467\t0.046\t\t"             </span></span>
+<span><span class="co">#&gt; [10] "\t\t0.4599\t0.4662\t0.4779\t0.0472\t0.0455\t0.0464\t0.0473\t0.0464\t0.0493\t0.0451\t0.0463\t0.0466\t\t"           </span></span>
+<span><span class="co">#&gt; [11] "\t\t0.2617\t0.2524\t0.2584\t0.0461\t0.0463\t0.0469\t0.0448\t0.0465\t0.0464\t0.0477\t0.0472\t0.0457\t\t"           </span></span>
+<span><span class="co">#&gt; [12] "\t\t"                                                                                                             </span></span>
+<span><span class="co">#&gt; [13] "~End"                                                                                                             </span></span>
+<span><span class="co">#&gt; [14] "Original Filename: Untitled   Date Last Saved: Unsaved"                                                           </span></span>
+<span><span class="co">#&gt; [15] "Copyright \xa9 2003 Molecular Devices. All rights reserved."</span></span></code></pre></div>
 <p>Fortunately, I’ve developed a little package <code>mop</code> that
 reads in lab data like these. This is used in the <code>qp</code>
 function when you provide it a character string.</p>
