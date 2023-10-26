@@ -90,50 +90,6 @@ qp_tidy.gp <- function(x, ...) {
 #' @rdname qp_tidy
 #' @export
 qp_tidy.default <- function(x, ...) {
-  check_validity(x)
+  check_qp_tidy(x)
   x
-}
-
-check_validity <- function(x) {
-  check_has_cols(x, c("sample_type", "index", ".abs"))
-  check_sample_type(x$sample_type)
-  check_abs(x$.abs)
-}
-
-check_has_cols <- function(df, cols) {
-  if (!all(cols %in% colnames(df))) {
-    missing <- setdiff(cols, colnames(df))
-    cli::cli_abort(c(
-      "Data is missing columns {.code {missing}}"
-    ))
-  }
-}
-
-check_index <- function(x) {
-  # NA value are fine
-  # They happen when a whole gplate is not used, for instance
-  if (class(x) != "numeric") rlang::abort("index must be numeric")
-}
-
-check_abs <- function(x) {
-  if (class(x) != "numeric") rlang::abort("abs must be numeric")
-  if (any(x$.abs < 0)) rlang::warn("Negative values found in .abs")
-  if (any(is.na(x$.abs))) rlang::warn("NA values found in `.abs`")
-}
-
-check_sample_type <- function(x) {
-  # NA value are fine
-  # They happen when a whole gplate is not used, for instance
-  if (!any(grepl("standard", x$sample_type))) {
-    rlang::warn(
-      c("`sample_type` does not contain any samples named `standard`",
-        "i" = "`sample_type` should denote standards with `standard`")
-    )
-  }
-  if (length(setdiff(x$sample_type, c("standard", "unknown")) > 0)) {
-    rlang::warn(
-      c("`sample_type` contains values other than `standard` and `unknown`",
-        "!" = "These values may be ignored downstream!")
-    )
-  }
 }
