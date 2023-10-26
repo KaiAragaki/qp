@@ -1,6 +1,6 @@
 #' Fit an lm using standards absorbances
 #'
-#' @param x A `data.frame` or `lsit` containing a `data.frame` under the name
+#' @param x A `data.frame` or `list` containing a `data.frame` under the name
 #'   `qp`. See details.
 #'
 #' @details The supplied dataframe must have the following columns:
