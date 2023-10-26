@@ -96,7 +96,9 @@ qp_tidy.default <- function(x, ...) {
 
 check_validity <- function(x) {
   if (!all(c("sample_type", "index", ".abs") %in% colnames(x))) {
-    rlang::warn("Data does not have columns `sample_type`, `index`, and `.abs`")
+    rlang::abort(
+      "Data does not have columns `sample_type`, `index`, and `.abs`"
+    )
   }
 
   if (!any(grepl("standard", x$sample_type))) {

@@ -1,0 +1,84 @@
+---
+title: "Quantifying protein with qp"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{quantifying-protein-with-qp}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(qp)
+```
+
+# Introduction
+
+The [Micro BCA](https://en.wikipedia.org/wiki/Bicinchoninic_acid_assay#Micro_BCA_assay_(for_dilute_solutions)) assay and its analysis is easy and straightforward. With most lab work, though, the analysis is typically repetitive. We can analyze these data programmatically to speed up and automate analysis, remove human error, and get reproducibility for free along the way.
+
+`qp` intends to be no-fuss enough where it analyze routine runs and flexible enough to make analyzing hairier ones simple enough. In this vignette, I'll start with a straightforward data set and move to a more challenging one to show you the two different approaches to analyzing protein quantification data using `qp`.
+
+# Routine analysis
+
+The standard `qp` workflow is based off [this](https://kai.quarto.pub/bok/western-blot.html#protein-quantification) protocol. Provided the protocol is followed, relatively few parameters need to be changed from their default.
+
+The easiest - and most common - way to read in your data is by providing a path to your SPECTRAmax file output. These `.txt` files are some of the most...creatively...formatted files I've come across.
+
+```{r}
+f <- system.file("extdata", "absorbances.txt", package = "qp")
+
+readLines(f)
+```
+
+Fortunately, I've developed a little package `mop` that reads in lab data like these. This is used in the `qp` function when you provide it a character string. 
+
+Typically when you perform these experiments, *you* will know how it was laid out. In these data I'm providing, though, I'll need to show you how it's laid out so that you can follow along why I set some parameters the way I do.
+
+This is how the plate looks:
+
+```{r echo=FALSE}
+qp_plot_plate(qp_tidy(f))
+```
+
+The samples are laid out in triplicate, horizontally arranged replicates in vertical bands that wrap to the next three columns once it hits the edge of the plate. 
+
+```{r echo=FALSE}
+library(gplate)
+library(ggplot2)
+gp(8, 12) |>
+  gp_sec("band", nrow = 8, ncol = 3) |>
+  gp_serve() |>
+  ggplot(aes(.col, .row, color = band)) +
+  geom_point(size = 20) + 
+  scale_y_reverse()
+```
+
+Furthermore, I have my seven standards in the top left corner of the plate, in ascending concentrations as they flow down the first column. The samples follow. The rest of the wells are empty:
+
+```{r echo=FALSE}
+gp(8, 12) |>
+  gp_sec("type", nrow = c(7, 5, 23), ncol = 3, labels = c("standard", "sample", "blank"), wrap = TRUE, flow = "col") |>
+  gp_serve() |>
+  ggplot(aes(.col, .row, color = type)) +
+  geom_point(size = 20) + 
+  scale_y_reverse()
+```
+
+Since we followed the standard protocol, and since I told you replicates were arranged horizontally, analysis is a breeze:
+
+```{r}
+out <- qp(f, replicate_orientation = "h")
+```
+
+We can plot our standards and samples simply, using `qp_plot_standards`
+
+```{r}
+qp_plot_standards(out)
+```
+
