@@ -50,26 +50,10 @@ qp <- function(x,
   x$.log2_abs <- log2(x$.abs)
   x <- qp_fit(x)
   x <- qp_calc_conc(x)
-  x <- qp_add_names(x)
   # Do not need to pass `ignore_outliers`
   # This is implicitly encoded by NAs in .is_outlier
 
+  x <- qp_add_names(x)
   if (remove_empty) x <- qp_remove_empty(x)
-
-  if (!is.null(sample_names)) {
-    # Will return "NA" instead of erroring if sample names < # samples
-    length(sample_names) <- max(x$qp$index, na.rm = TRUE)
-  } else {
-    sample_names <- as.character(1:max(x$qp$index, na.rm = TRUE))
-  }
-
-  qp <- x$qp |>
-    dplyr::mutate(
-      .sample_name = ifelse(
-        .data$sample_type == "unknown",
-        sample_names[.data$index],
-        paste("Standard", .data$index)
-      )
-    )
-  list(fit = x$fit, qp = qp)
+  x
 }
