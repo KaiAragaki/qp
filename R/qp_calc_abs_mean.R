@@ -16,8 +16,8 @@
 #' @importFrom rlang .data
 qp_calc_abs_mean <- function(x,
                              ignore_outliers = c(
-                               "all", "standards", "samples", "none")
-                             ) {
+                               "all", "standards", "samples", "none"
+                             )) {
   ignore_outliers <- rlang::arg_match(ignore_outliers)
   standards <- x |>
     dplyr::filter(.data$sample_type == "standard") |>
