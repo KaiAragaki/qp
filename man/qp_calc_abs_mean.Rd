@@ -8,9 +8,9 @@
 \usage{
 qp_calc_abs_mean(x, ignore_outliers = c("all", "standards", "samples", "none"))
 
-\method{qp_calc_abs_mean}{data.frame}(x, ignore_outliers)
+\method{qp_calc_abs_mean}{data.frame}(x, ignore_outliers = c("all", "standards", "samples", "none"))
 
-\method{qp_calc_abs_mean}{list}(x, ignore_outliers)
+\method{qp_calc_abs_mean}{list}(x, ignore_outliers = c("all", "standards", "samples", "none"))
 }
 \arguments{
 \item{x}{A \code{data.frame} or \code{list} containing a \code{data.frame} named \code{qp}.

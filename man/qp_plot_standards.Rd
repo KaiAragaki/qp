@@ -7,7 +7,7 @@
 qp_plot_standards(x)
 }
 \arguments{
-\item{x}{The output of \code{qp()} (a \code{list}) or \code{qp_calc_conc()} (a \code{data.frame})}
+\item{x}{The output of \code{qp} or \code{qp_calc_conc}}
 }
 \value{
 a \code{ggplot}
