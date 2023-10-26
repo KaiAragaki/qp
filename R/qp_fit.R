@@ -3,7 +3,7 @@
 #' @param x A `data.frame` or `list` containing a `data.frame` under the name
 #'   `qp`. See details.
 #'
-#' @details The supplied dataframe must have the following columns:
+#' @details The supplied `data.frame` must have the following columns:
 #'   - `sample_type`. Character. If not 'standard', assumed to be a sample
 #'   - `.is_outlier`. Boolean. If TRUE, assumed to be outlier and removed from
 #'     fitting. If FALSE or NA, used for fitting.
