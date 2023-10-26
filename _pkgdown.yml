@@ -16,6 +16,7 @@ reference:
     - qp_calc_conc
     - qp_fit
     - qp_remove_empty
+    - qp_add_names
   - title: "Visualization"
     contents:
     - qp_plot_plate
