@@ -48,7 +48,7 @@ check_is_outlier <- function(x) {
 
 check_conc <- function(x) {
   if (!is.numeric(x)) rlang::abort("`.conc` is not `numeric`")
-  if (any(x < 0)) rlang::abort("`.conc` contains negative values")
+  if (any(x < 0, na.rm = TRUE)) rlang::abort("`.conc` contains negative values")
 }
 
 check_log2_abs <- function(x) {
