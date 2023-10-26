@@ -2,16 +2,27 @@
 % Please edit documentation in R/qp_fit.R
 \name{qp_fit}
 \alias{qp_fit}
+\alias{qp_fit.data.frame}
+\alias{qp_fit.list}
 \title{Fit an lm using standards absorbances}
 \usage{
 qp_fit(x)
+
+\method{qp_fit}{data.frame}(x)
+
+\method{qp_fit}{list}(x)
 }
 \arguments{
-\item{x}{A data.frame. See details.}
+\item{x}{A \code{data.frame} or \code{lsit} containing a \code{data.frame} under the name
+\code{qp}. See details.}
 }
 \value{
-An \code{lm} object fit with the formula \code{.log2_conc ~ .log2_abs}, fit
+A list containing:
+\itemize{
+\item \code{fit}, an \code{lm} object fit with the formula \code{.log2_conc ~ .log2_abs}, fit
 using non-outlier standards
+\item \code{qp}, the input data
+}
 }
 \description{
 Fit an lm using standards absorbances

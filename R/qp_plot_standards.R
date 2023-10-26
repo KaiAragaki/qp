@@ -1,7 +1,6 @@
 #' View an absorbance/concentration plot
 #'
-#' @param x The output of `qp()`
-#'
+#' @param x The output of `qp()` (a `list`) or `qp_calc_conc()` (a `data.frame`)
 #' @return a `ggplot`
 #' @export
 #' @importFrom rlang .data
@@ -10,8 +9,8 @@
 #'   qp() |>
 #'   qp_plot_standards()
 qp_plot_standards <- function(x) {
-
-  plot_data <- x$qp |>
+  if (is.list(x)) x <- x$qp
+  plot_data <- x |>
     dplyr::mutate(
       outlier = !f_or_na(.data$.is_outlier),
       y = ifelse(

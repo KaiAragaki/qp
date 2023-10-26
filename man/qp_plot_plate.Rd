@@ -16,7 +16,5 @@ a \code{ggplot}
 View the absorbances of an analyzed \code{qp} as they were on the plate
 }
 \examples{
-x <- expand.grid(.row = 1:8, .col = 1:12)
-x$.abs <- 1:96
-make_qp_plate_view(x)
+qp_plot_plate(absorbances)
 }

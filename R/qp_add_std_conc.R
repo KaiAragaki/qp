@@ -13,7 +13,15 @@
 #'     etc.
 #' @return Same type as x, with a `.conc` column
 #' @export
-qp_add_std_conc <- function(x, standard_scale = c(0, 2^((2:7) - 5))) {
+qp_add_std_conc <- function(x, standard_scale = c(0, 2^((2:7) - 5)), ...) {
+  UseMethod("qp_add_std_conc")
+}
+
+#' @rdname qp_add_std_conc
+qp_add_std_conc.data.frame <- function(x, standard_scale, ...) {
+  check_has_cols(x, c("sample_type", "index"))
+  check_sample_type(x$sample_type)
+
   x$.conc <- NA_real_
   unk <- x[which(x$sample_type != "standard"), ]
   std <- x[which(x$sample_type == "standard"), ]
@@ -23,6 +31,12 @@ qp_add_std_conc <- function(x, standard_scale = c(0, 2^((2:7) - 5))) {
 
   std$.conc <- standard_scale[std$index]
   rbind(std, unk)
+}
+
+#' @rdname qp_add_std_conc
+qp_add_std_conc.list <- function(x, standard_scale, ...) {
+  x$qp <- qp_add_std_conc(x$qp, standard_scale)
+  x
 }
 
 check_scale <- function(x) {

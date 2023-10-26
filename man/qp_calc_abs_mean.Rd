@@ -2,12 +2,19 @@
 % Please edit documentation in R/qp_calc_abs_mean.R
 \name{qp_calc_abs_mean}
 \alias{qp_calc_abs_mean}
+\alias{qp_calc_abs_mean.data.frame}
+\alias{qp_calc_abs_mean.list}
 \title{Calculate absorbance means with optional outlier removal}
 \usage{
 qp_calc_abs_mean(x, ignore_outliers = c("all", "standards", "samples", "none"))
+
+\method{qp_calc_abs_mean}{data.frame}(x, ignore_outliers)
+
+\method{qp_calc_abs_mean}{list}(x, ignore_outliers)
 }
 \arguments{
-\item{x}{A \code{data.frame}. See details.}
+\item{x}{A \code{data.frame} or \code{list} containing a \code{data.frame} named \code{qp}.
+See details.}
 
 \item{ignore_outliers}{Which sample types should have outliers ignored from
 their mean calculations?}

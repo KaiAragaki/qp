@@ -1,6 +1,7 @@
 #' Calculate absorbance means with optional outlier removal
 #'
-#' @param x A `data.frame`. See details.
+#' @param x A `data.frame` or `list` containing a `data.frame` named `qp`.
+#'   See details.
 #' @param ignore_outliers Which sample types should have outliers ignored from
 #'   their mean calculations?
 #'
@@ -18,7 +19,18 @@ qp_calc_abs_mean <- function(x,
                              ignore_outliers = c(
                                "all", "standards", "samples", "none"
                              )) {
+  UseMethod("qp_calc_abs_mean")
+}
+
+
+#' @rdname qp_calc_abs_mean
+qp_calc_abs_mean.data.frame <- function(x, ignore_outliers) {
   ignore_outliers <- rlang::arg_match(ignore_outliers)
+  check_has_cols(x, c("sample_type", "index", "abs"))
+  check_sample_type(x$sample_type)
+  check_index(x$index)
+  check_abs(x$abs)
+
   standards <- x |>
     dplyr::filter(.data$sample_type == "standard") |>
     calc_mean(ignore_outliers %in% c("all", "standards"))
@@ -29,22 +41,28 @@ qp_calc_abs_mean <- function(x,
 }
 
 calc_mean <- function(df, ignore_outliers) {
-  df <- dplyr::group_by(df, .data$sample_type, .data$index)
   if (ignore_outliers) {
     df <- df |>
       dplyr::mutate(
         .is_outlier = mark_outlier(.data$.abs),
-        .mean = mean(.data$.abs[!.data$.is_outlier], na.rm = TRUE)
+        .mean = mean(.data$.abs[!.data$.is_outlier], na.rm = TRUE),
+        .by = c("sample_type", "index")
       )
   } else {
     df <- df |>
       dplyr::mutate(
         .is_outlier = NA,
-        .mean = mean(.data$.abs, na.rm = TRUE)
+        .mean = mean(.data$.abs, na.rm = TRUE),
+        .by = c("sample_type", "index")
       )
   }
-  df <- dplyr::ungroup(df)
   df
+}
+
+#' @rdname qp_calc_abs_mean
+qp_calc_abs_mean.list <- function(x, ignore_outliers) {
+  x$qp <- qp_calc_abs_mean(x$qp, ignore_outliers)
+  x
 }
 
 mark_suspect <- function(nums) {

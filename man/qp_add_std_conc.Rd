@@ -2,9 +2,15 @@
 % Please edit documentation in R/qp_add_std_conc.R
 \name{qp_add_std_conc}
 \alias{qp_add_std_conc}
+\alias{qp_add_std_conc.data.frame}
+\alias{qp_add_std_conc.list}
 \title{Add known concentrations of protein to standard samples}
 \usage{
-qp_add_std_conc(x, standard_scale = c(0, 2^((2:7) - 5)))
+qp_add_std_conc(x, standard_scale = c(0, 2^((2:7) - 5)), ...)
+
+\method{qp_add_std_conc}{data.frame}(x, standard_scale, ...)
+
+\method{qp_add_std_conc}{list}(x, standard_scale, ...)
 }
 \arguments{
 \item{x}{A \code{data.frame} containing a \code{sample_type} and \code{index} columns.

@@ -7,8 +7,8 @@
 qp_remove_empty(x)
 }
 \arguments{
-\item{x}{A \code{data.frame} containing columns \code{.pred_conc} and \code{sample_type}.
-See details.}
+\item{x}{A \code{data.frame} containing columns \code{.pred_conc} and \code{sample_type} or
+\code{list} containing data in \code{x$qp}. See details.}
 }
 \value{
 Same as input
