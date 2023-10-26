@@ -1,6 +1,6 @@
 #' View an absorbance/concentration plot
 #'
-#' @param x The output of `qp()` (a `list`) or `qp_calc_conc()` (a `data.frame`)
+#' @param x The output of `qp` or `qp_calc_conc`
 #' @return a `ggplot`
 #' @export
 #' @importFrom rlang .data
