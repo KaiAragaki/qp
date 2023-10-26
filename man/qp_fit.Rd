@@ -13,7 +13,7 @@ qp_fit(x)
 \method{qp_fit}{list}(x)
 }
 \arguments{
-\item{x}{A \code{data.frame} or \code{lsit} containing a \code{data.frame} under the name
+\item{x}{A \code{data.frame} or \code{list} containing a \code{data.frame} under the name
 \code{qp}. See details.}
 }
 \value{
@@ -28,7 +28,7 @@ using non-outlier standards
 Fit an lm using standards absorbances
 }
 \details{
-The supplied dataframe must have the following columns:
+The supplied \code{data.frame} must have the following columns:
 \itemize{
 \item \code{sample_type}. Character. If not 'standard', assumed to be a sample
 \item \code{.is_outlier}. Boolean. If TRUE, assumed to be outlier and removed from

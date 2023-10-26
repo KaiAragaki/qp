@@ -2,13 +2,19 @@
 % Please edit documentation in R/qp_remove_empty.R
 \name{qp_remove_empty}
 \alias{qp_remove_empty}
+\alias{qp_remove_empty.data.frame}
+\alias{qp_remove_empty.list}
 \title{Remove empty wells from data}
 \usage{
 qp_remove_empty(x)
+
+\method{qp_remove_empty}{data.frame}(x)
+
+\method{qp_remove_empty}{list}(x)
 }
 \arguments{
-\item{x}{A \code{data.frame} containing columns \code{.pred_conc} and \code{sample_type} or
-\code{list} containing data in \code{x$qp}. See details.}
+\item{x}{A \code{data.frame} or \code{list} containing a \code{data.frame} named \code{qp}
+containing columns \code{.pred_conc} and \code{sample_type}. See details.}
 }
 \value{
 Same as input
