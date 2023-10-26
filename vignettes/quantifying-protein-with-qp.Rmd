@@ -1,0 +1,57 @@
+---
+title: "Quantifying protein with qp"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{quantifying-protein-with-qp}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(qp)
+```
+
+# Introduction
+
+The [Micro BCA](https://en.wikipedia.org/wiki/Bicinchoninic_acid_assay#Micro_BCA_assay_(for_dilute_solutions)) assay and its analysis is easy and straightforward. With most lab work, though, the analysis is typically repetitive. We can analyze these data programmatically to speed up and automate analysis, remove human error, and get reproducibility for free along the way.
+
+`qp` intends to be no-fuss enough where it analyze routine runs and flexible enough to make analyzing hairier ones simple enough. In this vignette, I'll start with a straightforward data set and move to a more challenging one to show you the two different approaches to analyzing protein quantification data using `qp`.
+
+# Routine analysis
+
+The standard `qp` workflow is based off [this](https://kai.quarto.pub/bok/western-blot.html#protein-quantification) protocol. Provided the protocol is followed, relatively few parameters need to be changed from their default.
+
+## Ingesting data
+
+The easiest - and most common - way to read in your data is by providing a path to your SPECTRAmax file output. These `.txt` files are some of the most...creatively...formatted files I've come across.
+
+```{r}
+system.file("extdata", "absorbances.txt", package = "qp") |>
+  readLines()
+```
+
+Fortunately, I've developed a little package `mop` that reads in lab data like these. This is used in the `qp` function when you provide it a character string. 
+
+```{r echo = FALSE}
+absorbances |> qp_plot_plate()
+```
+
+`qp` comes with a data set from one of these experiments:
+
+```{r}
+head(absorbances)
+```
+
+
+
+
+
+
+
