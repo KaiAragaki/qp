@@ -31,7 +31,7 @@ qp_calc_conc <- function(x,
 
   qp <- x$qp
   fit <- x$fit
-  check_has_cols(qp, c(group_cols, all.vars(stats::terms(fit))))
+  check_has_cols(qp, c(group_cols, all.vars(stats::terms(fit))[-1]))
   with_predictions <- dplyr::bind_cols(qp, .pred = stats::predict(fit, qp))
   conc <- with_predictions |>
     dplyr::mutate(.pred_conc = 2^(.data$.pred) - 0.5) |>
