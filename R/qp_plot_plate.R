@@ -20,5 +20,6 @@ qp_plot_plate <- function(x) {
       ggplot2::aes(label = round(.data$.abs, 2)),
       color = "black"
     ) +
+    ggplot2::scale_y_reverse() +
     ggplot2::scale_color_gradient(low = "darkseagreen1", high = "mediumpurple3")
 }
