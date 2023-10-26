@@ -17,7 +17,7 @@ qp_calc_dil <- function(x, target_conc, target_vol) {
     dplyr::rowwise() |>
     dplyr::mutate(
       .temp = list(
-        bladdr::dilute(.data$pred_conc, target_conc, target_vol, quiet = TRUE)
+        bladdr::dilute(.data$.pred_conc, target_conc, target_vol, quiet = TRUE)
       )
     ) |>
     tidyr::unnest_wider(.data$.temp)
