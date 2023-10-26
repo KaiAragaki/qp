@@ -9,6 +9,7 @@
 #'   qp() |>
 #'   qp_plot_standards()
 qp_plot_standards <- function(x) {
+  x <- x$qp
   plot_data <- x |>
     dplyr::mutate(
       outlier = !f_or_na(.data$.is_outlier),
