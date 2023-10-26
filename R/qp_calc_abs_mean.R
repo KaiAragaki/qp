@@ -24,7 +24,10 @@ qp_calc_abs_mean <- function(x,
 
 
 #' @rdname qp_calc_abs_mean
-qp_calc_abs_mean.data.frame <- function(x, ignore_outliers) {
+qp_calc_abs_mean.data.frame <- function(x,
+                                        ignore_outliers = c(
+                                          "all", "standards", "samples", "none"
+                                        )) {
   ignore_outliers <- rlang::arg_match(ignore_outliers)
   check_has_cols(x, c("sample_type", "index", "abs"))
   check_sample_type(x$sample_type)
@@ -60,7 +63,10 @@ calc_mean <- function(df, ignore_outliers) {
 }
 
 #' @rdname qp_calc_abs_mean
-qp_calc_abs_mean.list <- function(x, ignore_outliers) {
+qp_calc_abs_mean.list <- function(x,
+                                  ignore_outliers = c(
+                                    "all", "standards", "samples", "none"
+                                  )) {
   x$qp <- qp_calc_abs_mean(x$qp, ignore_outliers)
   x
 }
