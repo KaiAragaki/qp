@@ -15,15 +15,24 @@
 #'   - `fit`, an `lm` object fit with the formula `.log2_conc ~ .log2_abs`, fit
 #'   using non-outlier standards
 #'   - `qp`, the input data
-#' @export
 #' @importFrom rlang .data
+#' @export
 qp_fit <- function(x) {
   UseMethod("qp_fit")
 }
 
 #' @rdname qp_fit
+#' @export
 qp_fit.data.frame <- function(x) {
-  check_has_cols(x, c("sample_type", ".is_outlier", ".conc", ".log2_abs"))
+
+  if (!".log2_abs" %in% colnames(x)) {
+    rlang::inform("Did not find column `.log2_abs`, calculating.")
+    check_has_cols(x, ".abs")
+    check_abs(x$.abs)
+    x$.log2_abs <- log2(x$.abs)
+  }
+
+  check_has_cols(x, c("sample_type", ".conc", ".is_outlier"))
   check_sample_type(x$sample_type)
   check_is_outlier(x$.is_outlier)
   check_conc(x$.conc)
@@ -43,6 +52,7 @@ qp_fit.data.frame <- function(x) {
 }
 
 #' @rdname qp_fit
+#' @export
 qp_fit.list <- function(x) {
   x$fit <- qp_fit.data.frame(x$qp)
   x

@@ -4,17 +4,30 @@
 \alias{qp_dilute}
 \alias{qp_dilute.data.frame}
 \alias{qp_dilute.list}
-\title{Calculate dilutions for an analyzed \code{qp} \code{list}}
+\title{Calculate dilutions from predicted concentrations}
 \usage{
 qp_dilute(x, ...)
 
-\method{qp_dilute}{data.frame}(x, target_conc, target_vol, ...)
+\method{qp_dilute}{data.frame}(
+  x,
+  target_conc = NULL,
+  target_vol = 15,
+  remove_standards = FALSE,
+  ...
+)
 
-\method{qp_dilute}{list}(x, target_conc, target_vol, ...)
+\method{qp_dilute}{list}(
+  x,
+  target_conc = NULL,
+  target_vol = 15,
+  remove_standards = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{A \code{data.frame} or \code{list} containing a \code{data.frame} named \code{qp} with
-a column named \code{.pred_conc}}
+a column named \code{.pred_conc} or \code{.mean_pred_conc}. If both, will favor
+\code{.mean_pred_conc}.}
 
 \item{target_conc}{Numeric vector. Target concentration in (mg/mL) protein.
 If length == 1, recycled.}
@@ -22,8 +35,9 @@ If length == 1, recycled.}
 \item{target_vol}{Target volume in uL. If length == 1, recycled.}
 }
 \value{
-A \code{tibble}, with the volumes of lysate and volumes of H2O to add.
+Same as input, with the volumes of lysate and volumes of diluent to
+add.
 }
 \description{
-Calculate dilutions for an analyzed \code{qp} \code{list}
+Calculate dilutions from predicted concentrations
 }

@@ -216,9 +216,37 @@ some_abs |>
 Something is an outlier if it is over 3 standard deviations away from the mean of the others. While this might mark things as outliers that you might not (perhaps because the other two samples were just ultra close to each other), it only has a downstream effect if these outliers are truly much different from the others.
 
 ## Fitting a model
+  Once the above steps have been completed, you can fit a simple linear model:
+  
+```r
+out <- absorbances |>
+  qp_add_std_conc() |> # all values are defaults
+  qp_calc_abs_mean() |>
+  qp_fit()
 
-## Predicting a concentration
+out
+```
 
-## Adding names
+## Predicting concentrations
+
+```r
+conc <- qp_calc_conc(out)
+```
 
 ## Removing empty wells
+
+Samples that have a predicted concentration lower than 0 can be removed easily using `qp_remove_empty`:
+
+```r
+no_zero <- qp_remove_empty(conc)
+```
+
+
+## Adding sample names
+
+At any point, you can add sample names to the data - each index gets its own sample name.
+
+```r
+conc |> qp_add_names(c("test"))
+```
+

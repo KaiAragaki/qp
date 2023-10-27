@@ -8,9 +8,9 @@
 \usage{
 qp_add_std_conc(x, standard_scale = c(0, 2^((2:7) - 5)), ...)
 
-\method{qp_add_std_conc}{data.frame}(x, standard_scale, ...)
+\method{qp_add_std_conc}{data.frame}(x, standard_scale = c(0, 2^((2:7) - 5)), ...)
 
-\method{qp_add_std_conc}{list}(x, standard_scale, ...)
+\method{qp_add_std_conc}{list}(x, standard_scale = c(0, 2^((2:7) - 5)), ...)
 }
 \arguments{
 \item{x}{A \code{data.frame} containing a \code{sample_type} and \code{index} columns.

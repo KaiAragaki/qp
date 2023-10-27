@@ -12,7 +12,8 @@ qp_summarize <- function(x) {
 #' @rdname qp_summarize
 #' @export
 qp_summarize.data.frame <- function(x) {
-  check_has_cols(x, c(".sample_name", "sample_type", ".pred_conc_mean"))
+  # FIXME - if sample name does not exist, make it exist (use index)
+  check_has_cols(x, c("index", "sample_type", ".pred_conc_mean"))
   check_sample_type(x$sample_type)
   check_pred_conc_mean(x$.pred_conc_mean)
   x |>

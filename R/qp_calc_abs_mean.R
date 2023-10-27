@@ -13,8 +13,8 @@
 #'
 #' @return a `tibble` with an `.is_outlier` column and a `.mean` column
 #'
-#' @export
 #' @importFrom rlang .data
+#' @export
 qp_calc_abs_mean <- function(x,
                              ignore_outliers = c(
                                "all", "standards", "samples", "none"
@@ -24,6 +24,7 @@ qp_calc_abs_mean <- function(x,
 
 
 #' @rdname qp_calc_abs_mean
+#' @export
 qp_calc_abs_mean.data.frame <- function(x,
                                         ignore_outliers = c(
                                           "all", "standards", "samples", "none"
@@ -63,6 +64,7 @@ calc_mean <- function(df, ignore_outliers) {
 }
 
 #' @rdname qp_calc_abs_mean
+#' @export
 qp_calc_abs_mean.list <- function(x,
                                   ignore_outliers = c(
                                     "all", "standards", "samples", "none"

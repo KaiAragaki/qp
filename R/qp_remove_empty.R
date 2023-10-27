@@ -7,18 +7,20 @@
 #'   `sample_type == "standard"`
 #'
 #' @return Same as input
-#' @export
 #' @importFrom rlang .data
+#' @export
 qp_remove_empty <- function(x) {
   UseMethod("qp_remove_empty")
 }
 
 #' @rdname qp_remove_empty
+#' @export
 qp_remove_empty.data.frame <- function(x) {
   dplyr::filter(x, .data$.pred_conc > 0 | .data$sample_type == "standard")
 }
 
 #' @rdname qp_remove_empty
+#' @export
 qp_remove_empty.list <- function(x) {
   x$qp <- qp_remove_empty(x$qp)
   x
