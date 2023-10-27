@@ -7,13 +7,13 @@
 #' @importFrom rlang .data
 #' @examples
 #' qp_plot_plate(absorbances)
-qp_plot_plate <- function(x) {
+qp_plot_plate <- function(x, size = 15) {
   ggplot2::ggplot(x, ggplot2::aes(
     x = .data$.col,
     y = .data$.row,
     color = .data$.abs
   )) +
-    ggplot2::geom_point(size = 20) +
+    ggplot2::geom_point(size = size) +
     ggplot2::geom_text(
       ggplot2::aes(label = round(.data$.abs, 2)),
       color = "black"
