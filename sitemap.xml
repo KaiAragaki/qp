@@ -40,7 +40,7 @@
     <loc>https://kaiaragaki.github.io/qp/reference/qp_calc_conc.html</loc>
   </url>
   <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_calc_dil.html</loc>
+    <loc>https://kaiaragaki.github.io/qp/reference/qp_dilute.html</loc>
   </url>
   <url>
     <loc>https://kaiaragaki.github.io/qp/reference/qp_fit.html</loc>
@@ -53,6 +53,9 @@
   </url>
   <url>
     <loc>https://kaiaragaki.github.io/qp/reference/qp_remove_empty.html</loc>
+  </url>
+  <url>
+    <loc>https://kaiaragaki.github.io/qp/reference/qp_summarize.html</loc>
   </url>
   <url>
     <loc>https://kaiaragaki.github.io/qp/reference/qp_tidy.html</loc>

@@ -130,26 +130,66 @@ how it was laid out. In these data I’m providing, though, I’ll need to
 show you how it’s laid out so that you can follow along why I set some
 parameters the way I do.</p>
 <p>This is how the plate looks:</p>
-<pre><code><span><span class="co">#&gt; Please wait. This will take ~10 seconds.</span></span></code></pre>
-<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-3-1.png" width="1152"></p>
 <p>The samples are laid out in triplicate, horizontally arranged
 replicates in vertical bands that wrap to the next three columns once it
 hits the edge of the plate.</p>
-<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-4-1.png" width="1152"></p>
 <p>Furthermore, I have my seven standards in the top left corner of the
 plate, in ascending concentrations as they flow down the first column.
 The samples follow. The rest of the wells are empty:</p>
-<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-5-1.png" width="1152"></p>
 <p>Since we followed the standard protocol, and since I told you
 replicates were arranged horizontally, analysis is a breeze:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qp.html">qp</a></span><span class="op">(</span><span class="va">f</span>, replicate_orientation <span class="op">=</span> <span class="st">"h"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Please wait. This will take ~10 seconds.</span></span></code></pre></div>
 <p>We can plot our standards and samples simply, using
-<code>qp_plot_standards</code></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code>qp_plot_standards</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qp_plot_standards.html">qp_plot_standards</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></code></pre></div>
 <p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p>And we can get a summary of the concentrations using
+<code>qp_summarize</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qp_summarize.html">qp_summarize</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
+<span><span class="va">summary</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 3</span></span></span>
+<span><span class="co">#&gt;    name       sample_type .mean_pred_conc</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Standard 1 standard           -<span style="color: #BB0000;">0.006</span><span style="color: #BB0000; text-decoration: underline;">23</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Standard 2 standard            0.102  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Standard 3 standard            0.258  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Standard 4 standard            0.520  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Standard 5 standard            1.08   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Standard 6 standard            2.06   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Standard 7 standard            3.76   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1          unknown             1.71   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2          unknown             1.39   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 3          unknown             0.989  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4          unknown             1.30   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 5          unknown             0.451</span></span></code></pre></div>
+<p>We can also calculate dilutions from this summary. By default, it
+will use the lowest concentration of the samples and a final volume of
+15uL:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">summary</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/qp_dilute.html">qp_dilute</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; `target_conc` is missing, using lowest sample concentration</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 5</span></span></span>
+<span><span class="co">#&gt;    name       sample_type .mean_pred_conc sample_to_add  add_to</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Standard 1 standard           -<span style="color: #BB0000;">0.006</span><span style="color: #BB0000; text-decoration: underline;">23</span>      -<span style="color: #BB0000; text-decoration: underline;">1</span><span style="color: #BB0000;">088</span>    <span style="text-decoration: underline;">1</span>103   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Standard 2 standard            0.102           66.2   -<span style="color: #BB0000;">51.2</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Standard 3 standard            0.258           26.2   -<span style="color: #BB0000;">11.2</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Standard 4 standard            0.520           13.0     1.98</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Standard 5 standard            1.08             6.24    8.76</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Standard 6 standard            2.06             3.28   11.7 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Standard 7 standard            3.76             1.8    13.2 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1          unknown             1.71             3.97   11.0 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2          unknown             1.39             4.85   10.1 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 3          unknown             0.989            6.85    8.15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4          unknown             1.30             5.23    9.77</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 5          unknown             0.451           15       0</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
