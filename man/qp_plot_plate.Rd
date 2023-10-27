@@ -4,7 +4,7 @@
 \alias{qp_plot_plate}
 \title{View the absorbances of an analyzed \code{qp} as they were on the plate}
 \usage{
-qp_plot_plate(x)
+qp_plot_plate(x, size = 15)
 }
 \arguments{
 \item{x}{A \code{data.frame} with \code{.row}, \code{.col}, and \code{.abs} columns}

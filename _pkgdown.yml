@@ -17,10 +17,15 @@ reference:
     - qp_fit
     - qp_remove_empty
     - qp_add_names
+    - qp_dilute
   - title: "Visualization"
     contents:
     - qp_plot_plate
     - qp_plot_standards
-  - title: "Miscellaneous"
+  - title: "Summary functions"
+    desc: >
+      These functions won't return an augmented versino of their input when called - they are necessarily distilled versions of their input.
     contents:
-    - qp_calc_dil
+    - qp_summarize
+    - qp_plot_plate
+    - qp_plot_standards
