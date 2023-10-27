@@ -23,7 +23,9 @@ Imports:
     gplate,
     bladdr,
     mop,
-    tidyr
+    tidyr,
+    cli,
+    tibble
 Remotes:
     KaiAragaki/gplate,
     McConkeyLab/bladdr,

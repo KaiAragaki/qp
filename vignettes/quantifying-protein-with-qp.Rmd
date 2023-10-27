@@ -42,31 +42,35 @@ Typically when you perform these experiments, *you* will know how it was laid ou
 
 This is how the plate looks:
 
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, fig.width=12, fig.height=8}
 qp_plot_plate(qp_tidy(f))
 ```
 
 The samples are laid out in triplicate, horizontally arranged replicates in vertical bands that wrap to the next three columns once it hits the edge of the plate. 
 
-```{r echo=FALSE}
+```{r echo=FALSE, fig.width=12, fig.height=8}
 library(gplate)
 library(ggplot2)
 gp(8, 12) |>
   gp_sec("band", nrow = 8, ncol = 3) |>
   gp_serve() |>
   ggplot(aes(.col, .row, color = band)) +
-  geom_point(size = 20) + 
+  geom_point(size = 15) +
   scale_y_reverse()
 ```
 
 Furthermore, I have my seven standards in the top left corner of the plate, in ascending concentrations as they flow down the first column. The samples follow. The rest of the wells are empty:
 
-```{r echo=FALSE}
+```{r echo=FALSE, fig.width=12, fig.height=8}
 gp(8, 12) |>
-  gp_sec("type", nrow = c(7, 5, 23), ncol = 3, labels = c("standard", "sample", "blank"), wrap = TRUE, flow = "col") |>
+  gp_sec(
+    "type", nrow = c(7, 5, 23), ncol = 3,
+    labels = c("standard", "sample", "blank"),
+    wrap = TRUE, flow = "col"
+  ) |>
   gp_serve() |>
   ggplot(aes(.col, .row, color = type)) +
-  geom_point(size = 20) + 
+  geom_point(size = 15) +
   scale_y_reverse()
 ```
 
@@ -76,9 +80,21 @@ Since we followed the standard protocol, and since I told you replicates were ar
 out <- qp(f, replicate_orientation = "h")
 ```
 
-We can plot our standards and samples simply, using `qp_plot_standards`
+We can plot our standards and samples simply, using `qp_plot_standards`:
 
 ```{r}
 qp_plot_standards(out)
 ```
 
+And we can get a summary of the concentrations using `qp_summarize`:
+
+```{r}
+summary <- qp_summarize(out)
+summary
+```
+
+We can also calculate dilutions from this summary. By default, it will use the lowest concentration of the samples and a final volume of 15uL:
+
+```{r}
+summary |> qp_dilute()
+```
