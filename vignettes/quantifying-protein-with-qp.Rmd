@@ -98,3 +98,127 @@ We can also calculate dilutions from this summary. By default, it will use the l
 ```{r}
 summary |> qp_dilute()
 ```
+
+
+
+# When things go wrong
+Occasionally, your experiment won't go perfectly - maybe you mixed up the order of the standards, or could can't run samples with technical replicates.
+
+## Reading in the data
+There are a couple ways of going about doing this. Depending on how borked your plate is, the most straightforward way may be to create a `data.frame` with columns `sample_type` (which should contain `standard` or `unknown`), `index` (which denotes the standard or sample number), and `.abs` (the absorbances at - hopefully but not necessarily - 562nm):
+
+```r
+standards <- data.frame(
+  sample_type = "standard",
+  index = rep(1:7, each = 2),
+  abs = c(0.071, 0.079, 0.08, 0.082,
+          0.1, 0.099, 0.15, 0.147,
+          0.22, 0.215, 0.50, 0.48, 0.78, 0.79))
+unknowns <- data.frame(sample_type = "unknown", index = 1, abs = 0.25)
+data <- rbind(standards, unknowns)
+data
+```
+
+Admittedly, this does destroy the whole 'reproducibility' aspect of it. Another way of going doing this is via [`gplate`](https://kaiaragaki.github.io/gplate/articles/gp_for_data.html)
+
+```r
+library(mop)
+f <- system.file("extdata", "absorbances.txt", package = "qp")
+spectramax <- read_spectramax(f)
+spectramax
+```
+
+We can extract the gp via:
+
+```r
+# I know it's ugly syntax - I'll work on it. Later.
+gp <- spectramax$data[[1]]$data
+gp
+```
+
+And then we can carve out sections using `gplate`:
+
+```r
+library(dplyr)
+standards <- gp |>
+  gp_excise(top = 1, left = 1, bottom = 7, right = 2) |>
+  gp_serve() |>
+  mutate(
+    sample_type = "standard",
+    index = rep(1:7, each = 2)
+  )
+
+samples <- gp |>
+  gp_excise(top = 1, left = 4, bottom = 1, right = 4) |>
+  gp_serve() |>
+  mutate(
+    sample_type = "unknown",
+    index = 1
+  )
+  
+data <- rbind(standards, samples) |>
+  rename(.abs = nm562)
+
+data
+```
+
+## Adding standard concentrations
+Suppose you accidentally made your highest standard twice as concentrated. That's a simple fix. Instead of using the standard standards:
+
+```r
+c(0, 2^((2:7) - 5))
+```
+
+You can set your own:
+
+```r
+c(0, 2^((2:6) - 5), 8)
+```
+
+and use them as an argument in `qp_add_std_conc`:
+
+```r
+qp_add_std_conc(data, c(0, 2^((2:6) - 5), 8))
+```
+
+You can specify them as strangely as you want:
+
+```r
+qp_add_std_conc(data, c(1, 7, 26, 0.4, 2, 1, 1))
+```
+
+It doesn't matter if you've forgotten a standard, either - just specify all the ones you remembered.
+
+## Calculating absorbance means
+At some point - either before or after calculating your standard concentrations - you'll need to calculate the means of your absorbances. In an Excel based format, you might manually remove outliers - but what counts as an 'outlier' is somewhat arbitrary in that setting. You can optionally remove outliers in a systematic way with `qp`:
+
+```r
+some_abs <- absorbances[c(1:5, 21:26),]
+some_abs |> 
+  qp_calc_abs_mean(ignore_outliers = "none")
+```
+
+```r
+some_abs |> 
+  qp_calc_abs_mean(ignore_outliers = "standards")
+```
+
+```r
+some_abs |> 
+  qp_calc_abs_mean(ignore_outliers = "samples")
+```
+
+```r
+some_abs |> 
+  qp_calc_abs_mean(ignore_outliers = "all")
+```
+
+Something is an outlier if it is over 3 standard deviations away from the mean of the others. While this might mark things as outliers that you might not (perhaps because the other two samples were just ultra close to each other), it only has a downstream effect if these outliers are truly much different from the others.
+
+## Fitting a model
+
+## Predicting a concentration
+
+## Adding names
+
+## Removing empty wells
