@@ -4,8 +4,10 @@ check_qp_tidy <- function(x) {
   check_abs(x$.abs)
 }
 
-check_has_cols <- function(df, cols) {
-  if (!all(cols %in% colnames(df))) {
+check_has_cols <- function(df, cols, type = "and") {
+  if (type == "and") fire <- !all(cols %in% colnames(df))
+  if (type == "or") fire <- !any(cols %in% colnames(df))
+  if (fire) {
     missing <- setdiff(cols, colnames(df))
     cli::cli_abort(c(
       "Data is missing columns {.code {missing}}"
@@ -53,4 +55,9 @@ check_conc <- function(x) {
 
 check_log2_abs <- function(x) {
   if (!is.numeric(x)) rlang::abort("`.conc` is not `numeric`")
+}
+
+check_pred_conc_mean <- function(x) {
+  # It's possible for predicted values to be negative
+  if (!is.numeric(x)) rlang::abort("`.pred_conc_mean` is not `numeric`")
 }
