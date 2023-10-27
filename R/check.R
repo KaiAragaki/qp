@@ -9,9 +9,13 @@ check_has_cols <- function(df, cols, type = "and") {
   if (type == "or") fire <- !any(cols %in% colnames(df))
   if (fire) {
     missing <- setdiff(cols, colnames(df))
-    cli::cli_abort(c(
-      "Data is missing columns {.code {missing}}"
-    ))
+    if (type == "and")
+      cli::cli_abort("Data is missing columns {.code {missing}}")
+    if (type == "or") {
+      cli::cli_abort(
+        "Data requires at least one of the following columns: {.code {missing}}"
+      )
+    }
   }
 }
 
