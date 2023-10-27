@@ -7,17 +7,20 @@
 #'   In a standard workflow, the index is the order the sample appears in the
 #'   plate
 #' @param ... Unused
+#' @export
 qp_add_names <- function(x, ...) {
   UseMethod("qp_add_names")
 }
 
 #' @rdname qp_add_names
+#' @export
 qp_add_names.list <- function(x, sample_names = NULL, ...) {
   x$qp <- qp_add_names(x$qp, sample_names)
   x
 }
 
 #' @rdname qp_add_names
+#' @export
 qp_add_names.data.frame <- function(x, sample_names = NULL, ...) {
   if (!is.null(sample_names)) {
     # Will return "NA" instead of erroring if sample names < # samples
