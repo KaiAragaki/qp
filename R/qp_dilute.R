@@ -50,7 +50,7 @@ qp_dilute.data.frame <- function(x, target_conc = NULL, target_vol = 15,
   ) |>
     tibble::enframe(name = NULL)
 
-  x <- x |>
+  x |>
     dplyr::bind_cols(dils) |>
     tidyr::unnest_wider(.data$value)
 }
