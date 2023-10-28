@@ -64,5 +64,5 @@ qp_dilute.list <- function(x, target_conc = NULL, target_vol = 15,
 }
 
 length_is_recyclable <- function(n, x) {
-  !is.null(n) && (n == 1 || n == nrow(x))
+  is.null(n) || n == 1 || n == nrow(x)
 }
