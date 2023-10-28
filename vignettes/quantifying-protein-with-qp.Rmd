@@ -14,11 +14,11 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Introduction
+
 ```{r setup}
 library(qp)
 ```
-
-# Introduction
 
 The [Micro BCA](https://en.wikipedia.org/wiki/Bicinchoninic_acid_assay#Micro_BCA_assay_(for_dilute_solutions)) assay and its analysis is easy and straightforward. With most lab work, though, the analysis is typically repetitive. We can analyze these data programmatically to speed up and automate analysis, remove human error, and get reproducibility for free along the way.
 
@@ -99,8 +99,6 @@ We can also calculate dilutions from this summary. By default, it will use the l
 summary |> qp_dilute()
 ```
 
-
-
 # When things go wrong
 Occasionally, your experiment won't go perfectly - maybe you mixed up the order of the standards, or could can't run samples with technical replicates. In this case, you can run the functions that `qp` runs individually, maybe doing a little data munging between steps.
 
@@ -137,7 +135,6 @@ digraph qp_deps {
 ## Reading in the data
 There are a couple ways of going about doing this. Depending on how borked your plate is, the most straightforward way may be to create a `data.frame` with columns `sample_type` (which should contain `standard` or `unknown`), `index` (which denotes the standard or sample number), and `.abs` (the absorbances at - hopefully but not necessarily - 562nm):
 
-
 ```{r}
 standards <- data.frame(
   sample_type = "standard",
@@ -159,16 +156,14 @@ spectramax <- read_spectramax(f)
 spectramax
 ```
 
-We can extract the gp via:
+We can extract the `gp` from the `spectramax` object via:
 
 ```{r}
 # I know it's ugly syntax - I'll work on it. Later.
 gp <- spectramax$data[[1]]$data
 gp
 ```
-
-And then we can carve out sections using `gplate`:
-
+And then we can carve out rectangular sections using `gplate::gp_excise`:
 
 ```{r}
 library(dplyr)
