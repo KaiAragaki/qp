@@ -53,7 +53,7 @@ qp <- function(x,
   # Do not need to pass `ignore_outliers`
   # This is implicitly encoded by NAs in .is_outlier
 
-  x <- qp_add_names(x)
+  x <- qp_add_names(x, sample_names = sample_names)
   if (remove_empty) x <- qp_remove_empty(x)
   x
 }
