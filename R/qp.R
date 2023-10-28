@@ -3,7 +3,7 @@
 #' @param x A `spectramax`, `gp`, or `data.frame` object, or path to SPECTRAmax
 #'   .xls(x)/.txt file.
 #' @param replicate_orientation Either 'h' or 'v' - see Details.
-#' @param sample_names Character vector of sample names.
+#' @param sample_names Optional character vector of sample names.
 #' @param remove_empty Should wells that have less absorbance than the lowest
 #'   standard be dropped?
 #' @param ignore_outliers Character. From which group - samples or standards -
