@@ -17,10 +17,9 @@ qp_summarize.data.frame <- function(x) {
   check_sample_type(x$sample_type)
   check_pred_conc_mean(x$.pred_conc_mean)
   x |>
-    dplyr::select(name = ".sample_name", "sample_type", ".pred_conc_mean") |>
     dplyr::summarize(
       .mean_pred_conc = mean(.data$.pred_conc_mean, na.rm = TRUE),
-      .by = c("name", "sample_type")
+      .by = c(".sample_name", "sample_type")
     ) |>
     dplyr::arrange(.data$sample_type)
 }
