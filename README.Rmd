@@ -28,3 +28,40 @@ You can install the development version of qp from [GitHub](https://github.com/)
 # install.packages("devtools")
 devtools::install_github("KaiAragaki/qp")
 ```
+
+## Quickstart
+
+If you have a nicely formatted plate with no surprises (that is, it follows [this](https://kai.quarto.pub/bok/western-blot.html#protein-quantification) protocol), you should really only need to plug it in to `qp` and let it rip:
+
+```{r}
+library(qp)
+f <- system.file("extdata", "absorbances.txt", package = "qp")
+
+# Most of these arguments are defaults
+# I'm only writing them out so you can see what options you can set
+out <- qp(
+  f,
+  replicate_orientation = "h",
+  sample_names = c("here", "are", "my", "sample", "names"),
+  remove_empty = TRUE,
+  ignore_outliers = "all",
+  standard_scale = c(0, 2^((2:7) - 5)),
+  n_replicates = 3,
+  wavelength = 562
+)
+```
+
+From this, you can do things like add dilution calculations:
+
+```{r}
+
+summary <- qp_summarize(out)
+
+qp_dilute(summary, target_vol = 15, remove_standards = TRUE)
+```
+
+Or make plots to assess quality:
+
+```{r}
+qp_plot_standards(out)
+```
