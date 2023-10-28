@@ -65,7 +65,7 @@ qp_dilute(summary, target_vol = 15, remove_standards = TRUE)
 #> 5 names        unknown               0.451         15      0
 ```
 
-Or make plots to assess quality:
+Or make a plot to assess quality:
 
 ``` r
 qp_plot_standards(out)

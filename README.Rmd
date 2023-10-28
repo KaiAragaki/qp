@@ -60,8 +60,8 @@ summary <- qp_summarize(out)
 qp_dilute(summary, target_vol = 15, remove_standards = TRUE)
 ```
 
-Or make plots to assess quality:
+Or make a plot to assess quality:
 
-```{r}
+```{r, fig.width=10, out.width="100%"}
 qp_plot_standards(out)
 ```
