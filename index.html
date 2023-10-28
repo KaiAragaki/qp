@@ -80,6 +80,47 @@
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"KaiAragaki/qp"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="quickstart">Quickstart<a class="anchor" aria-label="anchor" href="#quickstart"></a>
+</h2>
+<p>If you have a nicely formatted plate with no surprises (that is, it follows <a href="https://kai.quarto.pub/bok/western-blot.html#protein-quantification" class="external-link">this</a> protocol), you should really only need to plug it in to <code>qp</code> and let it rip:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kaiaragaki.github.io/qp/">qp</a></span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"absorbances.txt"</span>, package <span class="op">=</span> <span class="st">"qp"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Most of these arguments are defaults</span></span>
+<span><span class="co"># I'm only writing them out so you can see what options you can set</span></span>
+<span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/qp.html">qp</a></span><span class="op">(</span></span>
+<span>  <span class="va">f</span>,</span>
+<span>  replicate_orientation <span class="op">=</span> <span class="st">"h"</span>,</span>
+<span>  sample_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"here"</span>, <span class="st">"are"</span>, <span class="st">"my"</span>, <span class="st">"sample"</span>, <span class="st">"names"</span><span class="op">)</span>,</span>
+<span>  remove_empty <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  ignore_outliers <span class="op">=</span> <span class="st">"all"</span>,</span>
+<span>  standard_scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span> <span class="op">-</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  n_replicates <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  wavelength <span class="op">=</span> <span class="fl">562</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Please wait. This will take ~10 seconds.</span></span></code></pre></div>
+<p>From this, you can do things like add dilution calculations:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/qp_summarize.html">qp_summarize</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/qp_dilute.html">qp_dilute</a></span><span class="op">(</span><span class="va">summary</span>, target_vol <span class="op">=</span> <span class="fl">15</span>, remove_standards <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; `target_conc` is missing, using lowest sample concentration</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 5</span></span>
+<span><span class="co">#&gt;   .sample_name sample_type .mean_pred_conc sample_to_add add_to</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;        &lt;fct&gt;                 &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 here         unknown               1.71           3.97  11.0 </span></span>
+<span><span class="co">#&gt; 2 are          unknown               1.39           4.85  10.1 </span></span>
+<span><span class="co">#&gt; 3 my           unknown               0.989          6.85   8.15</span></span>
+<span><span class="co">#&gt; 4 sample       unknown               1.30           5.23   9.77</span></span>
+<span><span class="co">#&gt; 5 names        unknown               0.451         15      0</span></span></code></pre></div>
+<p>Or make plots to assess quality:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/qp_plot_standards.html">qp_plot_standards</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
+</div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>

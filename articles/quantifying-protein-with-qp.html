@@ -65,8 +65,8 @@
 
 
 
-
-<div class="row">
+<script src="quantifying-protein-with-qp_files/htmlwidgets-1.6.2/htmlwidgets.js"></script><script src="quantifying-protein-with-qp_files/viz-1.8.2/viz.js"></script><link href="quantifying-protein-with-qp_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="quantifying-protein-with-qp_files/grViz-binding-1.0.10/grViz.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Quantifying protein with qp</h1>
             
@@ -77,11 +77,11 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kaiaragaki.github.io/qp/">qp</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kaiaragaki.github.io/qp/">qp</a></span><span class="op">)</span></span></code></pre></div>
 <p>The <a href="https://en.wikipedia.org/wiki/Bicinchoninic_acid_assay#Micro_BCA_assay_(for_dilute_solutions)" class="external-link">Micro
 BCA</a> assay and its analysis is easy and straightforward. With most
 lab work, though, the analysis is typically repetitive. We can analyze
@@ -130,15 +130,15 @@ how it was laid out. In these data I’m providing, though, I’ll need to
 show you how it’s laid out so that you can follow along why I set some
 parameters the way I do.</p>
 <p>This is how the plate looks:</p>
-<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-3-1.png" width="1152"></p>
+<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-3-1.png" width="100%"></p>
 <p>The samples are laid out in triplicate, horizontally arranged
 replicates in vertical bands that wrap to the next three columns once it
 hits the edge of the plate.</p>
-<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-4-1.png" width="1152"></p>
+<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-4-1.png" width="100%"></p>
 <p>Furthermore, I have my seven standards in the top left corner of the
 plate, in ascending concentrations as they flow down the first column.
 The samples follow. The rest of the wells are empty:</p>
-<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-5-1.png" width="1152"></p>
+<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
 <p>Since we followed the standard protocol, and since I told you
 replicates were arranged horizontally, analysis is a breeze:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -148,27 +148,27 @@ replicates were arranged horizontally, analysis is a breeze:</p>
 <code>qp_plot_standards</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/qp_plot_standards.html">qp_plot_standards</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></code></pre></div>
-<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="quantifying-protein-with-qp_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
 <p>And we can get a summary of the concentrations using
 <code>qp_summarize</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qp_summarize.html">qp_summarize</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
 <span><span class="va">summary</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 3</span></span></span>
-<span><span class="co">#&gt;    name       sample_type .mean_pred_conc</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Standard 1 standard           -<span style="color: #BB0000;">0.006</span><span style="color: #BB0000; text-decoration: underline;">23</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Standard 2 standard            0.102  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Standard 3 standard            0.258  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Standard 4 standard            0.520  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Standard 5 standard            1.08   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Standard 6 standard            2.06   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Standard 7 standard            3.76   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1          unknown             1.71   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2          unknown             1.39   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 3          unknown             0.989  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4          unknown             1.30   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 5          unknown             0.451</span></span></code></pre></div>
+<span><span class="co">#&gt;    .sample_name sample_type .mean_pred_conc</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Standard 1   standard           -<span style="color: #BB0000;">0.006</span><span style="color: #BB0000; text-decoration: underline;">23</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Standard 2   standard            0.102  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Standard 3   standard            0.258  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Standard 4   standard            0.520  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Standard 5   standard            1.08   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Standard 6   standard            2.06   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Standard 7   standard            3.76   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1            unknown             1.71   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2            unknown             1.39   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 3            unknown             0.989  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4            unknown             1.30   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 5            unknown             0.451</span></span></code></pre></div>
 <p>We can also calculate dilutions from this summary. By default, it
 will use the lowest concentration of the samples and a final volume of
 15uL:</p>
@@ -176,20 +176,443 @@ will use the lowest concentration of the samples and a final volume of
 <code class="sourceCode R"><span><span class="va">summary</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/qp_dilute.html">qp_dilute</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `target_conc` is missing, using lowest sample concentration</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 5</span></span></span>
-<span><span class="co">#&gt;    name       sample_type .mean_pred_conc sample_to_add  add_to</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Standard 1 standard           -<span style="color: #BB0000;">0.006</span><span style="color: #BB0000; text-decoration: underline;">23</span>      -<span style="color: #BB0000; text-decoration: underline;">1</span><span style="color: #BB0000;">088</span>    <span style="text-decoration: underline;">1</span>103   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Standard 2 standard            0.102           66.2   -<span style="color: #BB0000;">51.2</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Standard 3 standard            0.258           26.2   -<span style="color: #BB0000;">11.2</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Standard 4 standard            0.520           13.0     1.98</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Standard 5 standard            1.08             6.24    8.76</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Standard 6 standard            2.06             3.28   11.7 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Standard 7 standard            3.76             1.8    13.2 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1          unknown             1.71             3.97   11.0 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2          unknown             1.39             4.85   10.1 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 3          unknown             0.989            6.85    8.15</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4          unknown             1.30             5.23    9.77</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 5          unknown             0.451           15       0</span></span></code></pre></div>
+<span><span class="co">#&gt;    .sample_name sample_type .mean_pred_conc sample_to_add  add_to</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Standard 1   standard           -<span style="color: #BB0000;">0.006</span><span style="color: #BB0000; text-decoration: underline;">23</span>      -<span style="color: #BB0000; text-decoration: underline;">1</span><span style="color: #BB0000;">088</span>    <span style="text-decoration: underline;">1</span>103   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Standard 2   standard            0.102           66.2   -<span style="color: #BB0000;">51.2</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Standard 3   standard            0.258           26.2   -<span style="color: #BB0000;">11.2</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Standard 4   standard            0.520           13.0     1.98</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Standard 5   standard            1.08             6.24    8.76</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Standard 6   standard            2.06             3.28   11.7 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Standard 7   standard            3.76             1.8    13.2 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1            unknown             1.71             3.97   11.0 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2            unknown             1.39             4.85   10.1 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 3            unknown             0.989            6.85    8.15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4            unknown             1.30             5.23    9.77</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 5            unknown             0.451           15       0</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="when-things-go-wrong">When things go wrong<a class="anchor" aria-label="anchor" href="#when-things-go-wrong"></a>
+</h2>
+<p>Occasionally, your experiment won’t go perfectly - maybe you mixed up
+the order of the standards, or could can’t run samples with technical
+replicates. In this case, you can run the functions that <code>qp</code>
+runs individually, maybe doing a little data munging between steps.</p>
+<p>Most functions depend on a previous function being run. See the
+following hierarchy to see what functions depend on what:</p>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-c9dc5b46071054a6968f" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-c9dc5b46071054a6968f">{"x":{"diagram":"\ndigraph qp_deps {\n  rankdir=BT\n  graph [overlap = true, fontsize = 10]\n\n  node [shape = box,\n        fontname = Helvetica]\n  tidy; calc_abs_mean; add_std_conc; add_names; plot_plate; fit;\n  calc_conc; summarize; dilute; remove_empty; plot_standards\n\n  calc_abs_mean->tidy\n  add_std_conc->tidy\n  add_names->tidy\n  plot_plate->tidy\n  fit->calc_abs_mean\n  fit->add_std_conc\n  calc_conc->fit\n  summarize->calc_conc\n  dilute->calc_conc\n  remove_empty->calc_conc\n  plot_standards->calc_conc\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><div class="section level3">
+<h3 id="reading-in-the-data">Reading in the data<a class="anchor" aria-label="anchor" href="#reading-in-the-data"></a>
+</h3>
+<p>There are a couple ways of going about doing this. Depending on how
+borked your plate is, the most straightforward way may be to create a
+<code>data.frame</code> with columns <code>sample_type</code> (which
+should contain <code>standard</code> or <code>unknown</code>),
+<code>index</code> (which denotes the standard or sample number), and
+<code>.abs</code> (the absorbances at - hopefully but not necessarily -
+562nm):</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">standards</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  sample_type <span class="op">=</span> <span class="st">"standard"</span>,</span>
+<span>  index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span>, each <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  abs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.071</span>, <span class="fl">0.079</span>, <span class="fl">0.08</span>, <span class="fl">0.082</span>,</span>
+<span>          <span class="fl">0.1</span>, <span class="fl">0.099</span>, <span class="fl">0.15</span>, <span class="fl">0.147</span>,</span>
+<span>          <span class="fl">0.22</span>, <span class="fl">0.215</span>, <span class="fl">0.50</span>, <span class="fl">0.48</span>, <span class="fl">0.78</span>, <span class="fl">0.79</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">unknowns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>sample_type <span class="op">=</span> <span class="st">"unknown"</span>, index <span class="op">=</span> <span class="fl">1</span>, abs <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">standards</span>, <span class="va">unknowns</span><span class="op">)</span></span>
+<span><span class="va">data</span></span>
+<span><span class="co">#&gt;    sample_type index   abs</span></span>
+<span><span class="co">#&gt; 1     standard     1 0.071</span></span>
+<span><span class="co">#&gt; 2     standard     1 0.079</span></span>
+<span><span class="co">#&gt; 3     standard     2 0.080</span></span>
+<span><span class="co">#&gt; 4     standard     2 0.082</span></span>
+<span><span class="co">#&gt; 5     standard     3 0.100</span></span>
+<span><span class="co">#&gt; 6     standard     3 0.099</span></span>
+<span><span class="co">#&gt; 7     standard     4 0.150</span></span>
+<span><span class="co">#&gt; 8     standard     4 0.147</span></span>
+<span><span class="co">#&gt; 9     standard     5 0.220</span></span>
+<span><span class="co">#&gt; 10    standard     5 0.215</span></span>
+<span><span class="co">#&gt; 11    standard     6 0.500</span></span>
+<span><span class="co">#&gt; 12    standard     6 0.480</span></span>
+<span><span class="co">#&gt; 13    standard     7 0.780</span></span>
+<span><span class="co">#&gt; 14    standard     7 0.790</span></span>
+<span><span class="co">#&gt; 15     unknown     1 0.250</span></span></code></pre></div>
+<p>Admittedly, this does destroy the whole ‘reproducibility’ aspect of
+it. Another way of going doing this is via <a href="https://kaiaragaki.github.io/gplate/articles/gp_for_data.html" class="external-link"><code>gplate</code></a></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kaiaragaki.github.io/mop/" class="external-link">mop</a></span><span class="op">)</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"absorbances.txt"</span>, package <span class="op">=</span> <span class="st">"qp"</span><span class="op">)</span></span>
+<span><span class="va">spectramax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://kaiaragaki.github.io/mop/reference/read_spectramax.html" class="external-link">read_spectramax</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Please wait. This will take ~10 seconds.</span></span>
+<span><span class="va">spectramax</span></span>
+<span><span class="co">#&gt; &lt;spectramax[5]&gt;</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; [[1]]$data</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;                 </span>12</span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;    ________________________</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt; </span>8<span style="color: #555555;"> | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt; </span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt; </span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Start corner: </span>tl</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Plate dimensions: </span>8 x 12</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[1]]$type</span></span>
+<span><span class="co">#&gt; [1] "Plate"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[1]]$wavelengths</span></span>
+<span><span class="co">#&gt; [1] "562"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"># Wavelengths:</span> 562 </span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"># Is tidy:</span> <span style="color: #0000BB;">TRUE</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"># Date:</span> 2023-10-28</span></span></code></pre></div>
+<p>We can extract the <code>gp</code> from the <code>spectramax</code>
+object via:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># I know it's ugly syntax - I'll work on it. Later.</span></span>
+<span><span class="va">gp</span> <span class="op">&lt;-</span> <span class="va">spectramax</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">data</span></span>
+<span><span class="va">gp</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;                 </span>12</span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;    ________________________</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt; </span>8<span style="color: #555555;"> | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt;   | ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯ ◯</span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt; </span></span></span>
+<span><span class="co"><span style="color: #555555;">#&gt; </span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Start corner: </span>tl</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Plate dimensions: </span>8 x 12</span></span></code></pre></div>
+<p>And then we can carve out rectangular sections using
+<code><a href="https://rdrr.io/pkg/gplate/man/gp_excise.html" class="external-link">gplate::gp_excise</a></code>:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kaiaragaki.github.io/gp/" class="external-link">gplate</a></span><span class="op">)</span></span>
+<span><span class="va">standards</span> <span class="op">&lt;-</span> <span class="va">gp</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/gplate/man/gp_excise.html" class="external-link">gp_excise</a></span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, left <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">7</span>, right <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/gplate/man/gp_serve.html" class="external-link">gp_serve</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    sample_type <span class="op">=</span> <span class="st">"standard"</span>,</span>
+<span>    index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span>, each <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">samples</span> <span class="op">&lt;-</span> <span class="va">gp</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/gplate/man/gp_excise.html" class="external-link">gp_excise</a></span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, left <span class="op">=</span> <span class="fl">4</span>, bottom <span class="op">=</span> <span class="fl">1</span>, right <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/gplate/man/gp_serve.html" class="external-link">gp_serve</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    sample_type <span class="op">=</span> <span class="st">"unknown"</span>,</span>
+<span>    index <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
+<span>  </span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">standards</span>, <span class="va">samples</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>.abs <span class="op">=</span> <span class="va">nm562</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">data</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 15 × 5</span></span></span>
+<span><span class="co">#&gt;     .row  .col   .abs sample_type index</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1     1 0.068<span style="text-decoration: underline;">6</span> standard        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     1     2 0.071<span style="text-decoration: underline;">7</span> standard        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     2     1 0.082<span style="text-decoration: underline;">5</span> standard        2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     2     2 0.083<span style="text-decoration: underline;">2</span> standard        2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     3     1 0.102  standard        3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     3     2 0.100  standard        3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     4     1 0.132  standard        4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     4     2 0.132  standard        4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     5     1 0.196  standard        5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     5     2 0.199  standard        5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>     6     1 0.296  standard        6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>     6     2 0.288  standard        6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>     7     1 0.460  standard        7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>     7     2 0.466  standard        7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>     1     1 0.242  unknown         1</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="adding-standard-concentrations">Adding standard concentrations<a class="anchor" aria-label="anchor" href="#adding-standard-concentrations"></a>
+</h3>
+<p>Suppose you accidentally made your highest standard twice as
+concentrated. That’s a simple fix. Instead of using the standard
+standards:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span> <span class="op">-</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.000 0.125 0.250 0.500 1.000 2.000 4.000</span></span></code></pre></div>
+<p>You can set your own:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span> <span class="op">-</span> <span class="fl">5</span><span class="op">)</span>, <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.000 0.125 0.250 0.500 1.000 2.000 8.000</span></span></code></pre></div>
+<p>and use them as an argument in <code>qp_add_std_conc</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/qp_add_std_conc.html">qp_add_std_conc</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span> <span class="op">-</span> <span class="fl">5</span><span class="op">)</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 15 × 6</span></span></span>
+<span><span class="co">#&gt;     .row  .col   .abs sample_type index  .conc</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1     1 0.068<span style="text-decoration: underline;">6</span> standard        1  0    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     1     2 0.071<span style="text-decoration: underline;">7</span> standard        1  0    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     2     1 0.082<span style="text-decoration: underline;">5</span> standard        2  0.125</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     2     2 0.083<span style="text-decoration: underline;">2</span> standard        2  0.125</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     3     1 0.102  standard        3  0.25 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     3     2 0.100  standard        3  0.25 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     4     1 0.132  standard        4  0.5  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     4     2 0.132  standard        4  0.5  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     5     1 0.196  standard        5  1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     5     2 0.199  standard        5  1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>     6     1 0.296  standard        6  2    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>     6     2 0.288  standard        6  2    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>     7     1 0.460  standard        7  8    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>     7     2 0.466  standard        7  8    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>     1     1 0.242  unknown         1 <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
+<p>You can specify them as strangely as you want:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/qp_add_std_conc.html">qp_add_std_conc</a></span><span class="op">(</span><span class="va">data</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">26</span>, <span class="fl">0.4</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 15 × 6</span></span></span>
+<span><span class="co">#&gt;     .row  .col   .abs sample_type index .conc</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1     1 0.068<span style="text-decoration: underline;">6</span> standard        1   1  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     1     2 0.071<span style="text-decoration: underline;">7</span> standard        1   1  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     2     1 0.082<span style="text-decoration: underline;">5</span> standard        2   7  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     2     2 0.083<span style="text-decoration: underline;">2</span> standard        2   7  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     3     1 0.102  standard        3  26  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     3     2 0.100  standard        3  26  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     4     1 0.132  standard        4   0.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     4     2 0.132  standard        4   0.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     5     1 0.196  standard        5   2  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     5     2 0.199  standard        5   2  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>     6     1 0.296  standard        6   1  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>     6     2 0.288  standard        6   1  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>     7     1 0.460  standard        7   1  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>     7     2 0.466  standard        7   1  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>     1     1 0.242  unknown         1  <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="calculating-absorbance-means">Calculating absorbance means<a class="anchor" aria-label="anchor" href="#calculating-absorbance-means"></a>
+</h3>
+<p>At some point - either before or after calculating your standard
+concentrations - you’ll need to calculate the means of your absorbances.
+In an Excel based format, you might manually remove outliers - but what
+counts as an ‘outlier’ is somewhat arbitrary in that setting. You can
+optionally remove outliers in a systematic way with <code>qp</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">some_abs</span> <span class="op">&lt;-</span> <span class="va">absorbances</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">21</span><span class="op">:</span><span class="fl">26</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">some_abs</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/qp_calc_abs_mean.html">qp_calc_abs_mean</a></span><span class="op">(</span>ignore_outliers <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 7</span></span></span>
+<span><span class="co">#&gt;     .row  .col   .abs sample_type index .is_outlier  .mean</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1     1 0.070<span style="text-decoration: underline;">7</span> standard        1 <span style="color: #BB0000;">NA</span>          0.073<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     2     1 0.078<span style="text-decoration: underline;">6</span> standard        1 <span style="color: #BB0000;">NA</span>          0.073<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     3     1 0.071<span style="text-decoration: underline;">4</span> standard        1 <span style="color: #BB0000;">NA</span>          0.073<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     1     2 0.079<span style="text-decoration: underline;">5</span> standard        2 <span style="color: #BB0000;">NA</span>          0.079<span style="text-decoration: underline;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     2     2 0.079<span style="text-decoration: underline;">9</span> standard        2 <span style="color: #BB0000;">NA</span>          0.079<span style="text-decoration: underline;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     3     7 0.792  standard        7 <span style="color: #BB0000;">NA</span>          0.792 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     1     8 0.456  unknown         1 <span style="color: #BB0000;">NA</span>          0.457 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     2     8 0.459  unknown         1 <span style="color: #BB0000;">NA</span>          0.457 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     3     8 0.455  unknown         1 <span style="color: #BB0000;">NA</span>          0.457 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     1     9 0.446  unknown         2 <span style="color: #BB0000;">NA</span>          0.444 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>     2     9 0.441  unknown         2 <span style="color: #BB0000;">NA</span>          0.444</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">some_abs</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/qp_calc_abs_mean.html">qp_calc_abs_mean</a></span><span class="op">(</span>ignore_outliers <span class="op">=</span> <span class="st">"standards"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 7</span></span></span>
+<span><span class="co">#&gt;     .row  .col   .abs sample_type index .is_outlier  .mean</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1     1 0.070<span style="text-decoration: underline;">7</span> standard        1 FALSE       0.071<span style="text-decoration: underline;">0</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     2     1 0.078<span style="text-decoration: underline;">6</span> standard        1 TRUE        0.071<span style="text-decoration: underline;">0</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     3     1 0.071<span style="text-decoration: underline;">4</span> standard        1 FALSE       0.071<span style="text-decoration: underline;">0</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     1     2 0.079<span style="text-decoration: underline;">5</span> standard        2 FALSE       0.079<span style="text-decoration: underline;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     2     2 0.079<span style="text-decoration: underline;">9</span> standard        2 FALSE       0.079<span style="text-decoration: underline;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     3     7 0.792  standard        7 FALSE       0.792 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     1     8 0.456  unknown         1 <span style="color: #BB0000;">NA</span>          0.457 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     2     8 0.459  unknown         1 <span style="color: #BB0000;">NA</span>          0.457 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     3     8 0.455  unknown         1 <span style="color: #BB0000;">NA</span>          0.457 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     1     9 0.446  unknown         2 <span style="color: #BB0000;">NA</span>          0.444 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>     2     9 0.441  unknown         2 <span style="color: #BB0000;">NA</span>          0.444</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">some_abs</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/qp_calc_abs_mean.html">qp_calc_abs_mean</a></span><span class="op">(</span>ignore_outliers <span class="op">=</span> <span class="st">"samples"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 7</span></span></span>
+<span><span class="co">#&gt;     .row  .col   .abs sample_type index .is_outlier  .mean</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1     1 0.070<span style="text-decoration: underline;">7</span> standard        1 <span style="color: #BB0000;">NA</span>          0.073<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     2     1 0.078<span style="text-decoration: underline;">6</span> standard        1 <span style="color: #BB0000;">NA</span>          0.073<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     3     1 0.071<span style="text-decoration: underline;">4</span> standard        1 <span style="color: #BB0000;">NA</span>          0.073<span style="text-decoration: underline;">6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     1     2 0.079<span style="text-decoration: underline;">5</span> standard        2 <span style="color: #BB0000;">NA</span>          0.079<span style="text-decoration: underline;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     2     2 0.079<span style="text-decoration: underline;">9</span> standard        2 <span style="color: #BB0000;">NA</span>          0.079<span style="text-decoration: underline;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     3     7 0.792  standard        7 <span style="color: #BB0000;">NA</span>          0.792 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     1     8 0.456  unknown         1 FALSE       0.455 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     2     8 0.459  unknown         1 TRUE        0.455 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     3     8 0.455  unknown         1 FALSE       0.455 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     1     9 0.446  unknown         2 FALSE       0.444 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>     2     9 0.441  unknown         2 FALSE       0.444</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">some_abs</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/qp_calc_abs_mean.html">qp_calc_abs_mean</a></span><span class="op">(</span>ignore_outliers <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 7</span></span></span>
+<span><span class="co">#&gt;     .row  .col   .abs sample_type index .is_outlier  .mean</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1     1 0.070<span style="text-decoration: underline;">7</span> standard        1 FALSE       0.071<span style="text-decoration: underline;">0</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     2     1 0.078<span style="text-decoration: underline;">6</span> standard        1 TRUE        0.071<span style="text-decoration: underline;">0</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     3     1 0.071<span style="text-decoration: underline;">4</span> standard        1 FALSE       0.071<span style="text-decoration: underline;">0</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     1     2 0.079<span style="text-decoration: underline;">5</span> standard        2 FALSE       0.079<span style="text-decoration: underline;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     2     2 0.079<span style="text-decoration: underline;">9</span> standard        2 FALSE       0.079<span style="text-decoration: underline;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     3     7 0.792  standard        7 FALSE       0.792 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     1     8 0.456  unknown         1 FALSE       0.455 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     2     8 0.459  unknown         1 TRUE        0.455 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     3     8 0.455  unknown         1 FALSE       0.455 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     1     9 0.446  unknown         2 FALSE       0.444 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>     2     9 0.441  unknown         2 FALSE       0.444</span></span></code></pre></div>
+<p>Something is an outlier if it is over 3 standard deviations away from
+the mean of the others. While this might mark things as outliers that
+you might not (perhaps because the other two samples were just ultra
+close to each other), it only has a downstream effect if these outliers
+are truly much different from the others.</p>
+</div>
+<div class="section level3">
+<h3 id="fitting-a-model">Fitting a model<a class="anchor" aria-label="anchor" href="#fitting-a-model"></a>
+</h3>
+<p>Once the above steps have been completed, you can fit a simple linear
+model:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="va">absorbances</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/qp_add_std_conc.html">qp_add_std_conc</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># all values are defaults</span></span>
+<span>  <span class="fu"><a href="../reference/qp_calc_abs_mean.html">qp_calc_abs_mean</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/qp_fit.html">qp_fit</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `sample_type` contains values other than `standard` and `unknown`</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> These values may be ignored downstream!</span></span>
+<span><span class="co">#&gt; Did not find column `.log2_abs`, calculating.</span></span>
+<span></span>
+<span><span class="va">out</span></span>
+<span><span class="co">#&gt; $fit</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; stats::lm(formula = .log2_conc ~ .log2_abs, data = fit_data)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt; (Intercept)    .log2_abs  </span></span>
+<span><span class="co">#&gt;       2.378        0.850  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $qp</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 88 × 9</span></span></span>
+<span><span class="co">#&gt;     .row  .col   .abs sample_type index .conc .is_outlier  .mean .log2_abs</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1     1 0.070<span style="text-decoration: underline;">7</span> standard        1 0     FALSE       0.071<span style="text-decoration: underline;">0</span>     -<span style="color: #BB0000;">3.82</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     2     1 0.078<span style="text-decoration: underline;">6</span> standard        1 0     TRUE        0.071<span style="text-decoration: underline;">0</span>     -<span style="color: #BB0000;">3.67</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     3     1 0.071<span style="text-decoration: underline;">4</span> standard        1 0     FALSE       0.071<span style="text-decoration: underline;">0</span>     -<span style="color: #BB0000;">3.81</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     1     2 0.079<span style="text-decoration: underline;">5</span> standard        2 0.125 FALSE       0.080<span style="text-decoration: underline;">0</span>     -<span style="color: #BB0000;">3.65</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     2     2 0.079<span style="text-decoration: underline;">9</span> standard        2 0.125 FALSE       0.080<span style="text-decoration: underline;">0</span>     -<span style="color: #BB0000;">3.65</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     3     2 0.080<span style="text-decoration: underline;">5</span> standard        2 0.125 FALSE       0.080<span style="text-decoration: underline;">0</span>     -<span style="color: #BB0000;">3.63</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     1     3 0.099<span style="text-decoration: underline;">9</span> standard        3 0.25  FALSE       0.097<span style="text-decoration: underline;">7</span>     -<span style="color: #BB0000;">3.32</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     2     3 0.095<span style="text-decoration: underline;">5</span> standard        3 0.25  FALSE       0.097<span style="text-decoration: underline;">7</span>     -<span style="color: #BB0000;">3.39</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     3     3 0.097<span style="text-decoration: underline;">6</span> standard        3 0.25  FALSE       0.097<span style="text-decoration: underline;">7</span>     -<span style="color: #BB0000;">3.36</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     1     4 0.151  standard        4 0.5   TRUE        0.148      -<span style="color: #BB0000;">2.72</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 78 more rows</span></span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="predicting-concentrations">Predicting concentrations<a class="anchor" aria-label="anchor" href="#predicting-concentrations"></a>
+</h3>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">conc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qp_calc_conc.html">qp_calc_conc</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
+<span><span class="va">conc</span></span>
+<span><span class="co">#&gt; $fit</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; stats::lm(formula = .log2_conc ~ .log2_abs, data = fit_data)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt; (Intercept)    .log2_abs  </span></span>
+<span><span class="co">#&gt;       2.378        0.850  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $qp</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 88 × 12</span></span></span>
+<span><span class="co">#&gt;     .row  .col   .abs sample_type index .conc .is_outlier  .mean .log2_abs</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     1     1 0.070<span style="text-decoration: underline;">7</span> standard        1 0     FALSE       0.071<span style="text-decoration: underline;">0</span>     -<span style="color: #BB0000;">3.82</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     2     1 0.078<span style="text-decoration: underline;">6</span> standard        1 0     TRUE        0.071<span style="text-decoration: underline;">0</span>     -<span style="color: #BB0000;">3.67</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     3     1 0.071<span style="text-decoration: underline;">4</span> standard        1 0     FALSE       0.071<span style="text-decoration: underline;">0</span>     -<span style="color: #BB0000;">3.81</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     1     2 0.079<span style="text-decoration: underline;">5</span> standard        2 0.125 FALSE       0.080<span style="text-decoration: underline;">0</span>     -<span style="color: #BB0000;">3.65</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     2     2 0.079<span style="text-decoration: underline;">9</span> standard        2 0.125 FALSE       0.080<span style="text-decoration: underline;">0</span>     -<span style="color: #BB0000;">3.65</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     3     2 0.080<span style="text-decoration: underline;">5</span> standard        2 0.125 FALSE       0.080<span style="text-decoration: underline;">0</span>     -<span style="color: #BB0000;">3.63</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     1     3 0.099<span style="text-decoration: underline;">9</span> standard        3 0.25  FALSE       0.097<span style="text-decoration: underline;">7</span>     -<span style="color: #BB0000;">3.32</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     2     3 0.095<span style="text-decoration: underline;">5</span> standard        3 0.25  FALSE       0.097<span style="text-decoration: underline;">7</span>     -<span style="color: #BB0000;">3.39</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     3     3 0.097<span style="text-decoration: underline;">6</span> standard        3 0.25  FALSE       0.097<span style="text-decoration: underline;">7</span>     -<span style="color: #BB0000;">3.36</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     1     4 0.151  standard        4 0.5   TRUE        0.148      -<span style="color: #BB0000;">2.72</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 78 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: .pred &lt;dbl&gt;, .pred_conc &lt;dbl&gt;, .pred_conc_mean &lt;dbl&gt;</span></span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="removing-empty-wells">Removing empty wells<a class="anchor" aria-label="anchor" href="#removing-empty-wells"></a>
+</h3>
+<p>Samples that have a predicted concentration lower than 0 can be
+removed easily using <code>qp_remove_empty</code>:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">conc</span><span class="op">$</span><span class="va">qp</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 12</span></span></span>
+<span><span class="co">#&gt;    .row  .col   .abs sample_type index .conc .is_outlier  .mean .log2_abs .pred</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     7     6 0.048  unknown        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> FALSE       0.048<span style="text-decoration: underline;">5</span>     -<span style="color: #BB0000;">4.38</span> -<span style="color: #BB0000;">1.35</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     8     6 0.046<span style="text-decoration: underline;">9</span> unknown        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> FALSE       0.048<span style="text-decoration: underline;">5</span>     -<span style="color: #BB0000;">4.41</span> -<span style="color: #BB0000;">1.37</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     7     7 0.049<span style="text-decoration: underline;">9</span> unknown        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> FALSE       0.048<span style="text-decoration: underline;">5</span>     -<span style="color: #BB0000;">4.32</span> -<span style="color: #BB0000;">1.30</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     8     7 0.048<span style="text-decoration: underline;">3</span> unknown        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> FALSE       0.048<span style="text-decoration: underline;">5</span>     -<span style="color: #BB0000;">4.37</span> -<span style="color: #BB0000;">1.34</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     7     8 0.048<span style="text-decoration: underline;">5</span> unknown        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> FALSE       0.048<span style="text-decoration: underline;">5</span>     -<span style="color: #BB0000;">4.37</span> -<span style="color: #BB0000;">1.33</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     8     8 0.048<span style="text-decoration: underline;">7</span> unknown        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span> FALSE       0.048<span style="text-decoration: underline;">5</span>     -<span style="color: #BB0000;">4.36</span> -<span style="color: #BB0000;">1.33</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: .pred_conc &lt;dbl&gt;, .pred_conc_mean &lt;dbl&gt;</span></span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">no_zero</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qp_remove_empty.html">qp_remove_empty</a></span><span class="op">(</span><span class="va">conc</span><span class="op">)</span></span>
+<span><span class="va">no_zero</span><span class="op">$</span><span class="va">qp</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 12</span></span></span>
+<span><span class="co">#&gt;    .row  .col  .abs sample_type index .conc .is_outlier .mean .log2_abs .pred</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     4     2 0.379 unknown         7    <span style="color: #BB0000;">NA</span> FALSE       0.378     -<span style="color: #BB0000;">1.40</span> 1.19 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     5     2 0.370 unknown         7    <span style="color: #BB0000;">NA</span> TRUE        0.378     -<span style="color: #BB0000;">1.44</span> 1.16 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     6     2 0.376 unknown         7    <span style="color: #BB0000;">NA</span> FALSE       0.378     -<span style="color: #BB0000;">1.41</span> 1.18 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     4     3 0.228 unknown         8    <span style="color: #BB0000;">NA</span> TRUE        0.218     -<span style="color: #BB0000;">2.13</span> 0.565</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     5     3 0.217 unknown         8    <span style="color: #BB0000;">NA</span> FALSE       0.218     -<span style="color: #BB0000;">2.20</span> 0.504</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     6     3 0.220 unknown         8    <span style="color: #BB0000;">NA</span> FALSE       0.218     -<span style="color: #BB0000;">2.19</span> 0.520</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: .pred_conc &lt;dbl&gt;, .pred_conc_mean &lt;dbl&gt;</span></span></span></code></pre></div>
+<p>Note that this typically won’t remove wells that have the BCA
+solution in it but have no sample.</p>
+</div>
+<div class="section level3">
+<h3 id="adding-sample-names">Adding sample names<a class="anchor" aria-label="anchor" href="#adding-sample-names"></a>
+</h3>
+<p>At any point, you can add sample names to the data - each index gets
+its own sample name.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">with_names</span> <span class="op">&lt;-</span> <span class="va">no_zero</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/qp_add_names.html">qp_add_names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"my_sample_"</span>, <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">with_names</span><span class="op">$</span><span class="va">qp</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 13</span></span></span>
+<span><span class="co">#&gt;    .row  .col  .abs sample_type index .conc .is_outlier .mean .log2_abs .pred</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     4     2 0.379 unknown         7    <span style="color: #BB0000;">NA</span> FALSE       0.378     -<span style="color: #BB0000;">1.40</span> 1.19 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     5     2 0.370 unknown         7    <span style="color: #BB0000;">NA</span> TRUE        0.378     -<span style="color: #BB0000;">1.44</span> 1.16 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     6     2 0.376 unknown         7    <span style="color: #BB0000;">NA</span> FALSE       0.378     -<span style="color: #BB0000;">1.41</span> 1.18 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     4     3 0.228 unknown         8    <span style="color: #BB0000;">NA</span> TRUE        0.218     -<span style="color: #BB0000;">2.13</span> 0.565</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     5     3 0.217 unknown         8    <span style="color: #BB0000;">NA</span> FALSE       0.218     -<span style="color: #BB0000;">2.20</span> 0.504</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     6     3 0.220 unknown         8    <span style="color: #BB0000;">NA</span> FALSE       0.218     -<span style="color: #BB0000;">2.19</span> 0.520</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: .pred_conc &lt;dbl&gt;, .pred_conc_mean &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   .sample_name &lt;chr&gt;</span></span></span></code></pre></div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
