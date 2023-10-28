@@ -11,6 +11,7 @@ Language: en
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Suggests: 
+    DiagrammeR,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)

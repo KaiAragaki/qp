@@ -22,7 +22,7 @@ qp_calc_conc <- function(x,
                          ignore_outliers = TRUE,
                          group_cols = c("sample_type", "index")) {
   if (is.data.frame(x)) {
-    rlang::warning(c(
+    rlang::warn(c(
       "The supplied data was a data.frame, not a list",
       "Attempting to calculate a fit using supplied data.frame"
     ))

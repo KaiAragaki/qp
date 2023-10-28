@@ -22,11 +22,11 @@ check_has_cols <- function(df, cols, type = "and") {
 check_index <- function(x) {
   # NA value are fine
   # They happen when a whole gplate is not used, for instance
-  if (class(x) != "numeric") rlang::abort("index must be numeric")
+  if (!is.numeric(x)) rlang::abort("index must be numeric")
 }
 
 check_abs <- function(x) {
-  if (class(x) != "numeric") rlang::abort("abs must be numeric")
+  if (!is.numeric(x)) rlang::abort("abs must be numeric")
   if (any(x < 0)) rlang::warn("Negative values found in .abs")
   if (any(is.na(x))) rlang::warn("NA values found in `.abs`")
 }
