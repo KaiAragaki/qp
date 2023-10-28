@@ -17,6 +17,10 @@
 #'   using non-outlier standards
 #'   - `qp`, the input data
 #' @importFrom rlang .data
+#' @examples
+#'   absorbances |>
+#'     qp_add_std_conc() |>
+#'     qp_fit()
 #' @export
 qp_fit <- function(x) {
   UseMethod("qp_fit")
