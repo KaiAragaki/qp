@@ -6,7 +6,8 @@
 #' @details The supplied `data.frame` must have the following columns:
 #'   - `sample_type`. Character. If not 'standard', assumed to be a sample
 #'   - `.is_outlier`. Boolean. If TRUE, assumed to be outlier and removed from
-#'     fitting. If FALSE or NA, used for fitting.
+#'     fitting. If FALSE or NA, used for fitting. If unsupplied, will create one
+#'     with all values set to NA.
 #'   - `.conc`. Numeric. Known concentration of standard.
 #'   - `.log2_abs`. Numeric. The log2 of the absorbances
 #'   The function creates a new column `.log2_conc`, or log2(`.conc` + 0.5)
