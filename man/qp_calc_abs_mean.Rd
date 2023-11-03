@@ -17,20 +17,22 @@ qp_calc_abs_mean(x, ignore_outliers = c("all", "standards", "samples", "none"))
 See details.}
 
 \item{ignore_outliers}{Which sample types should have outliers ignored from
-their mean calculations?}
+their mean calculations? If \code{.is_outlier} column is supplied, this argument
+is ignored.}
 }
 \value{
-a \code{tibble} with an \code{.is_outlier} column and a \code{.mean} column
+The input \code{tibble} with an \code{.is_outlier} column and a \code{.mean} column
 }
 \description{
 Calculate absorbance means with optional outlier removal
 }
 \details{
-Input \code{data.frame} must contian the following columns:
+Input \code{data.frame} must contain the following columns:
 \itemize{
 \item \code{sample_type}. Character. Must contain values either "standard" or
 "unknown"
 \item \code{index}. Numeric. Denotes sample number.
 \item \code{.abs}. Numeric. Contains absorbance values.
+\item If a boolean \code{.is_outlier} is supplied, that will be used instead.
 }
 }
