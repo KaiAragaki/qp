@@ -36,24 +36,28 @@ qp_mark_outliers.data.frame <- function(x,
   standards <- dplyr::filter(x, .data$sample_type == "standard")
   unknowns <- dplyr::filter(x, .data$sample_type == "unknown")
 
-  if (ignore_outliers %in% c("all", "standards")) {
-    standards <- standards |>
-      dplyr::mutate(
-        .is_outlier = mark_outlier(.data$.abs),
-        .by = c("sample_type", "index")
-      )
-  } else {
-    standards$.is_outlier <- NA
+  if (nrow(standards) > 0) {
+    if (ignore_outliers %in% c("all", "standards")) {
+      standards <- standards |>
+        dplyr::mutate(
+                 .is_outlier = mark_outlier(.data$.abs),
+                 .by = c("sample_type", "index")
+               )
+    } else {
+      standards$.is_outlier <- NA
+    }
   }
 
-  if (ignore_outliers %in% c("all", "samples")) {
-    unknowns <- unknowns |>
-      dplyr::mutate(
-        .is_outlier = mark_outlier(.data$.abs),
-        .by = c("sample_type", "index")
-      )
-  } else {
-    unknowns$.is_outlier <- NA
+  if (nrow(unknowns) > 0) {
+    if (ignore_outliers %in% c("all", "samples")) {
+      unknowns <- unknowns |>
+        dplyr::mutate(
+                 .is_outlier = mark_outlier(.data$.abs),
+                 .by = c("sample_type", "index")
+               )
+    } else {
+      unknowns$.is_outlier <- NA
+    }
   }
 
   rbind(standards, unknowns)

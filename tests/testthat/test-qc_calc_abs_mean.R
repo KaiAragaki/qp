@@ -28,6 +28,6 @@ test_that("Outliers marked", {
 test_that("Outliers ignored when not checked", {
   vals <- c(1, 1, 100)
   df <- data.frame(sample_type = "standard", index = 1, .abs = vals)
-  expect_equal(calc_mean(df, FALSE)$.mean, rep(mean(vals), length(vals)))
-  expect_equal(calc_mean(df, TRUE)$.mean, rep(1, length(vals)))
+  expect_equal(qp_calc_abs_mean(df, "none")$.mean, rep(mean(vals), length(vals)))
+  expect_equal(qp_calc_abs_mean(df, "all")$.mean, rep(1, length(vals)))
 })
