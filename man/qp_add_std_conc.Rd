@@ -36,3 +36,25 @@ correspond to the first item in \code{standard_scale}, 2 will be the second,
 etc.
 }
 }
+\examples{
+abs <- expand.grid(
+  sample_type = c("standard", "unknown"),
+  index = 1:7
+)
+
+abs
+
+qp_add_std_conc(abs)
+
+# Can add custom scale - doesn't have to be 'in order' or unique:
+qp_add_std_conc(abs, c(1, 4, 2, 2, 3, 0.125, 7))
+
+# Will warn - more values in `standard_scale` than standard indices
+# Will drop extra
+qp_add_std_conc(abs, 1:8)
+
+# Will error - fewer values in `standard_scale` than standard indices
+if (FALSE) {
+  qp_add_std_conc(abs, 1:6)
+}
+}

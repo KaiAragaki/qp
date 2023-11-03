@@ -13,6 +13,28 @@
 #'     etc.
 #' @return Same type as x, with a `.conc` column
 #' @export
+#' @examples
+#' abs <- expand.grid(
+#'   sample_type = c("standard", "unknown"),
+#'   index = 1:7
+#' )
+#'
+#' abs
+#'
+#' qp_add_std_conc(abs)
+#'
+#' # Can add custom scale - doesn't have to be 'in order' or unique:
+#' qp_add_std_conc(abs, c(1, 4, 2, 2, 3, 0.125, 7))
+#'
+#' # Will warn - more values in `standard_scale` than standard indices
+#' # Will drop extra
+#' qp_add_std_conc(abs, 1:8)
+#'
+#' # Will error - fewer values in `standard_scale` than standard indices
+#' if (FALSE) {
+#'   qp_add_std_conc(abs, 1:6)
+#' }
+
 qp_add_std_conc <- function(x, standard_scale = c(0, 2^((2:7) - 5)), ...) {
   UseMethod("qp_add_std_conc")
 }
