@@ -32,9 +32,15 @@ The supplied \code{data.frame} must have the following columns:
 \itemize{
 \item \code{sample_type}. Character. If not 'standard', assumed to be a sample
 \item \code{.is_outlier}. Boolean. If TRUE, assumed to be outlier and removed from
-fitting. If FALSE or NA, used for fitting.
+fitting. If FALSE or NA, used for fitting. If unsupplied, will create one
+with all values set to NA.
 \item \code{.conc}. Numeric. Known concentration of standard.
 \item \code{.log2_abs}. Numeric. The log2 of the absorbances
 The function creates a new column \code{.log2_conc}, or log2(\code{.conc} + 0.5)
 }
+}
+\examples{
+  absorbances |>
+    qp_add_std_conc() |>
+    qp_fit()
 }
