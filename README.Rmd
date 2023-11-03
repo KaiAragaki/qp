@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # qp <a href="https://kaiaragaki.github.io/qp/"><img src="man/figures/logo.png" align="right" height="138" alt="qp website" /></a>
 
 <!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/KaiAragaki/qp/branch/master/graph/badge.svg)](https://app.codecov.io/gh/KaiAragaki/qp?branch=master)
 <!-- badges: end -->
 
 `qp` serves as a robust toolkit for working with MicroBCA assays. Currently, the protocol it's best served for is [here](https://kai.quarto.pub/bok/western-blot.html#protein-quantification).
