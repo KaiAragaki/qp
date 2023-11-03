@@ -45,7 +45,7 @@ check_sample_type <- function(x) {
         "i" = "`sample_type` should denote standards with `standard`")
     )
   }
-  if (length(setdiff(x, c("standard", "unknown")) > 0)) {
+  if (length(setdiff(x, c("standard", "unknown"))) > 0) {
     rlang::warn(
       c("`sample_type` contains values other than `standard` and `unknown`",
         "!" = "These values may be ignored downstream!")
