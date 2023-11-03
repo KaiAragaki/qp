@@ -5,9 +5,7 @@ check_qp_tidy <- function(x) {
 }
 
 check_has_cols <- function(df, cols, type = "and") {
-  if (type == "and") fire <- !all(cols %in% colnames(df))
-  if (type == "or") fire <- !any(cols %in% colnames(df))
-  if (fire) {
+  if (!has_cols(df, cols, type)) {
     missing <- setdiff(cols, colnames(df))
     if (type == "and")
       cli::cli_abort("Data is missing columns {.code {missing}}")
@@ -17,6 +15,13 @@ check_has_cols <- function(df, cols, type = "and") {
       )
     }
   }
+}
+
+# Returns boolean but doesn't raise problems like `check_has_cols`
+has_cols <- function(df, cols, type = "and") {
+  if (type == "and") out <- all(cols %in% colnames(df))
+  if (type == "or") out <- any(cols %in% colnames(df))
+  out
 }
 
 check_index <- function(x) {
