@@ -68,14 +68,11 @@ check_scale <- function(x) {
 }
 
 check_std_scale_compat <- function(std, scale) {
-  if (any(is.na(scale[std$index])))
-    rlang::abort("standard_scale returned NA when indexed")
-
   if (length(unique(std$index)) < length(scale)) {
     rlang::warn("Not all standards in scale used")
   } else if (length(unique(std$index)) > length(scale)) {
-    rlang::abort(
-      "Length of unique standard indices exceeds length of standard_scale"
-    )
+    rlang::abort("Length of unique standard indices > `length(standard_scale)`")
+  } else if (any(is.na(scale[std$index]))) {
+    rlang::abort("standard_scale returned NA when indexed")
   }
 }
