@@ -24,7 +24,7 @@ reference:
     - qp_plot_standards
   - title: "Summary functions"
     desc: >
-      These functions won't return an augmented versino of their input when called - they are necessarily distilled versions of their input.
+      These functions won't return an augmented version of their input when called - they are necessarily distilled versions of their input.
     contents:
     - qp_summarize
     - qp_plot_plate
