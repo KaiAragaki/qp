@@ -4,6 +4,7 @@
 # qp <a href="https://kaiaragaki.github.io/qp/"><img src="man/figures/logo.png" align="right" height="138" alt="qp website" /></a>
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 `qp` serves as a robust toolkit for working with MicroBCA assays.
@@ -50,7 +51,6 @@ out <- qp(
 From this, you can do things like add dilution calculations:
 
 ``` r
-
 summary <- qp_summarize(out)
 
 qp_dilute(summary, target_vol = 15, remove_standards = TRUE)

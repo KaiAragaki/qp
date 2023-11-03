@@ -54,7 +54,6 @@ out <- qp(
 From this, you can do things like add dilution calculations:
 
 ```{r}
-
 summary <- qp_summarize(out)
 
 qp_dilute(summary, target_vol = 15, remove_standards = TRUE)
