@@ -71,7 +71,7 @@ qp_calc_abs_mean.data.frame <- function(x,
 
   dplyr::mutate(
     x,
-    .mean = mean(.data$.abs[!.data$.is_outlier], na.rm = TRUE),
+    .mean = mean(.data$.abs[f_or_na(.data$.is_outlier)], na.rm = TRUE),
     .by = c("sample_type", "index")
   )
 }
