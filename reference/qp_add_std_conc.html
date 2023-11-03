@@ -85,6 +85,91 @@ correspond to the first item in <code>standard_scale</code>, 2 will be the secon
 etc.</p></li>
 </ul></div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">abs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  sample_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"standard"</span>, <span class="st">"unknown"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  index <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">7</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">abs</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    sample_type index</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     standard     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      unknown     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     standard     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      unknown     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     standard     3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      unknown     3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     standard     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      unknown     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     standard     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     unknown     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    standard     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     unknown     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    standard     7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     unknown     7</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">qp_add_std_conc</span><span class="op">(</span><span class="va">abs</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    sample_type index .conc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     standard     1 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     standard     2 0.125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     standard     3 0.250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     standard     4 0.500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     standard     5 1.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    standard     6 2.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    standard     7 4.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      unknown     1    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      unknown     2    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      unknown     3    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      unknown     4    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     unknown     5    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     unknown     6    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     unknown     7    NA</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Can add custom scale - doesn't have to be 'in order' or unique:</span></span></span>
+<span class="r-in"><span><span class="fu">qp_add_std_conc</span><span class="op">(</span><span class="va">abs</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">0.125</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    sample_type index .conc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     standard     1 1.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     standard     2 4.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     standard     3 2.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     standard     4 2.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     standard     5 3.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    standard     6 0.125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    standard     7 7.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      unknown     1    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      unknown     2    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      unknown     3    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      unknown     4    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     unknown     5    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     unknown     6    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     unknown     7    NA</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Will warn - more values in `standard_scale` than standard indices</span></span></span>
+<span class="r-in"><span><span class="co"># Will drop extra</span></span></span>
+<span class="r-in"><span><span class="fu">qp_add_std_conc</span><span class="op">(</span><span class="va">abs</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Not all standards in scale used</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    sample_type index .conc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     standard     1     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     standard     2     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     standard     3     3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     standard     4     4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     standard     5     5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    standard     6     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    standard     7     7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      unknown     1    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      unknown     2    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      unknown     3    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      unknown     4    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     unknown     5    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     unknown     6    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     unknown     7    NA</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Will error - fewer values in `standard_scale` than standard indices</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">qp_add_std_conc</span><span class="op">(</span><span class="va">abs</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
