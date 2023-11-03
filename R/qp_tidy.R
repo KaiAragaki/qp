@@ -79,7 +79,6 @@ qp_tidy.spectramax <- function(x,
   qp_tidy(x, ...)
 }
 
-
 #' @rdname qp_tidy
 #' @export
 qp_tidy.gp <- function(x, ...) {
