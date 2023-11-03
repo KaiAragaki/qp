@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Codecov test
+coverage](https://codecov.io/gh/KaiAragaki/qp/branch/master/graph/badge.svg)](https://app.codecov.io/gh/KaiAragaki/qp?branch=master)
 <!-- badges: end -->
 
 `qp` serves as a robust toolkit for working with MicroBCA assays.
