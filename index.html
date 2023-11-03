@@ -103,8 +103,7 @@
 <span><span class="co">#&gt; Please wait. This will take ~10 seconds.</span></span></code></pre></div>
 <p>From this, you can do things like add dilution calculations:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/qp_summarize.html">qp_summarize</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/qp_summarize.html">qp_summarize</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/qp_dilute.html">qp_dilute</a></span><span class="op">(</span><span class="va">summary</span>, target_vol <span class="op">=</span> <span class="fl">15</span>, remove_standards <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `target_conc` is missing, using lowest sample concentration</span></span>
