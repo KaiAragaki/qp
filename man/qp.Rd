@@ -21,7 +21,7 @@ qp(
 
 \item{replicate_orientation}{Either 'h' or 'v' - see Details.}
 
-\item{sample_names}{Character vector of sample names.}
+\item{sample_names}{Optional character vector of sample names.}
 
 \item{remove_empty}{Should wells that have less absorbance than the lowest
 standard be dropped?}
