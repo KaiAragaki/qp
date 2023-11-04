@@ -40,18 +40,14 @@ qp_tidy.spectramax <- function(x,
                                ...) {
   replicate_orientation <- rlang::arg_match(replicate_orientation)
 
-  if (!(wavelength %in% x$wavelengths))
+  x <- extract_spectramax_plate(x)
+
+  df <- gplate::gp_serve(x)
+
+  if (!has_cols(df, paste0("nm", wavelength)))
     rlang::abort("Specified wavelength not present in data")
 
-  plate_index <- which(sapply(x$data, \(x) x$type == "Plate"))
-
-  if (length(plate_index) != 1)
-    rlang::abort("Supplied data does not include 1 (and only 1) plate")
-
-  x <- x$data[[plate_index]]$data
-
-  max_samples <- gplate::wells(x) %/% n_replicates
-  max_unknowns <- max_samples - n_standards
+  max_unknowns <- get_max_unknowns(gplate::wells(x), n_replicates, n_standards)
 
   if (replicate_orientation == "v") {
     nrow <- nrow2 <- n_replicates
@@ -91,4 +87,20 @@ qp_tidy.gp <- function(x, ...) {
 qp_tidy.default <- function(x, ...) {
   check_qp_tidy(x)
   x
+}
+
+extract_spectramax_plate <- function(x) {
+  plate_index <- which(sapply(x$data, \(x) x$type == "Plate"))
+  if (length(plate_index) != 1)
+    rlang::abort("Supplied data does not include 1 (and only 1) plate")
+  x$data[[plate_index]]$data
+}
+
+get_max_unknowns <- function(n, n_replicates, n_standards) {
+  max_samples <- n %/% n_replicates
+  out <- max_samples - n_standards
+  if (out < 0) {
+    out <- 0
+  }
+  out
 }

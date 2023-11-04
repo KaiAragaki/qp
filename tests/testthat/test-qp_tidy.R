@@ -12,3 +12,26 @@ test_that("checks catch abberent data", {
   expect_warning(qp_tidy(lacks_standard))
 })
 
+test_that("checks catch abberent spectramax data", {
+  # Can only operate on wavelengths the data have
+  abs <- system.file("extdata", "absorbances.txt", package = "qp") |>
+    mop::read_spectramax()
+  expect_error(
+    qp_tidy(abs, wavelength = 561),
+    "Specified wavelength not present in data"
+  )
+  expect_no_error(
+    qp_tidy(abs, wavelength = 562),
+  )
+  # Can't operate on multiplate data
+  abs_2_plate <- abs
+  abs_2_plate$data[[2]] <- abs$data[[1]]
+  expect_error(
+    qp_tidy(abs_2_plate),
+    "Supplied data does not include 1 \\(and only 1\\) plate"
+  )
+})
+
+test_that("max_unknowns calculated correctly", {
+  expect_equal(get_max_unknowns(80, 3, 7), 19)
+})
