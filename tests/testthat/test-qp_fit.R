@@ -17,3 +17,15 @@ test_that(".is_outlier is produced if not present", {
   expect_message(qp_fit(x), "Did not find column `\\.is_outlier`")
   expect_true(all(is.na(qp_fit(x)$qp$.is_outlier)))
 })
+
+test_that("fit is consistent", {
+  suppressMessages(
+    suppressWarnings(
+      fit <- absorbances[1:40, ] |>
+        qp_add_std_conc() |>
+        qp_fit()
+    )
+  )
+  coefs <- round(fit$fit$coefficients, 2)
+  expect_true(all(coefs == c(2.38, 0.86)))
+})
