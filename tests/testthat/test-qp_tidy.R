@@ -34,4 +34,7 @@ test_that("checks catch abberent spectramax data", {
 
 test_that("max_unknowns calculated correctly", {
   expect_equal(get_max_unknowns(80, 3, 7), 19)
+  expect_equal(get_max_unknowns(2, 2, 1), 0)
+  expect_equal(get_max_unknowns(3, 2, 1), 0)
+  expect_equal(get_max_unknowns(0, 2, 2), 0)
 })
