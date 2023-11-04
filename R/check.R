@@ -70,3 +70,14 @@ check_pred_conc_mean <- function(x) {
   # It's possible for predicted values to be negative
   if (!is.numeric(x)) rlang::abort("`.pred_conc_mean` is not `numeric`")
 }
+
+provide_outliers_if_none <- function(x, ignore) {
+  if (!has_cols(x, ".is_outlier")) {
+    cli::cli_inform(
+      c("Did not find column `.is_outlier`",
+        "Running `qp_mark_outliers` with {.code ignore_outliers = {ignore}}")
+    )
+    x <- qp_mark_outliers(x, ignore_outliers = ignore)
+  }
+  x
+}

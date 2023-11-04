@@ -23,40 +23,29 @@ qp_calc_conc <- function(x,
                          group_cols = c("sample_type", "index")) {
   if (is.data.frame(x)) {
     rlang::warn(c(
-      "The supplied data was a data.frame, not a list",
-      "Attempting to calculate a fit using supplied data.frame"
+      "`x` is a `data.frame`, not a `list`",
+      "Trying to apply `qp_fit` to `x`"
     ))
-    x <- list(fit = qp_fit(x), qp = x)
+    x <- qp_fit(x)
   }
+
+  group_to_ignore <- ifelse(ignore_outliers, "all", "none")
 
   qp <- x$qp
   fit <- x$fit
   check_has_cols(qp, c(group_cols, all.vars(stats::terms(fit))[-1]))
-  with_predictions <- dplyr::bind_cols(qp, .pred = stats::predict(fit, qp))
-  conc <- with_predictions |>
-    dplyr::mutate(.pred_conc = 2^(.data$.pred) - 0.5) |>
-    dplyr::group_by(dplyr::across(dplyr::any_of(group_cols)))
 
-  if (ignore_outliers) {
-    if (!".is_outlier" %in% colnames(conc)) {
-      rlang::inform(
-        "No colname of `.is_outlier` supplied. Calculating outliers."
-      )
-      conc <- dplyr::mutate(conc, .is_outlier = mark_outlier(.data$.pred))
-    }
-    conc <- dplyr::mutate(
-      conc,
+  with_predictions <- dplyr::bind_cols(qp, .pred = stats::predict(fit, qp))
+  x <- with_predictions |>
+    dplyr::mutate(.pred_conc = 2^(.data$.pred) - 0.5) |>
+    dplyr::group_by(dplyr::across(dplyr::any_of(group_cols))) |>
+    provide_outliers_if_none(group_to_ignore) |>
+    dplyr::mutate(
       .pred_conc_mean = mean(
         .data$.pred_conc[which(f_or_na(.data$.is_outlier))],
         na.rm = TRUE
       )
-    )
-  } else {
-    conc <- dplyr::mutate(
-      conc,
-      .pred_conc_mean = mean(.data$.pred_conc, na.rm = TRUE)
-    )
-  }
-  conc <- dplyr::ungroup(conc)
-  list(fit = fit, qp = conc)
+    ) |>
+    dplyr::ungroup()
+  list(fit = fit, qp = x)
 }

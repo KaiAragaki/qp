@@ -37,13 +37,7 @@ qp_fit.data.frame <- function(x) {
     x$.log2_abs <- log2(x$.abs)
   }
 
-  if (!has_cols(x, ".is_outlier")) {
-    rlang::inform(
-      c("Did not find column `.is_outlier`, fitting with all standards.",
-        "i" = "To remove outliers, set `ignore_outliers` in `qp_calc_abs_mean`")
-    )
-    x$.is_outlier <- NA
-  }
+  x <- provide_outliers_if_none(x, "all")
 
   check_has_cols(x, c("sample_type", ".conc"))
   check_sample_type(x$sample_type)
