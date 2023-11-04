@@ -30,14 +30,14 @@ qp_fit <- function(x) {
 #' @export
 qp_fit.data.frame <- function(x) {
 
-  if (!".log2_abs" %in% colnames(x)) {
+  if (!has_cols(x, ".log2_abs")) {
     rlang::inform("Did not find column `.log2_abs`, calculating.")
     check_has_cols(x, ".abs")
     check_abs(x$.abs)
     x$.log2_abs <- log2(x$.abs)
   }
 
-  if (!".is_outlier" %in% colnames(x)) {
+  if (!has_cols(x, ".is_outlier")) {
     rlang::inform(
       c("Did not find column `.is_outlier`, fitting with all standards.",
         "i" = "To remove outliers, set `ignore_outliers` in `qp_calc_abs_mean`")
