@@ -31,8 +31,8 @@ check_index <- function(x) {
 }
 
 check_abs <- function(x) {
-  if (!is.numeric(x)) rlang::abort("abs must be numeric")
-  if (any(x < 0)) rlang::warn("Negative values found in .abs")
+  if (!is.numeric(x)) rlang::abort("`.abs` must be numeric")
+  if (any(x < 0)) rlang::warn("Negative values found in `.abs`")
   if (any(is.na(x))) rlang::warn("NA values found in `.abs`")
 }
 
