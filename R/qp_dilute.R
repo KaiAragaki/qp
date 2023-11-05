@@ -6,6 +6,7 @@
 #' @param target_conc Numeric vector. Target concentration in (mg/mL) protein.
 #'   If length == 1, recycled.
 #' @param target_vol Target volume in uL. If length == 1, recycled.
+#' @param remove_standards Should standards be removed from results?
 #' @param ... Unused
 #'
 #' @return Same as input, with the volumes of lysate and volumes of diluent to

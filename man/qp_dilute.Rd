@@ -35,6 +35,8 @@ a column named \code{.pred_conc} or \code{.mean_pred_conc}. If both, will favor
 If length == 1, recycled.}
 
 \item{target_vol}{Target volume in uL. If length == 1, recycled.}
+
+\item{remove_standards}{Should standards be removed from results?}
 }
 \value{
 Same as input, with the volumes of lysate and volumes of diluent to
