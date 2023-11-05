@@ -8,6 +8,9 @@ qp_plot_plate(x, size = 15)
 }
 \arguments{
 \item{x}{A \code{data.frame} with \code{.row}, \code{.col}, and \code{.abs} columns}
+
+\item{size}{The size of the points used to illustrate the wells.
+Passed to geom_point.}
 }
 \value{
 a \code{ggplot}

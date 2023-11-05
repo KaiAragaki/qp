@@ -36,3 +36,30 @@ Input \code{data.frame} must contain the following columns:
 \item If a boolean \code{.is_outlier} is supplied, that will be used instead.
 }
 }
+\examples{
+ library(dplyr)
+
+abs <- expand.grid(
+  sample_type = c("standard", "unknown"),
+  index = 1:7,
+  rep = 1:3
+) |>
+  dplyr::arrange(sample_type, index, rep)
+
+abs$.abs <- abs(rnorm(nrow(abs), mean = abs$index))
+
+# Selecting different subsets for outlier removal
+qp_calc_abs_mean(abs, "none")
+
+qp_calc_abs_mean(abs, "standards")
+
+qp_calc_abs_mean(abs, "samples")
+
+qp_calc_abs_mean(abs, "all")
+
+# If an `.is_outlier` column is provided, that will be used instead:
+
+abs$.is_outlier <- rep(c(TRUE, FALSE), length.out = nrow(abs))
+
+qp_calc_abs_mean(abs)
+}

@@ -5,6 +5,7 @@
 #' @param standard_scale A numeric vector giving the concentrations of the
 #'   standards. The units are arbitrary, but will determine the units of the
 #'   output concentrations.
+#' @param ... Unused
 #' @details Input is expected to have two columns:
 #'   - `sample_type`: A character vector denoting which samples are standards
 #'     with "standard". All other values will be considered unknowns.

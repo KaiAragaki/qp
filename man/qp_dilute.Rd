@@ -29,6 +29,8 @@ qp_dilute(x, ...)
 a column named \code{.pred_conc} or \code{.mean_pred_conc}. If both, will favor
 \code{.mean_pred_conc}.}
 
+\item{...}{Unused}
+
 \item{target_conc}{Numeric vector. Target concentration in (mg/mL) protein.
 If length == 1, recycled.}
 

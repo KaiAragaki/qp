@@ -19,6 +19,8 @@ See details.}
 \item{standard_scale}{A numeric vector giving the concentrations of the
 standards. The units are arbitrary, but will determine the units of the
 output concentrations.}
+
+\item{...}{Unused}
 }
 \value{
 Same type as x, with a \code{.conc} column
