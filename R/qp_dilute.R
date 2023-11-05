@@ -29,12 +29,12 @@ qp_dilute.data.frame <- function(x, target_conc = NULL, target_vol = 15,
   if (remove_standards)
     x <- x |> dplyr::filter(.data$sample_type != "standard")
 
-  if (!length_is_recyclable(target_conc, x)) {
+  if (!length_is_recyclable(length(target_conc), x)) {
     rlang::abort("`target_conc` length is not 1 or nrow(x)")
   }
 
   conc_col_name <- ifelse(
-    ".mean_pred_conc" %in% colnames(x), ".mean_pred_conc", ".pred_conc"
+    has_cols(x, ".mean_pred_conc"), ".mean_pred_conc", ".pred_conc"
   )
 
   if (is.null(target_conc)) {
@@ -64,5 +64,5 @@ qp_dilute.list <- function(x, target_conc = NULL, target_vol = 15,
 }
 
 length_is_recyclable <- function(n, x) {
-  is.null(n) || n == 1 || n == nrow(x)
+  n == 0 || n == 1 || n == nrow(x)
 }
