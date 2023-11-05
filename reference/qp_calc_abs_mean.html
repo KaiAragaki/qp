@@ -85,6 +85,259 @@ is ignored.</p></dd>
 <li><p>If a boolean <code>.is_outlier</code> is supplied, that will be used instead.</p></li>
 </ul></div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘dplyr’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:stats’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     filter, lag</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:base’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     intersect, setdiff, setequal, union</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">abs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  sample_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"standard"</span>, <span class="st">"unknown"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  index <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">7</span>,</span></span>
+<span class="r-in"><span>  rep <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span></span></span>
+<span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">sample_type</span>, <span class="va">index</span>, <span class="va">rep</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">abs</span><span class="op">$</span><span class="va">.abs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">abs</span><span class="op">)</span>, mean <span class="op">=</span> <span class="va">abs</span><span class="op">$</span><span class="va">index</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Selecting different subsets for outlier removal</span></span></span>
+<span class="r-in"><span><span class="fu">qp_calc_abs_mean</span><span class="op">(</span><span class="va">abs</span>, <span class="st">"none"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    sample_type index rep       .abs .is_outlier    .mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     standard     1   1 2.27294539          NA 1.232511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     standard     1   2 1.36765918          NA 1.232511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     standard     1   3 0.05692763          NA 1.232511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     standard     2   1 0.16185806          NA 1.417102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     standard     2   2 1.55085021          NA 1.417102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     standard     2   3 2.53859670          NA 1.417102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     standard     3   1 0.31587984          NA 2.101351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     standard     3   2 2.20821700          NA 2.101351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     standard     3   3 3.77995670          NA 2.101351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    standard     4   1 5.23912716          NA 4.627815</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    standard     4   2 5.76486305          NA 4.627815</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    standard     4   3 2.87945509          NA 4.627815</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    standard     5   1 5.19654325          NA 5.061389</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14    standard     5   2 4.78048278          NA 5.061389</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15    standard     5   3 5.20714081          NA 5.061389</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16    standard     6   1 5.75914958          NA 5.320043</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17    standard     6   2 6.36930432          NA 5.320043</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18    standard     6   3 3.83167511          NA 5.320043</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19    standard     7   1 9.39580819          NA 7.818037</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20    standard     7   2 6.73203471          NA 7.818037</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21    standard     7   3 7.32626783          NA 7.818037</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22     unknown     1   1 0.42755878          NA 1.408214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23     unknown     1   2 3.08604646          NA 1.408214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24     unknown     1   3 0.71103688          NA 1.408214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25     unknown     2   1 0.79904282          NA 1.638968</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26     unknown     2   2 1.29559409          NA 1.638968</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27     unknown     2   3 2.82226605          NA 1.638968</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28     unknown     3   1 1.60781524          NA 2.733506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29     unknown     3   2 3.47810353          NA 2.733506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30     unknown     3   3 3.11459894          NA 2.733506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31     unknown     4   1 5.37286412          NA 3.780155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32     unknown     4   2 3.90712955          NA 3.780155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33     unknown     4   3 2.06046998          NA 3.780155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34     unknown     5   1 5.16324906          NA 5.345936</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35     unknown     5   2 6.26176805          NA 5.345936</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36     unknown     5   3 4.61279030          NA 5.345936</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37     unknown     6   1 7.06822695          NA 6.747870</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38     unknown     6   2 6.98998100          NA 6.747870</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39     unknown     6   3 6.18540099          NA 6.747870</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40     unknown     7   1 6.30296255          NA 7.041491</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41     unknown     7   2 7.57341137          NA 7.041491</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42     unknown     7   3 7.24809952          NA 7.041491</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">qp_calc_abs_mean</span><span class="op">(</span><span class="va">abs</span>, <span class="st">"standards"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    sample_type index rep       .abs .is_outlier    .mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     standard     1   1 2.27294539       FALSE 1.232511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     standard     1   2 1.36765918       FALSE 1.232511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     standard     1   3 0.05692763       FALSE 1.232511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     standard     2   1 0.16185806       FALSE 1.417102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     standard     2   2 1.55085021       FALSE 1.417102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     standard     2   3 2.53859670       FALSE 1.417102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     standard     3   1 0.31587984       FALSE 2.101351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     standard     3   2 2.20821700       FALSE 2.101351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     standard     3   3 3.77995670       FALSE 2.101351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    standard     4   1 5.23912716       FALSE 5.501995</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    standard     4   2 5.76486305       FALSE 5.501995</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    standard     4   3 2.87945509        TRUE 5.501995</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    standard     5   1 5.19654325       FALSE 5.201842</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14    standard     5   2 4.78048278        TRUE 5.201842</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15    standard     5   3 5.20714081       FALSE 5.201842</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16    standard     6   1 5.75914958       FALSE 6.064227</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17    standard     6   2 6.36930432       FALSE 6.064227</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18    standard     6   3 3.83167511        TRUE 6.064227</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19    standard     7   1 9.39580819        TRUE 7.029151</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20    standard     7   2 6.73203471       FALSE 7.029151</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21    standard     7   3 7.32626783       FALSE 7.029151</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22     unknown     1   1 0.42755878          NA 1.408214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23     unknown     1   2 3.08604646          NA 1.408214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24     unknown     1   3 0.71103688          NA 1.408214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25     unknown     2   1 0.79904282          NA 1.638968</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26     unknown     2   2 1.29559409          NA 1.638968</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27     unknown     2   3 2.82226605          NA 1.638968</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28     unknown     3   1 1.60781524          NA 2.733506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29     unknown     3   2 3.47810353          NA 2.733506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30     unknown     3   3 3.11459894          NA 2.733506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31     unknown     4   1 5.37286412          NA 3.780155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32     unknown     4   2 3.90712955          NA 3.780155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33     unknown     4   3 2.06046998          NA 3.780155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34     unknown     5   1 5.16324906          NA 5.345936</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35     unknown     5   2 6.26176805          NA 5.345936</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36     unknown     5   3 4.61279030          NA 5.345936</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37     unknown     6   1 7.06822695          NA 6.747870</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38     unknown     6   2 6.98998100          NA 6.747870</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39     unknown     6   3 6.18540099          NA 6.747870</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40     unknown     7   1 6.30296255          NA 7.041491</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41     unknown     7   2 7.57341137          NA 7.041491</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42     unknown     7   3 7.24809952          NA 7.041491</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">qp_calc_abs_mean</span><span class="op">(</span><span class="va">abs</span>, <span class="st">"samples"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    sample_type index rep       .abs .is_outlier     .mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     standard     1   1 2.27294539          NA 1.2325107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     standard     1   2 1.36765918          NA 1.2325107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     standard     1   3 0.05692763          NA 1.2325107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     standard     2   1 0.16185806          NA 1.4171017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     standard     2   2 1.55085021          NA 1.4171017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     standard     2   3 2.53859670          NA 1.4171017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     standard     3   1 0.31587984          NA 2.1013512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     standard     3   2 2.20821700          NA 2.1013512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     standard     3   3 3.77995670          NA 2.1013512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    standard     4   1 5.23912716          NA 4.6278151</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    standard     4   2 5.76486305          NA 4.6278151</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    standard     4   3 2.87945509          NA 4.6278151</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    standard     5   1 5.19654325          NA 5.0613889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14    standard     5   2 4.78048278          NA 5.0613889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15    standard     5   3 5.20714081          NA 5.0613889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16    standard     6   1 5.75914958          NA 5.3200430</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17    standard     6   2 6.36930432          NA 5.3200430</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18    standard     6   3 3.83167511          NA 5.3200430</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19    standard     7   1 9.39580819          NA 7.8180369</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20    standard     7   2 6.73203471          NA 7.8180369</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21    standard     7   3 7.32626783          NA 7.8180369</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22     unknown     1   1 0.42755878       FALSE 0.5692978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23     unknown     1   2 3.08604646        TRUE 0.5692978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24     unknown     1   3 0.71103688       FALSE 0.5692978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25     unknown     2   1 0.79904282       FALSE 1.0473185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26     unknown     2   2 1.29559409       FALSE 1.0473185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27     unknown     2   3 2.82226605        TRUE 1.0473185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28     unknown     3   1 1.60781524        TRUE 3.2963512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29     unknown     3   2 3.47810353       FALSE 3.2963512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30     unknown     3   3 3.11459894       FALSE 3.2963512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31     unknown     4   1 5.37286412       FALSE 3.7801546</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32     unknown     4   2 3.90712955       FALSE 3.7801546</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33     unknown     4   3 2.06046998       FALSE 3.7801546</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34     unknown     5   1 5.16324906       FALSE 4.8880197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35     unknown     5   2 6.26176805        TRUE 4.8880197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36     unknown     5   3 4.61279030       FALSE 4.8880197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37     unknown     6   1 7.06822695       FALSE 7.0291040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38     unknown     6   2 6.98998100       FALSE 7.0291040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39     unknown     6   3 6.18540099        TRUE 7.0291040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40     unknown     7   1 6.30296255        TRUE 7.4107554</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41     unknown     7   2 7.57341137       FALSE 7.4107554</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42     unknown     7   3 7.24809952       FALSE 7.4107554</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">qp_calc_abs_mean</span><span class="op">(</span><span class="va">abs</span>, <span class="st">"all"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    sample_type index rep       .abs .is_outlier     .mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     standard     1   1 2.27294539       FALSE 1.2325107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     standard     1   2 1.36765918       FALSE 1.2325107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     standard     1   3 0.05692763       FALSE 1.2325107</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     standard     2   1 0.16185806       FALSE 1.4171017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     standard     2   2 1.55085021       FALSE 1.4171017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     standard     2   3 2.53859670       FALSE 1.4171017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     standard     3   1 0.31587984       FALSE 2.1013512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     standard     3   2 2.20821700       FALSE 2.1013512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     standard     3   3 3.77995670       FALSE 2.1013512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    standard     4   1 5.23912716       FALSE 5.5019951</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    standard     4   2 5.76486305       FALSE 5.5019951</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    standard     4   3 2.87945509        TRUE 5.5019951</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    standard     5   1 5.19654325       FALSE 5.2018420</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14    standard     5   2 4.78048278        TRUE 5.2018420</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15    standard     5   3 5.20714081       FALSE 5.2018420</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16    standard     6   1 5.75914958       FALSE 6.0642270</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17    standard     6   2 6.36930432       FALSE 6.0642270</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18    standard     6   3 3.83167511        TRUE 6.0642270</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19    standard     7   1 9.39580819        TRUE 7.0291513</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20    standard     7   2 6.73203471       FALSE 7.0291513</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21    standard     7   3 7.32626783       FALSE 7.0291513</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22     unknown     1   1 0.42755878       FALSE 0.5692978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23     unknown     1   2 3.08604646        TRUE 0.5692978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24     unknown     1   3 0.71103688       FALSE 0.5692978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25     unknown     2   1 0.79904282       FALSE 1.0473185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26     unknown     2   2 1.29559409       FALSE 1.0473185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27     unknown     2   3 2.82226605        TRUE 1.0473185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28     unknown     3   1 1.60781524        TRUE 3.2963512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29     unknown     3   2 3.47810353       FALSE 3.2963512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30     unknown     3   3 3.11459894       FALSE 3.2963512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31     unknown     4   1 5.37286412       FALSE 3.7801546</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32     unknown     4   2 3.90712955       FALSE 3.7801546</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33     unknown     4   3 2.06046998       FALSE 3.7801546</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34     unknown     5   1 5.16324906       FALSE 4.8880197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35     unknown     5   2 6.26176805        TRUE 4.8880197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36     unknown     5   3 4.61279030       FALSE 4.8880197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37     unknown     6   1 7.06822695       FALSE 7.0291040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38     unknown     6   2 6.98998100       FALSE 7.0291040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39     unknown     6   3 6.18540099        TRUE 7.0291040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40     unknown     7   1 6.30296255        TRUE 7.4107554</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41     unknown     7   2 7.57341137       FALSE 7.4107554</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42     unknown     7   3 7.24809952       FALSE 7.4107554</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If an `.is_outlier` column is provided, that will be used instead:</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">abs</span><span class="op">$</span><span class="va">.is_outlier</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">abs</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">qp_calc_abs_mean</span><span class="op">(</span><span class="va">abs</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Data has `.is_outlier` column, using that</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    sample_type index rep       .abs .is_outlier     .mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     standard     1   1 2.27294539        TRUE 1.3676592</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     standard     1   2 1.36765918       FALSE 1.3676592</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     standard     1   3 0.05692763        TRUE 1.3676592</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     standard     2   1 0.16185806       FALSE 1.3502274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     standard     2   2 1.55085021        TRUE 1.3502274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     standard     2   3 2.53859670       FALSE 1.3502274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     standard     3   1 0.31587984        TRUE 2.2082170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     standard     3   2 2.20821700       FALSE 2.2082170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     standard     3   3 3.77995670        TRUE 2.2082170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    standard     4   1 5.23912716       FALSE 4.0592911</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    standard     4   2 5.76486305        TRUE 4.0592911</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    standard     4   3 2.87945509       FALSE 4.0592911</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    standard     5   1 5.19654325        TRUE 4.7804828</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14    standard     5   2 4.78048278       FALSE 4.7804828</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15    standard     5   3 5.20714081        TRUE 4.7804828</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16    standard     6   1 5.75914958       FALSE 4.7954123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17    standard     6   2 6.36930432        TRUE 4.7954123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18    standard     6   3 3.83167511       FALSE 4.7954123</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19    standard     7   1 9.39580819        TRUE 6.7320347</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20    standard     7   2 6.73203471       FALSE 6.7320347</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21    standard     7   3 7.32626783        TRUE 6.7320347</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22     unknown     1   1 0.42755878       FALSE 0.5692978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23     unknown     1   2 3.08604646        TRUE 0.5692978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24     unknown     1   3 0.71103688       FALSE 0.5692978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25     unknown     2   1 0.79904282        TRUE 1.2955941</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26     unknown     2   2 1.29559409       FALSE 1.2955941</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27     unknown     2   3 2.82226605        TRUE 1.2955941</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28     unknown     3   1 1.60781524       FALSE 2.3612071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29     unknown     3   2 3.47810353        TRUE 2.3612071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30     unknown     3   3 3.11459894       FALSE 2.3612071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31     unknown     4   1 5.37286412        TRUE 3.9071296</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32     unknown     4   2 3.90712955       FALSE 3.9071296</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33     unknown     4   3 2.06046998        TRUE 3.9071296</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34     unknown     5   1 5.16324906       FALSE 4.8880197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35     unknown     5   2 6.26176805        TRUE 4.8880197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36     unknown     5   3 4.61279030       FALSE 4.8880197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37     unknown     6   1 7.06822695        TRUE 6.9899810</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38     unknown     6   2 6.98998100       FALSE 6.9899810</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39     unknown     6   3 6.18540099        TRUE 6.9899810</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40     unknown     7   1 6.30296255       FALSE 6.7755310</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41     unknown     7   2 7.57341137        TRUE 6.7755310</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42     unknown     7   3 7.24809952       FALSE 6.7755310</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
