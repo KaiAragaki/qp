@@ -82,7 +82,6 @@ qp_calc_abs_mean.list <- function(x,
                                   ignore_outliers = c(
                                     "all", "standards", "samples", "none"
                                   )) {
-  ignore_outliers <- rlang::arg_match(ignore_outliers)
   x$qp <- qp_calc_abs_mean(x$qp, ignore_outliers)
   x
 }
