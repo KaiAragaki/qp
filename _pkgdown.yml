@@ -30,3 +30,6 @@ reference:
     - qp_summarize
     - qp_plot_plate
     - qp_plot_standards
+  - title: "Data"
+    contents:
+    - absorbances
