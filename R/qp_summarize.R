@@ -16,6 +16,9 @@ qp_summarize.data.frame <- function(x) {
   check_has_cols(x, c("index", "sample_type", ".pred_conc_mean"))
   check_sample_type(x$sample_type)
   check_pred_conc_mean(x$.pred_conc_mean)
+  if (!has_cols(x, ".sample_name")) {
+    x <- qp_add_names(x)
+  }
   x |>
     dplyr::summarize(
       .mean_pred_conc = mean(.data$.pred_conc_mean, na.rm = TRUE),
