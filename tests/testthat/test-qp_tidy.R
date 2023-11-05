@@ -38,3 +38,8 @@ test_that("max_unknowns calculated correctly", {
   expect_equal(get_max_unknowns(3, 2, 1), 0)
   expect_equal(get_max_unknowns(0, 2, 2), 0)
 })
+
+test_that("vertical replicate_orientation works", {
+  f <- system.file("extdata", "absorbances.txt", package = "qp")
+  expect_no_error(suppressWarnings(qp_tidy(f, replicate_orientation = "v")))
+})
