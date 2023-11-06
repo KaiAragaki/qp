@@ -34,6 +34,11 @@ qp_add_names.data.frame <- function(x, sample_names = NULL, ...) {
       .data$sample_type == "unknown",
       sample_names[.data$index],
       paste("Standard", .data$index)
+    ),
+    .sample_name = ifelse(
+      is.na(.data$.sample_name),
+      .data$index,
+      .data$.sample_name
     )
   )
 }
