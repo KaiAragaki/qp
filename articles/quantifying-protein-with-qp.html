@@ -200,8 +200,8 @@ replicates. In this case, you can run the functions that <code>qp</code>
 runs individually, maybe doing a little data munging between steps.</p>
 <p>Most functions depend on a previous function being run. See the
 following hierarchy to see what functions depend on what:</p>
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-763bca3968598e898023" style="width:100%;height:432.632880098888px;"></div>
-<script type="application/json" data-for="htmlwidget-763bca3968598e898023">{"x":{"diagram":"\ndigraph qp_deps {\n  rankdir=BT\n  graph [overlap = true, fontsize = 10]\n\n  node [shape = box,\n        fontname = Helvetica]\n  tidy; calc_abs_mean; add_std_conc; add_names; plot_plate; fit;\n  calc_conc; summarize; dilute; remove_empty; plot_standards\n\n  calc_abs_mean->tidy\n  add_std_conc->tidy\n  add_names->tidy\n  plot_plate->tidy\n  fit->calc_abs_mean\n  fit->add_std_conc\n  calc_conc->fit\n  summarize->calc_conc\n  dilute->calc_conc\n  remove_empty->calc_conc\n  plot_standards->calc_conc\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><div class="section level3">
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ebd2e1942c94accd8452" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-ebd2e1942c94accd8452">{"x":{"diagram":"\ndigraph qp_deps {\n  rankdir=BT\n  graph [overlap = true, fontsize = 10]\n\n  node [shape = box,\n        fontname = Helvetica]\n  tidy; calc_abs_mean; add_std_conc; add_names; plot_plate; fit;\n  calc_conc; summarize; dilute; remove_empty; plot_standards\n\n  calc_abs_mean->tidy\n  add_std_conc->tidy\n  add_names->tidy\n  plot_plate->tidy\n  fit->calc_abs_mean\n  fit->add_std_conc\n  calc_conc->fit\n  summarize->calc_conc\n  dilute->calc_conc\n  remove_empty->calc_conc\n  plot_standards->calc_conc\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><div class="section level3">
 <h3 id="reading-in-the-data">Reading in the data<a class="anchor" aria-label="anchor" href="#reading-in-the-data"></a>
 </h3>
 <p>There are a couple ways of going about doing this. Depending on how
@@ -273,7 +273,7 @@ it. Another way of going doing this is via <a href="https://kaiaragaki.github.io
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #555555;"># Wavelengths:</span> 562 </span></span>
 <span><span class="co">#&gt; <span style="color: #555555;"># Is tidy:</span> <span style="color: #0000BB;">TRUE</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #555555;"># Date:</span> 2023-11-05</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #555555;"># Date:</span> 2023-11-06</span></span></code></pre></div>
 <p>We can extract the <code>gp</code> from the <code>spectramax</code>
 object via:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
