@@ -13,10 +13,15 @@ library(qp)
 # Analysis Parameters
 
 ```{r}
-qp_plot_plate(params$qp)
+qp_plot_plate(params$qp$qp)
 ```
 
+```{r}
+qp_plot_standards(params$qp)
+```
 
-
+```{r}
+qp_samples_summary(params$qp)
+```
 
 
