@@ -1,0 +1,22 @@
+---
+title: "Protein Quantification Report"
+output: html_document
+params:
+  qp : NA
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(qp)
+```
+
+# Analysis Parameters
+
+```{r}
+qp_plot_plate(params$qp)
+```
+
+
+
+
+

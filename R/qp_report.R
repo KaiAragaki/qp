@@ -1,5 +1,5 @@
 qp_report <- function(qp) {
-  ""
+
 }
 
 # Standards ----

@@ -1,0 +1,4 @@
+name: Quantify Protein Report
+description: >
+  Report output from qp
+create_dir: FALSE
