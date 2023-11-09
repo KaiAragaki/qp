@@ -7,6 +7,7 @@ params:
   qp : NA
   target_conc : NA
   target_vol : NA
+  other : list()
 ---
 
 ```{r setup, include=FALSE}
@@ -15,12 +16,11 @@ library(qp)
 library(ggplot2)
 library(dplyr)
 library(gt)
+library(knitr)
 ```
 
-# Report Parameters
 
-
-
+# Plots
 ```{r}
 plate_plot <- qp_plot_plate(params$qp$qp) +
   theme_void() +
@@ -35,7 +35,7 @@ ggsave(
   "plate_plot.png",
   plate_plot,
   device = "png",
-  width = 17, height = 9, units = "cm",
+  width = 17, height = max(params$qp$qp$.col), units = "cm",
   bg = "transparent"
 )
 ```
@@ -59,8 +59,10 @@ ggsave(
 
 ![test](plate_plot.png){height=300px} ![test](standards_plot.png){height=300px}
 
-```{r message=FALSE}
+# Tables
 
+
+```{r message=FALSE}
 dil <- qp_dilute(
   qp_summarize(params$qp),
   params$target_conc, params$target_vol, remove_standards = TRUE
@@ -85,6 +87,12 @@ dil |>
 
 ```
 
+
+## Summaries
+:::: {style="display: flex; justify-content: space-between;"}
+
+::: {}
+
 ```{r}
 td <- qp_samples_summary(params$qp)$qp
 tab_options(
@@ -95,6 +103,11 @@ tab_options(
 ) |>
   tab_header("Samples Summary")
 ```
+
+:::
+
+
+::: {}
 
 ```{r}
 td <- qp_standards_summary(params$qp)$qp
@@ -107,6 +120,16 @@ tab_options(
   tab_header("Standards Summary")
 ```
 
+:::
+
+
+::::
+
+## All
+:::: {style="display: flex; justify-content: space-between;"}
+
+:::{}
+
 ```{r}
 td <- qp_samples_all(params$qp)$qp
 tab_options(
@@ -117,6 +140,10 @@ tab_options(
 ) |>
   tab_header("Samples")
 ```
+
+:::
+
+:::{}
 
 ```{r}
 td <- qp_standards_all(params$qp)$qp
@@ -129,11 +156,27 @@ tab_options(
   tab_header("Standards")
 ```
 
+:::
 
+
+::::
 
 
 ```{r}
+# load_all()
 library(rmarkdown)
 f <- system.file("rmarkdown/templates/quantify-protein-report/skeleton/skeleton.Rmd", package = "qp")
 out_file <- "~/Desktop/test.html"
+# render(f, output_file = out_file, params = list(qp = qp(absorbances), target_vol = 30, target_conc = NULL, other = list(foo = "bar", fruit = "banana")))
+```
+
+# Report Parameters
+
+```{r}
+params$other |>
+  as.data.frame() |>
+  t() |>
+  as_tibble(rownames = "Parameter") |>
+  rename("Value" = "V1") |>
+  kable()
 ```
