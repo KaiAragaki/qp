@@ -54,7 +54,8 @@ qp_dilute.data.frame <- function(x, target_conc = NULL, target_vol = 15,
 
   x |>
     dplyr::bind_cols(dils) |>
-    tidyr::unnest_wider("value")
+    tidyr::unnest_wider("value") |>
+    dplyr::mutate(.target_conc = target_conc, .target_vol = target_vol)
 }
 
 #' @rdname qp_dilute

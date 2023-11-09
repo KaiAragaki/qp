@@ -1,0 +1,26 @@
+body {
+    background: linear-gradient(45deg, #8965CD, #C1FFC1);
+    background-attachment: fixed;
+    color: white;
+    font-family: Arial;
+    font-weight: bold;
+    text-align: center;
+}
+
+h1, h2 {
+    font-weight: bold;
+    text-align: center;
+}
+
+
+h1, h1.title {
+    font-size: 60px;
+}
+
+h2 {
+    font-size: 50px;
+}
+
+body .main-container {
+    max-width: 90%
+}

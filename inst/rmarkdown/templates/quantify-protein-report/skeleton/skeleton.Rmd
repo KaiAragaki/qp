@@ -1,27 +1,139 @@
 ---
 title: "Protein Quantification Report"
-output: html_document
+output:
+  html_document:
+    css: "style.css"
 params:
   qp : NA
+  target_conc : NA
+  target_vol : NA
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(qp)
+library(ggplot2)
+library(dplyr)
+library(gt)
 ```
 
-# Analysis Parameters
+# Report Parameters
+
+
 
 ```{r}
-qp_plot_plate(params$qp$qp)
+plate_plot <- qp_plot_plate(params$qp$qp) +
+  theme_void() +
+  coord_cartesian(clip = "off") +
+  theme(
+    plot.margin = margin(1, 0.5, 1, 0.5, unit = "cm"),
+    panel.background = element_rect(fill = "transparent", color = NA),
+    plot.background = element_rect(fill = "#FFFFFF33", color = NA)
+  )
+
+ggsave(
+  "plate_plot.png",
+  plate_plot,
+  device = "png",
+  width = 17, height = 9, units = "cm",
+  bg = "transparent"
+)
 ```
 
 ```{r}
-qp_plot_standards(params$qp)
+standards_plot <- qp_plot_standards(params$qp) +
+  theme_minimal() +
+  theme(
+    panel.background = element_rect(fill = "transparent", color = NA),
+    plot.background = element_rect(fill = "#FFFFFF33", color = NA)
+  )
+
+ggsave(
+  "standards_plot.png",
+  standards_plot,
+  device = "png",
+  width = 12, height = 9, units = "cm",
+  bg = "transparent"
+)
+```
+
+![test](plate_plot.png){height=300px} ![test](standards_plot.png){height=300px}
+
+```{r message=FALSE}
+
+dil <- qp_dilute(
+  qp_summarize(params$qp),
+  params$target_conc, params$target_vol, remove_standards = TRUE
+)
+
+dil |>
+  select(
+    Name = ".sample_name", .mean_pred_conc, .target_conc,
+    "Final Vol" = ".target_vol", "Sample to Add (uL)" = sample_to_add,
+    "Diluent to Add (uL)" = add_to
+  ) |>
+  mutate(.target_conc = round(.target_conc, 2),
+         .mean_pred_conc = round(.mean_pred_conc, 2)) |>
+  rename("[Target]" = .target_conc,
+         "[Sample]" = .mean_pred_conc) |>
+  gt() |>
+  tab_options(
+    table.background.color = "#FFFFFF33",
+    table.border.top.color = "white",
+    table.border.bottom.color = "white"
+  )
+
 ```
 
 ```{r}
-qp_samples_summary(params$qp)
+td <- qp_samples_summary(params$qp)$qp
+tab_options(
+  td,
+  table.background.color = "#FFFFFF33",
+  table.border.top.color = "white",
+  table.border.bottom.color = "white"
+) |>
+  tab_header("Samples Summary")
+```
+
+```{r}
+td <- qp_standards_summary(params$qp)$qp
+tab_options(
+  td,
+  table.background.color = "#FFFFFF33",
+  table.border.top.color = "white",
+  table.border.bottom.color = "white"
+) |>
+  tab_header("Standards Summary")
+```
+
+```{r}
+td <- qp_samples_all(params$qp)$qp
+tab_options(
+  td,
+  table.background.color = "#FFFFFF33",
+  table.border.top.color = "white",
+  table.border.bottom.color = "white"
+) |>
+  tab_header("Samples")
+```
+
+```{r}
+td <- qp_standards_all(params$qp)$qp
+tab_options(
+  td,
+  table.background.color = "#FFFFFF33",
+  table.border.top.color = "white",
+  table.border.bottom.color = "white"
+) |>
+  tab_header("Standards")
 ```
 
 
+
+
+```{r}
+library(rmarkdown)
+f <- system.file("rmarkdown/templates/quantify-protein-report/skeleton/skeleton.Rmd", package = "qp")
+out_file <- "~/Desktop/test.html"
+```

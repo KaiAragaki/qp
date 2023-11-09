@@ -19,7 +19,9 @@ qp_plot_plate <- function(x, size = 15) {
     ggplot2::geom_text(
       ggplot2::aes(
         label = round(.data$.abs, 2),
-        color = ifelse(.data$.abs < 0.35, "black", "white")),
+        color = ifelse(.data$.abs < 0.35, "black", "white")
+      ),
+      size = size / 3
     ) +
     ggplot2::scale_y_reverse() +
     ggplot2::scale_color_identity()
