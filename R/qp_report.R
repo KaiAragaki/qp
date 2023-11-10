@@ -1,5 +1,12 @@
-qp_report <- function(qp) {
-  rmarkdown::render()
+qp_report <- function(qp, output_file) {
+  rmarkdown::render(
+    system.file(
+      "rmarkdown/templates/quantify-protein-report/skeleton/skeleton.Rmd",
+      package = "qp"
+    ),
+    output_file = output_file,
+    params = list(qp = qp)
+  )
 }
 
 # Standards ----

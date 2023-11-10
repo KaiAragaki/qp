@@ -5,8 +5,6 @@ output:
     css: "style.css"
 params:
   qp : NA
-  target_conc : NA
-  target_vol : NA
   other : list()
 ---
 
@@ -63,21 +61,24 @@ ggsave(
 
 
 ```{r message=FALSE}
-dil <- qp_dilute(
-  qp_summarize(params$qp),
-  params$target_conc, params$target_vol, remove_standards = TRUE
-)
 
-dil |>
+params$qp$qp |>
+  summarize(
+    .by = c(
+      .sample_name, .pred_conc_mean, .target_conc, .target_vol, sample_type
+    )
+  ) |>
+  qp_dilute() |>
+  filter(sample_type == "unknown") |>
   select(
-    Name = ".sample_name", .mean_pred_conc, .target_conc,
+    Name = ".sample_name", .pred_conc_mean, .target_conc,
     "Final Vol" = ".target_vol", "Sample to Add (uL)" = sample_to_add,
     "Diluent to Add (uL)" = add_to
   ) |>
   mutate(.target_conc = round(.target_conc, 2),
-         .mean_pred_conc = round(.mean_pred_conc, 2)) |>
+         .pred_conc_mean = round(.pred_conc_mean, 2)) |>
   rename("[Target]" = .target_conc,
-         "[Sample]" = .mean_pred_conc) |>
+         "[Sample]" = .pred_conc_mean) |>
   gt() |>
   tab_options(
     table.background.color = "#FFFFFF33",
@@ -94,14 +95,17 @@ dil |>
 ::: {}
 
 ```{r}
-td <- qp_samples_summary(params$qp)$qp
-tab_options(
-  td,
-  table.background.color = "#FFFFFF33",
-  table.border.top.color = "white",
-  table.border.bottom.color = "white"
-) |>
-  tab_header("Samples Summary")
+mk_tbl <- function(qp_tbl_out, name) {
+  qp_tbl_out$qp |>
+    tab_options(
+      table.background.color = "#FFFFFF33",
+      table.border.top.color = "white",
+      table.border.bottom.color = "white"
+    ) |>
+    tab_header(name)
+}
+
+mk_tbl(qp_samples_summary(params$qp), "Samples Summary")
 ```
 
 :::
@@ -110,14 +114,7 @@ tab_options(
 ::: {}
 
 ```{r}
-td <- qp_standards_summary(params$qp)$qp
-tab_options(
-  td,
-  table.background.color = "#FFFFFF33",
-  table.border.top.color = "white",
-  table.border.bottom.color = "white"
-) |>
-  tab_header("Standards Summary")
+mk_tbl(qp_standards_summary(params$qp), "Standards Summary")
 ```
 
 :::
@@ -131,14 +128,7 @@ tab_options(
 :::{}
 
 ```{r}
-td <- qp_samples_all(params$qp)$qp
-tab_options(
-  td,
-  table.background.color = "#FFFFFF33",
-  table.border.top.color = "white",
-  table.border.bottom.color = "white"
-) |>
-  tab_header("Samples")
+mk_tbl(qp_samples_all(params$qp), "Samples")
 ```
 
 :::
@@ -146,14 +136,7 @@ tab_options(
 :::{}
 
 ```{r}
-td <- qp_standards_all(params$qp)$qp
-tab_options(
-  td,
-  table.background.color = "#FFFFFF33",
-  table.border.top.color = "white",
-  table.border.bottom.color = "white"
-) |>
-  tab_header("Standards")
+mk_tbl(qp_standards_all(params$qp), "Standards")
 ```
 
 :::
@@ -163,11 +146,11 @@ tab_options(
 
 
 ```{r}
-# load_all()
+#load_all()
 library(rmarkdown)
 f <- system.file("rmarkdown/templates/quantify-protein-report/skeleton/skeleton.Rmd", package = "qp")
 out_file <- "~/Desktop/test.html"
-# render(f, output_file = out_file, params = list(qp = qp(absorbances), target_vol = 30, target_conc = NULL, other = list(foo = "bar", fruit = "banana")))
+# render(f, output_file = out_file, params = list(qp = qp(absorbances) |> qp_dilute(), other = list(foo = "bar", fruit = "banana")))
 ```
 
 # Report Parameters
