@@ -231,3 +231,26 @@ make_well_circles_plot <- function(df) {
     ggplot2::scale_color_identity() +
     ggplot2::theme(plot.margin = ggplot2::margin(0, 1.5, 0, 1.5, unit = "cm"))
 }
+
+dil_summary <- function(qp) {
+  qp |>
+    summarize(
+      .by = c(
+        .sample_name, .pred_conc_mean, .target_conc, .target_vol, sample_type
+      )
+    ) |>
+    qp_dilute() |>
+    filter(sample_type == "unknown") |>
+    select(
+      Name = ".sample_name", .pred_conc_mean, .target_conc,
+      "Final Vol" = ".target_vol", "Sample to Add (uL)" = sample_to_add,
+      "Diluent to Add (uL)" = add_to
+    ) |>
+    mutate(
+      .target_conc = round(.target_conc, 2),
+      .pred_conc_mean = round(.pred_conc_mean, 2)
+    ) |>
+    rename(
+      "[Target]" = .target_conc, "[Sample]" = .pred_conc_mean
+    )
+}
