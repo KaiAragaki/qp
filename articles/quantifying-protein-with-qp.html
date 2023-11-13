@@ -155,7 +155,7 @@ replicates were arranged horizontally, analysis is a breeze:</p>
 <code class="sourceCode R"><span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qp_summarize.html">qp_summarize</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
 <span><span class="va">summary</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 3</span></span></span>
-<span><span class="co">#&gt;    .sample_name sample_type .mean_pred_conc</span></span>
+<span><span class="co">#&gt;    .sample_name sample_type .pred_conc_mean</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Standard 1   standard           -<span style="color: #BB0000;">0.006</span><span style="color: #BB0000; text-decoration: underline;">23</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Standard 2   standard            0.102  </span></span>
@@ -175,21 +175,22 @@ will use the lowest concentration of the samples and a final volume of
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summary</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/qp_dilute.html">qp_dilute</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `target_conc` is missing, using lowest sample concentration</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 5</span></span></span>
-<span><span class="co">#&gt;    .sample_name sample_type .mean_pred_conc sample_to_add  add_to</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Standard 1   standard           -<span style="color: #BB0000;">0.006</span><span style="color: #BB0000; text-decoration: underline;">23</span>      -<span style="color: #BB0000; text-decoration: underline;">1</span><span style="color: #BB0000;">088</span>    <span style="text-decoration: underline;">1</span>103   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Standard 2   standard            0.102           66.2   -<span style="color: #BB0000;">51.2</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Standard 3   standard            0.258           26.2   -<span style="color: #BB0000;">11.2</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Standard 4   standard            0.520           13.0     1.98</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Standard 5   standard            1.08             6.24    8.76</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Standard 6   standard            2.06             3.28   11.7 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Standard 7   standard            3.76             1.8    13.2 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1            unknown             1.71             3.97   11.0 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2            unknown             1.39             4.85   10.1 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 3            unknown             0.989            6.85    8.15</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4            unknown             1.30             5.23    9.77</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 5            unknown             0.451           15       0</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 7</span></span></span>
+<span><span class="co">#&gt;    .sample_name sample_type .pred_conc_mean sample_to_add  add_to .target_conc</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Standard 1   standard           -<span style="color: #BB0000;">0.006</span><span style="color: #BB0000; text-decoration: underline;">23</span>      -<span style="color: #BB0000; text-decoration: underline;">1</span><span style="color: #BB0000;">088</span>    <span style="text-decoration: underline;">1</span>103           0.451</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Standard 2   standard            0.102           66.2   -<span style="color: #BB0000;">51.2</span>         0.451</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Standard 3   standard            0.258           26.2   -<span style="color: #BB0000;">11.2</span>         0.451</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Standard 4   standard            0.520           13.0     1.98        0.451</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Standard 5   standard            1.08             6.24    8.76        0.451</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Standard 6   standard            2.06             3.28   11.7         0.451</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Standard 7   standard            3.76             1.8    13.2         0.451</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 1            unknown             1.71             3.97   11.0         0.451</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 2            unknown             1.39             4.85   10.1         0.451</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 3            unknown             0.989            6.85    8.15        0.451</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 4            unknown             1.30             5.23    9.77        0.451</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 5            unknown             0.451           15       0           0.451</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: .target_vol &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="when-things-go-wrong">When things go wrong<a class="anchor" aria-label="anchor" href="#when-things-go-wrong"></a>
@@ -200,8 +201,8 @@ replicates. In this case, you can run the functions that <code>qp</code>
 runs individually, maybe doing a little data munging between steps.</p>
 <p>Most functions depend on a previous function being run. See the
 following hierarchy to see what functions depend on what:</p>
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ebd2e1942c94accd8452" style="width:100%;height:432.632880098888px;"></div>
-<script type="application/json" data-for="htmlwidget-ebd2e1942c94accd8452">{"x":{"diagram":"\ndigraph qp_deps {\n  rankdir=BT\n  graph [overlap = true, fontsize = 10]\n\n  node [shape = box,\n        fontname = Helvetica]\n  tidy; calc_abs_mean; add_std_conc; add_names; plot_plate; fit;\n  calc_conc; summarize; dilute; remove_empty; plot_standards\n\n  calc_abs_mean->tidy\n  add_std_conc->tidy\n  add_names->tidy\n  plot_plate->tidy\n  fit->calc_abs_mean\n  fit->add_std_conc\n  calc_conc->fit\n  summarize->calc_conc\n  dilute->calc_conc\n  remove_empty->calc_conc\n  plot_standards->calc_conc\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><div class="section level3">
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-70ce1fda032210e3b148" style="width:100%;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-70ce1fda032210e3b148">{"x":{"diagram":"\ndigraph qp_deps {\n  rankdir=BT\n  graph [overlap = true, fontsize = 10]\n\n  node [shape = box,\n        fontname = Helvetica]\n  tidy; calc_abs_mean; add_std_conc; add_names; plot_plate; fit;\n  calc_conc; summarize; dilute; remove_empty; plot_standards\n\n  calc_abs_mean->tidy\n  add_std_conc->tidy\n  add_names->tidy\n  plot_plate->tidy\n  fit->calc_abs_mean\n  fit->add_std_conc\n  calc_conc->fit\n  summarize->calc_conc\n  dilute->calc_conc\n  remove_empty->calc_conc\n  plot_standards->calc_conc\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><div class="section level3">
 <h3 id="reading-in-the-data">Reading in the data<a class="anchor" aria-label="anchor" href="#reading-in-the-data"></a>
 </h3>
 <p>There are a couple ways of going about doing this. Depending on how
@@ -273,7 +274,7 @@ it. Another way of going doing this is via <a href="https://kaiaragaki.github.io
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #555555;"># Wavelengths:</span> 562 </span></span>
 <span><span class="co">#&gt; <span style="color: #555555;"># Is tidy:</span> <span style="color: #0000BB;">TRUE</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #555555;"># Date:</span> 2023-11-06</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #555555;"># Date:</span> 2023-11-13</span></span></code></pre></div>
 <p>We can extract the <code>gp</code> from the <code>spectramax</code>
 object via:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
