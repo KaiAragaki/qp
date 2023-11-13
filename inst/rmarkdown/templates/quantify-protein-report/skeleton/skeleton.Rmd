@@ -142,7 +142,8 @@ out_file <- "~/Desktop/test.html"
 
 ```{r}
 if (length(params$other) > 0) {
-  params$other |>
+  sanitized <- lapply(params$other, toString)
+  sanitized |>
     as.data.frame() |>
     t() |>
     as_tibble(rownames = "Parameter") |>
