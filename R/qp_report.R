@@ -234,23 +234,27 @@ make_well_circles_plot <- function(df) {
 
 dil_summary <- function(qp) {
   qp |>
-    summarize(
+    dplyr::summarize(
       .by = c(
-        .sample_name, .pred_conc_mean, .target_conc, .target_vol, sample_type
+        ".sample_name", ".pred_conc_mean", ".target_conc",
+        ".target_vol", "sample_type"
       )
     ) |>
     qp_dilute() |>
-    filter(sample_type == "unknown") |>
-    select(
-      Name = ".sample_name", .pred_conc_mean, .target_conc,
-      "Final Vol" = ".target_vol", "Sample to Add (uL)" = sample_to_add,
-      "Diluent to Add (uL)" = add_to
+    dplyr::filter(.data$sample_type == "unknown") |>
+    dplyr::select(
+      Name = ".sample_name",
+      ".pred_conc_mean", ".target_conc",
+      `Final Vol` = ".target_vol",
+      `Sample to Add (uL)` = "sample_to_add",
+      `Diluent to Add (uL)` = "add_to"
     ) |>
-    mutate(
-      .target_conc = round(.target_conc, 2),
-      .pred_conc_mean = round(.pred_conc_mean, 2)
+    dplyr::mutate(
+      .target_conc = round(.data$.target_conc, 2),
+      .pred_conc_mean = round(.data$.pred_conc_mean, 2)
     ) |>
-    rename(
-      "[Target]" = .target_conc, "[Sample]" = .pred_conc_mean
+    dplyr::rename(
+      "[Target]" = .data$.target_conc,
+      "[Sample]" = .data$.pred_conc_mean
     )
 }
