@@ -233,6 +233,11 @@ make_well_circles_plot <- function(df) {
 }
 
 dil_summary <- function(qp) {
+  check_has_cols(qp, c(
+    ".sample_name", ".pred_conc_mean", ".target_conc",
+    ".target_vol", "sample_type"
+  ))
+
   qp |>
     dplyr::summarize(
       .by = c(
