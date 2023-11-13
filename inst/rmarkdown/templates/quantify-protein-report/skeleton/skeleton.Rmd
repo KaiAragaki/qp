@@ -1,0 +1,152 @@
+---
+title: "Protein Quantification Report"
+output:
+  html_document:
+    css: "style.css"
+params:
+  qp : NA
+  other : list()
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(qp)
+library(ggplot2)
+library(dplyr)
+library(gt)
+library(knitr)
+```
+
+
+# Plots
+```{r}
+plate_plot <- qp_plot_plate(params$qp$qp) +
+  theme_void() +
+  coord_cartesian(clip = "off") +
+  theme(
+    plot.margin = margin(1, 0.5, 1, 0.5, unit = "cm"),
+    panel.background = element_rect(fill = "transparent", color = NA),
+    plot.background = element_rect(fill = "#FFFFFF33", color = NA)
+  )
+
+ggsave(
+  "plate_plot.png",
+  plate_plot,
+  device = "png",
+  width = 17, height = max(params$qp$qp$.col), units = "cm",
+  bg = "transparent"
+)
+```
+
+```{r}
+standards_plot <- qp_plot_standards(params$qp) +
+  theme_minimal() +
+  theme(
+    panel.background = element_rect(fill = "transparent", color = NA),
+    plot.background = element_rect(fill = "#FFFFFF33", color = NA)
+  )
+
+ggsave(
+  "standards_plot.png",
+  standards_plot,
+  device = "png",
+  width = 12, height = 9, units = "cm",
+  bg = "transparent"
+)
+```
+
+![test](plate_plot.png){height=300px} ![test](standards_plot.png){height=300px}
+
+# Tables
+
+
+```{r message=FALSE}
+
+params$qp$qp |>
+  dil_summary() |>
+  gt() |>
+  tab_options(
+    table.background.color = "#FFFFFF33",
+    table.border.top.color = "white",
+    table.border.bottom.color = "white"
+  )
+
+```
+
+
+## Summaries
+:::: {style="display: flex; justify-content: space-between;"}
+
+::: {}
+
+```{r}
+mk_tbl <- function(qp_tbl_out, name) {
+  qp_tbl_out$qp |>
+    tab_options(
+      table.background.color = "#FFFFFF33",
+      table.border.top.color = "white",
+      table.border.bottom.color = "white"
+    ) |>
+    tab_header(name)
+}
+
+mk_tbl(qp_samples_summary(params$qp), "Samples Summary")
+```
+
+:::
+
+
+::: {}
+
+```{r}
+mk_tbl(qp_standards_summary(params$qp), "Standards Summary")
+```
+
+:::
+
+
+::::
+
+## All
+:::: {style="display: flex; justify-content: space-between;"}
+
+:::{}
+
+```{r}
+mk_tbl(qp_samples_all(params$qp), "Samples")
+```
+
+:::
+
+:::{}
+
+```{r}
+mk_tbl(qp_standards_all(params$qp), "Standards")
+```
+
+:::
+
+
+::::
+
+
+```{r}
+#load_all()
+library(rmarkdown)
+f <- system.file("rmarkdown/templates/quantify-protein-report/skeleton/skeleton.Rmd", package = "qp")
+out_file <- "~/Desktop/test.html"
+# render(f, output_file = out_file, params = list(qp = qp(absorbances) |> qp_dilute(), other = list(foo = "bar", fruit = "banana")))
+```
+
+# Report Parameters
+
+```{r}
+if (length(params$other) > 0) {
+  params$other |>
+    as.data.frame() |>
+    t() |>
+    as_tibble(rownames = "Parameter") |>
+    rename("Value" = "V1") |>
+    kable()
+}
+```

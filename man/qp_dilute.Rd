@@ -26,8 +26,8 @@ qp_dilute(x, ...)
 }
 \arguments{
 \item{x}{A \code{data.frame} or \code{list} containing a \code{data.frame} named \code{qp} with
-a column named \code{.pred_conc} or \code{.mean_pred_conc}. If both, will favor
-\code{.mean_pred_conc}.}
+a column named \code{.pred_conc} or \code{.pred_conc_mean}. If both, will favor
+\code{.pred_conc_mean}.}
 
 \item{...}{Unused}
 

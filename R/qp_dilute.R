@@ -1,8 +1,8 @@
 #' Calculate dilutions from predicted concentrations
 #'
 #' @param x A `data.frame` or `list` containing a `data.frame` named `qp` with
-#'   a column named `.pred_conc` or `.mean_pred_conc`. If both, will favor
-#'   `.mean_pred_conc`.
+#'   a column named `.pred_conc` or `.pred_conc_mean`. If both, will favor
+#'   `.pred_conc_mean`.
 #' @param target_conc Numeric vector. Target concentration in (mg/mL) protein.
 #'   If length == 1, recycled.
 #' @param target_vol Target volume in uL. If length == 1, recycled.
@@ -21,7 +21,7 @@ qp_dilute <- function(x, ...) {
 #' @export
 qp_dilute.data.frame <- function(x, target_conc = NULL, target_vol = 15,
                                  remove_standards = FALSE, ...) {
-  check_has_cols(x, c(".pred_conc", ".mean_pred_conc"), type = "or")
+  check_has_cols(x, c(".pred_conc", ".pred_conc_mean"), type = "or")
 
   if (remove_standards || is.null(target_conc)) {
     check_has_cols(x, "sample_type")
@@ -36,7 +36,7 @@ qp_dilute.data.frame <- function(x, target_conc = NULL, target_vol = 15,
   }
 
   conc_col_name <- ifelse(
-    has_cols(x, ".mean_pred_conc"), ".mean_pred_conc", ".pred_conc"
+    has_cols(x, ".pred_conc_mean"), ".pred_conc_mean", ".pred_conc"
   )
 
   if (is.null(target_conc)) {
@@ -54,7 +54,8 @@ qp_dilute.data.frame <- function(x, target_conc = NULL, target_vol = 15,
 
   x |>
     dplyr::bind_cols(dils) |>
-    tidyr::unnest_wider("value")
+    tidyr::unnest_wider("value") |>
+    dplyr::mutate(.target_conc = target_conc, .target_vol = target_vol)
 }
 
 #' @rdname qp_dilute

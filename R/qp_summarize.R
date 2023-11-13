@@ -21,7 +21,7 @@ qp_summarize.data.frame <- function(x) {
   }
   x |>
     dplyr::summarize(
-      .mean_pred_conc = mean(.data$.pred_conc_mean, na.rm = TRUE),
+      .pred_conc_mean = mean(.data$.pred_conc_mean, na.rm = TRUE),
       .by = c(".sample_name", "sample_type")
     ) |>
     dplyr::arrange(.data$sample_type)

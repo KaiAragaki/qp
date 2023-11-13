@@ -13,13 +13,16 @@ qp_plot_plate <- function(x, size = 15) {
   ggplot2::ggplot(x, ggplot2::aes(
     x = .data$.col,
     y = .data$.row,
-    color = .data$.abs
+    color = abs_to_col(.data$.abs, qp_pal)
   )) +
     ggplot2::geom_point(size = size) +
     ggplot2::geom_text(
-      ggplot2::aes(label = round(.data$.abs, 2)),
-      color = "black"
+      ggplot2::aes(
+        label = round(.data$.abs, 2),
+        color = ifelse(.data$.abs < 0.35, "black", "white")
+      ),
+      size = size / 3
     ) +
     ggplot2::scale_y_reverse() +
-    ggplot2::scale_color_gradient(low = "darkseagreen1", high = "mediumpurple3")
+    ggplot2::scale_color_identity()
 }
