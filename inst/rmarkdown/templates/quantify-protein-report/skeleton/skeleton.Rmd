@@ -141,10 +141,12 @@ out_file <- "~/Desktop/test.html"
 # Report Parameters
 
 ```{r}
-params$other |>
-  as.data.frame() |>
-  t() |>
-  as_tibble(rownames = "Parameter") |>
-  rename("Value" = "V1") |>
-  kable()
+if (length(params$other) > 0) {
+  params$other |>
+    as.data.frame() |>
+    t() |>
+    as_tibble(rownames = "Parameter") |>
+    rename("Value" = "V1") |>
+    kable()
+}
 ```

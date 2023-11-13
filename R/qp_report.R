@@ -1,11 +1,31 @@
-qp_report <- function(qp, output_file) {
+#' Create a report for a protein quantificaiton experiment
+#'
+#' @param qp Likely the output from `qp` AND `qp_dilute`.
+#' @param output_file Character. The path of the file to export,
+#'   including `.html`
+#' @param other Generally used for Shiny application. Assumes a
+#'   named list of key-values that will be used to document report
+#'   parameters.
+#'
+#' @export
+#' @examples
+#' \dontrun{
+#' absorbances |>
+#'   qp() |>
+#'   qp_dilute() |>
+#'   qp_report(
+#'     "~/my_report.html",
+#'     other = list(key = "value") # Essentially metadata
+#'   )
+#' }
+qp_report <- function(qp, output_file, other = list()) {
   rmarkdown::render(
     system.file(
       "rmarkdown/templates/quantify-protein-report/skeleton/skeleton.Rmd",
       package = "qp"
     ),
     output_file = output_file,
-    params = list(qp = qp)
+    params = list(qp = qp, other = other)
   )
 }
 
@@ -17,34 +37,15 @@ qp_standards_all <- function(x) {
 
 #' @export
 qp_standards_all.data.frame <- function(x) {
-  stds <- dplyr::filter(x, .data$sample_type == "standard")
-  stds$.coord <- paste0(LETTERS[stds$.row], stds$.col)
-
-  table_data <- stds |>
-    dplyr::select(
-      ".sample_name", ".abs", ".is_outlier", ".pred_conc", ".coord", ".conc",
-    ) |>
-    dplyr::group_by(.data$.sample_name, .data$.pred_conc, .data$.conc) |>
-    tidyr::nest() |>
-    dplyr::mutate(gg = purrr::map(.data$data, make_well_circles_plot)) |>
-    tidyr::unnest(.data$data) |>
-    dplyr::select(-c(".is_outlier", ".coord")) |>
-    dplyr::ungroup()
-
+  x <- add_coords_col(x)
+  table_data <- add_well_circles_plot_col(
+    x,
+    "standard",
+    c(".sample_name", ".abs", ".is_outlier", ".pred_conc", ".coord", ".conc"),
+    c(".sample_name", ".pred_conc", ".conc")
+  )
   table_data |>
-    gt::gt() |>
-    gt::text_transform(
-      location = gt::cells_body(
-        columns = .data$gg
-      ),
-      fn = function(x) {
-        gt::ggplot_image(table_data$gg, height = gt::px(35), aspect_ratio = 1)
-      }
-    ) |>
-    gt::fmt_number(
-      c(".abs", ".pred_conc", ".conc"),
-      n_sigfig = 2
-    ) |>
+    make_gt(35, 1, c(".abs", ".pred_conc", ".conc")) |>
     gt::cols_label(
       .sample_name = "Sample", .conc = "[Actual]",
       .pred_conc = "[Predicted]", .abs = "Absorbance", gg = ""
@@ -64,34 +65,16 @@ qp_standards_summary <- function(x) {
 
 #' @export
 qp_standards_summary.data.frame <- function(x) {
-  stds <- dplyr::filter(x, .data$sample_type == "standard")
-  stds$.coord <- paste0(LETTERS[stds$.row], stds$.col)
-
-  table_data <- stds |>
-    dplyr::select(
-      ".sample_name", ".pred_conc_mean", ".is_outlier", ".abs", ".coord"
-    ) |>
-    dplyr::group_by(.data$.sample_name, .data$.pred_conc_mean) |>
-    tidyr::nest() |>
-    dplyr::mutate(gg = purrr::map(.data$data, make_well_circles_plot)) |>
-    dplyr::select(-.data$data) |>
-    dplyr::ungroup()
-
+  x <- add_coords_col(x)
+  table_data <- add_well_circles_plot_col(
+    x,
+    "standard",
+    c(".sample_name", ".pred_conc_mean", ".is_outlier", ".abs", ".coord"),
+    c(".sample_name", ".pred_conc_mean"),
+    summary = TRUE
+  )
   table_data |>
-    gt::gt() |>
-    gt::text_transform(
-      location = gt::cells_body(
-        columns = .data$gg
-      ),
-      fn = function(x) {
-        gt::ggplot_image(table_data$gg, height = gt::px(50), aspect_ratio = 2)
-      }
-    ) |>
-    gt::fmt_number(
-      c(".pred_conc_mean"),
-      drop_trailing_zeros = TRUE,
-      n_sigfig = 2
-    ) |>
+    make_gt(50, 2, ".pred_conc_mean") |>
     gt::cols_label(
       .sample_name = "Sample", .pred_conc_mean = "Concentration", gg = ""
     )
@@ -112,34 +95,15 @@ qp_samples_all <- function(x) {
 
 #' @export
 qp_samples_all.data.frame <- function(x) {
-  samples <- dplyr::filter(x, .data$sample_type == "unknown")
-  samples$.coord <- paste0(LETTERS[samples$.row], samples$.col)
-
-  table_data <- samples |>
-    dplyr::select(
-      ".sample_name", ".abs", ".is_outlier", ".pred_conc", ".coord"
-    ) |>
-    dplyr::group_by(.data$.sample_name, .data$.pred_conc) |>
-    tidyr::nest() |>
-    dplyr::mutate(gg = purrr::map(.data$data, make_well_circles_plot)) |>
-    tidyr::unnest(.data$data) |>
-    dplyr::select(-c(".is_outlier", ".coord")) |>
-    dplyr::ungroup()
-
+  x <- add_coords_col(x)
+  table_data <- add_well_circles_plot_col(
+    x,
+    "unknown",
+    c(".sample_name", ".abs", ".is_outlier", ".pred_conc", ".coord"),
+    group_vars = c(".sample_name", ".pred_conc")
+  )
   table_data |>
-    gt::gt() |>
-    gt::text_transform(
-      location = gt::cells_body(
-        columns = .data$gg
-      ),
-      fn = function(x) {
-        gt::ggplot_image(table_data$gg, height = gt::px(35), aspect_ratio = 1)
-      }
-    ) |>
-    gt::fmt_number(
-      c(".abs", ".pred_conc"),
-      n_sigfig = 2
-    ) |>
+    make_gt(35, 1, c(".abs", ".pred_conc")) |>
     gt::cols_label(
       .sample_name = "Sample", .pred_conc = "[Predicted]",
       .abs = "Absorbance", gg = ""
@@ -159,34 +123,16 @@ qp_samples_summary <- function(x) {
 
 #' @export
 qp_samples_summary.data.frame <- function(x) {
-  samples <- dplyr::filter(x, .data$sample_type == "unknown")
-  samples$.coord <- paste0(LETTERS[samples$.row], samples$.col)
-
-  table_data <- samples |>
-    dplyr::select(
-      ".sample_name", ".pred_conc_mean", ".is_outlier", ".abs", ".coord"
-    ) |>
-    dplyr::group_by(.data$.sample_name, .data$.pred_conc_mean) |>
-    tidyr::nest() |>
-    dplyr::mutate(gg = purrr::map(.data$data, make_well_circles_plot)) |>
-    dplyr::select(-.data$data) |>
-    dplyr::ungroup()
-
+  x <- add_coords_col(x)
+  table_data <- add_well_circles_plot_col(
+    x,
+    "unknown",
+    c(".sample_name", ".pred_conc_mean", ".is_outlier", ".abs", ".coord"),
+    c(".sample_name", ".pred_conc_mean"),
+    summary = TRUE
+  )
   table_data |>
-    gt::gt() |>
-    gt::text_transform(
-      location = gt::cells_body(
-        columns = .data$gg
-      ),
-      fn = function(x) {
-        gt::ggplot_image(table_data$gg, height = gt::px(50), aspect_ratio = 2)
-      }
-    ) |>
-    gt::fmt_number(
-      c(".pred_conc_mean"),
-      drop_trailing_zeros = TRUE,
-      n_sigfig = 2
-    ) |>
+    make_gt(50, 2, ".pred_conc_mean") |>
     gt::cols_label(
       .sample_name = "Sample", .pred_conc_mean = "Concentration", gg = ""
     )
@@ -230,6 +176,56 @@ make_well_circles_plot <- function(df) {
     ggplot2::coord_cartesian(clip = "off") +
     ggplot2::scale_color_identity() +
     ggplot2::theme(plot.margin = ggplot2::margin(0, 1.5, 0, 1.5, unit = "cm"))
+}
+
+add_well_circles_plot_col <- function(x,
+                                      sample_type,
+                                      select_vars,
+                                      group_vars,
+                                      summary = FALSE) {
+  x <- dplyr::filter(x, .data$sample_type == .env$sample_type)
+
+  x <- x |>
+    dplyr::select(dplyr::all_of(select_vars)) |>
+    dplyr::group_by(dplyr::across(dplyr::all_of(group_vars))) |>
+    tidyr::nest() |>
+    dplyr::mutate(gg = purrr::map(.data$data, make_well_circles_plot))
+
+  if (summary) {
+    x <- dplyr::select(x, -"data")
+  } else {
+    x <- x |>
+      tidyr::unnest(.data$data) |>
+      dplyr::select(-c(".is_outlier", ".coord"))
+  }
+
+  dplyr::ungroup(x)
+}
+
+add_coords_col <- function(x) {
+  x$.coord <- paste0(LETTERS[x$.row], x$.col)
+  x
+}
+
+make_gt <- function(x, well_img_height, well_img_aspect_ratio, cols_to_round) {
+  x |>
+    gt::gt() |>
+    gt::text_transform(
+      location = gt::cells_body(
+        columns = .data$gg
+      ),
+      fn = function(z) {
+        gt::ggplot_image(
+          x$gg,
+          height = gt::px(well_img_height),
+          aspect_ratio = well_img_aspect_ratio
+        )
+      }
+    ) |>
+    gt::fmt_number(
+      dplyr::all_of(cols_to_round),
+      n_sigfig = 2
+    )
 }
 
 dil_summary <- function(qp) {
