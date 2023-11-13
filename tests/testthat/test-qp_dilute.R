@@ -13,7 +13,7 @@ test_that("length_is_recyclable works", {
 test_that("dilution prefers .mean_pred_conc", {
   data <- data.frame(
     .pred_conc = c(1, 2),
-    .mean_pred_conc = c(5, 10)
+    .pred_conc_mean = c(5, 10)
   )
   out <- qp_dilute(data, target_conc = 5, target_vol = 2)
   expect_equal(out$sample_to_add, c(2, 1))
