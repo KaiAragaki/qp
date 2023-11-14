@@ -1,6 +1,6 @@
 qp_pal <- grDevices::colorRampPalette(
-  c("darkseagreen1", "#A763A0", "#3D1452"),
-  bias = 0.9
+  c("darkseagreen1", "#B7C7B5", "#A763A0", "#3D1452"),
+  bias = 1.5
 )(100)
 
 # Notes:
