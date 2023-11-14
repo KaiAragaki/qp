@@ -61,9 +61,8 @@ ggsave(
 
 
 ```{r message=FALSE}
-
 params$qp$qp |>
-  dil_summary() |>
+  qp:::dil_summary() |>
   gt() |>
   tab_options(
     table.background.color = "#FFFFFF33",
@@ -90,7 +89,7 @@ mk_tbl <- function(qp_tbl_out, name) {
     tab_header(name)
 }
 
-mk_tbl(qp_samples_summary(params$qp), "Samples Summary")
+mk_tbl(qp:::qp_samples_summary(params$qp), "Samples Summary")
 ```
 
 :::
@@ -99,7 +98,7 @@ mk_tbl(qp_samples_summary(params$qp), "Samples Summary")
 ::: {}
 
 ```{r}
-mk_tbl(qp_standards_summary(params$qp), "Standards Summary")
+mk_tbl(qp:::qp_standards_summary(params$qp), "Standards Summary")
 ```
 
 :::
@@ -113,7 +112,7 @@ mk_tbl(qp_standards_summary(params$qp), "Standards Summary")
 :::{}
 
 ```{r}
-mk_tbl(qp_samples_all(params$qp), "Samples")
+mk_tbl(qp:::qp_samples_all(params$qp), "Samples")
 ```
 
 :::
@@ -121,7 +120,7 @@ mk_tbl(qp_samples_all(params$qp), "Samples")
 :::{}
 
 ```{r}
-mk_tbl(qp_standards_all(params$qp), "Standards")
+mk_tbl(qp:::qp_standards_all(params$qp), "Standards")
 ```
 
 :::
@@ -129,14 +128,6 @@ mk_tbl(qp_standards_all(params$qp), "Standards")
 
 ::::
 
-
-```{r}
-#load_all()
-library(rmarkdown)
-f <- system.file("rmarkdown/templates/quantify-protein-report/skeleton/skeleton.Rmd", package = "qp")
-out_file <- "~/Desktop/test.html"
-# render(f, output_file = out_file, params = list(qp = qp(absorbances) |> qp_dilute(), other = list(foo = "bar", fruit = "banana")))
-```
 
 # Report Parameters
 
