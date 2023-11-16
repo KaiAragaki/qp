@@ -24,5 +24,6 @@ abs_to_col <- function(abs, pal) {
   abs <- abs - 0.07
   scaled <- 100 / (1 + exp(-10 * (abs - 0.15)))
   idx <- round(scaled)
+  idx <- ifelse(idx == 0, 1, idx)
   pal[idx]
 }
