@@ -37,17 +37,22 @@ qp_standards_all <- function(x) {
 #' @export
 qp_standards_all.data.frame <- function(x) {
   x <- add_coords_col(x)
+  x <- add_dilutions_cols(x)
   table_data <- add_well_circles_plot_col(
     x,
     "standard",
-    c(".sample_name", ".abs", ".is_outlier", ".pred_conc", ".coord", ".conc"),
+    c(".sample_name", ".abs", ".is_outlier", ".pred_conc", ".coord", ".conc",
+      "sample_to_add", "add_to", ".target_conc", ".target_vol"),
     c(".sample_name", ".pred_conc", ".conc")
   )
   table_data |>
-    make_gt(35, 1, c(".abs", ".pred_conc", ".conc")) |>
+    make_gt(35, 1, c(".abs", ".pred_conc", ".conc", ".target_conc")) |>
     gt::cols_label(
       .sample_name = "Sample", .conc = "[Actual]",
-      .pred_conc = "[Predicted]", .abs = "Absorbance", gg = ""
+      .pred_conc = "[Predicted]", .abs = "Absorbance",
+      sample_to_add = "Sample to Add", add_to = "Add To",
+      .target_conc = "[Target]", .target_vol = "Target Vol.",
+      gg = ""
     )
 }
 
@@ -95,17 +100,22 @@ qp_samples_all <- function(x) {
 #' @export
 qp_samples_all.data.frame <- function(x) {
   x <- add_coords_col(x)
+  x <- add_dilutions_cols(x)
   table_data <- add_well_circles_plot_col(
     x,
     "unknown",
-    c(".sample_name", ".abs", ".is_outlier", ".pred_conc", ".coord"),
+    c(".sample_name", ".abs", ".is_outlier", ".pred_conc", ".coord",
+      "sample_to_add", "add_to", ".target_conc", ".target_vol"),
     group_vars = c(".sample_name", ".pred_conc")
   )
   table_data |>
-    make_gt(35, 1, c(".abs", ".pred_conc")) |>
+    make_gt(35, 1, c(".abs", ".pred_conc", ".target_conc")) |>
     gt::cols_label(
       .sample_name = "Sample", .pred_conc = "[Predicted]",
-      .abs = "Absorbance", gg = ""
+      .abs = "Absorbance",
+      sample_to_add = "Sample to Add", add_to = "Add To",
+      .target_conc = "[Target]", .target_vol = "Target Vol.",
+      gg = ""
     )
 }
 
@@ -175,6 +185,14 @@ make_well_circles_plot <- function(df) {
     ggplot2::coord_cartesian(clip = "off") +
     ggplot2::scale_color_identity() +
     ggplot2::theme(plot.margin = ggplot2::margin(0, 1.5, 0, 1.5, unit = "cm"))
+}
+
+add_dilutions_cols <- function(x) {
+  x |>
+    dplyr::select(
+      -c(".pred_conc_mean", "sample_to_add", "add_to")
+    ) |>
+    qp_dilute(x$.target_conc, x$.target_vol)
 }
 
 add_well_circles_plot_col <- function(x,

@@ -107,26 +107,17 @@ mk_tbl(qp:::qp_standards_summary(params$qp), "Standards Summary")
 ::::
 
 ## All
-:::: {style="display: flex; justify-content: space-between;"}
-
-:::{}
 
 ```{r}
 mk_tbl(qp:::qp_samples_all(params$qp), "Samples")
 ```
 
-:::
 
-:::{}
 
 ```{r}
 mk_tbl(qp:::qp_standards_all(params$qp), "Standards")
 ```
 
-:::
-
-
-::::
 
 
 # Report Parameters
