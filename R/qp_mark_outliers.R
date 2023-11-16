@@ -1,7 +1,7 @@
 #' Mark absorbance outliers
 #'
-#' @param x A `data.frame` or `list` containing a `data.frame` named `qp`.
-#'   See details.
+#' @param x A `data.frame` or `list` containing a `data.frame` named `qp`. See
+#'   details.
 #' @param ignore_outliers Which sample types should have outliers marked?
 #'
 #' @details Input `data.frame` must contain the following columns:
@@ -40,9 +40,9 @@ qp_mark_outliers.data.frame <- function(x,
     if (ignore_outliers %in% c("all", "standards")) {
       standards <- standards |>
         dplyr::mutate(
-                 .is_outlier = mark_outlier(.data$.abs),
-                 .by = c("sample_type", "index")
-               )
+          .is_outlier = mark_outlier(.data$.abs),
+          .by = c("sample_type", "index")
+        )
     } else {
       standards$.is_outlier <- NA
     }
@@ -52,9 +52,9 @@ qp_mark_outliers.data.frame <- function(x,
     if (ignore_outliers %in% c("all", "samples")) {
       unknowns <- unknowns |>
         dplyr::mutate(
-                 .is_outlier = mark_outlier(.data$.abs),
-                 .by = c("sample_type", "index")
-               )
+          .is_outlier = mark_outlier(.data$.abs),
+          .by = c("sample_type", "index")
+        )
     } else {
       unknowns$.is_outlier <- NA
     }

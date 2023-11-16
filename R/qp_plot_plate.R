@@ -1,8 +1,8 @@
 #' View the absorbances of an analyzed `qp` as they were on the plate
 #'
 #' @param x A `data.frame` with `.row`, `.col`, and `.abs` columns
-#' @param size The size of the points used to illustrate the wells.
-#'   Passed to geom_point.
+#' @param size The size of the points used to illustrate the wells. Passed to
+#'   geom_point.
 #'
 #' @return a `ggplot`
 #' @export

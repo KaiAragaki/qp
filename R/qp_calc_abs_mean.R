@@ -1,7 +1,7 @@
 #' Calculate absorbance means with optional outlier removal
 #'
-#' @param x A `data.frame` or `list` containing a `data.frame` named `qp`.
-#'   See details.
+#' @param x A `data.frame` or `list` containing a `data.frame` named `qp`. See
+#'   details.
 #' @param ignore_outliers Which sample types should have outliers ignored from
 #'   their mean calculations? If `.is_outlier` column is supplied, this argument
 #'   is ignored.

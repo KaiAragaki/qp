@@ -42,7 +42,9 @@ qp_add_std_conc <- function(x, standard_scale = c(0, 2^((2:7) - 5)), ...) {
 
 #' @rdname qp_add_std_conc
 #' @export
-qp_add_std_conc.data.frame <- function(x, standard_scale = c(0, 2^((2:7) - 5)), ...) {
+qp_add_std_conc.data.frame <- function(x,
+                                       standard_scale = c(0, 2^((2:7) - 5)),
+                                       ...) {
   check_has_cols(x, c("sample_type", "index"))
   check_sample_type(x$sample_type)
 

@@ -1,19 +1,18 @@
 #' Read in and wrangle protein quantification data
 #'
-#' @param x A `gp`, `data.frame`/`tibble`, `spectramax`, or character
-#' path to a raw SPECTRAmax .xls(x)/.txt
+#' @param x A `gp`, `data.frame`/`tibble`, `spectramax`, or character path to a
+#'   raw SPECTRAmax .xls(x)/.txt
 #' @param replicate_orientation Character. Specified the direction the
 #'   *replicates* lie, not the direction the samples flow (which will be
 #'   perpendicular to `replicate_orientation`).
 #' @param n_standards Numeric. The number of different concentrations of
 #'   standards. Does not include replicates.
 #' @param n_replicates Numeric. The number of replicates per sample.
-#' @param wavelength Numeric. For SPECTRAmax files and objects, the
-#'   wavelength measured. Otherwise, ignored.
+#' @param wavelength Numeric. For SPECTRAmax files and objects, the wavelength
+#'   measured. Otherwise, ignored.
 #' @param ... Arguments passed to relevant methods.
-#
-#' @details `qp` assumes that if you read in data not in a `spectramax` file
-#'   or object, you probably have a custom workflow in mind - therefore, tidying
+#' @details `qp` assumes that if you read in data not in a `spectramax` file or
+#'   object, you probably have a custom workflow in mind - therefore, tidying
 #'   will be minimal and mostly focused on checking for validity.
 #'
 #' @return a `data.frame`

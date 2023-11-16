@@ -1,11 +1,10 @@
 #' Create a report for a protein quantificaiton experiment
 #'
 #' @param qp Likely the output from `qp` AND `qp_dilute`.
-#' @param output_file Character. The path of the file to export,
-#'   including `.html`
-#' @param other Generally used for Shiny application. Assumes a
-#'   named list of key-values that will be used to document report
-#'   parameters.
+#' @param output_file Character. The path of the file to export, including
+#'   `.html`
+#' @param other Generally used for Shiny application. Assumes a named list of
+#'   key-values that will be used to document report parameters.
 #'
 #' @export
 #' @examples
