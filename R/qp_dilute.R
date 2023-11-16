@@ -1,12 +1,14 @@
 #' Calculate dilutions from predicted concentrations
 #'
-#' @param x A `data.frame` or `list` containing a `data.frame` named `qp` with
-#'   a column named `.pred_conc` or `.pred_conc_mean`. If both, will favor
+#' @param x A `data.frame` or `list` containing a `data.frame` named `qp` with a
+#'   column named `.pred_conc` or `.pred_conc_mean`. If both, will favor
 #'   `.pred_conc_mean`.
 #' @param target_conc Numeric vector. Target concentration in (mg/mL) protein.
 #'   If length == 1, recycled.
 #' @param target_vol Target volume in uL. If length == 1, recycled.
-#' @param remove_standards Should standards be removed from results?
+#' @param remove_standards Boolean. Should standards be removed from results?
+#' @param pipette_vol_compat Boolean. Shold returned numbers be rounded to the
+#'   typically precision of a pipette?
 #' @param ... Unused
 #'
 #' @return Same as input, with the volumes of lysate and volumes of diluent to
@@ -19,8 +21,12 @@ qp_dilute <- function(x, ...) {
 
 #' @rdname qp_dilute
 #' @export
-qp_dilute.data.frame <- function(x, target_conc = NULL, target_vol = 15,
-                                 remove_standards = FALSE, ...) {
+qp_dilute.data.frame <- function(x,
+                                 target_conc = NULL,
+                                 target_vol = 15,
+                                 remove_standards = FALSE,
+                                 pipette_vol_compat = TRUE,
+                                 ...) {
   check_has_cols(x, c(".pred_conc", ".pred_conc_mean"), type = "or")
 
   if (remove_standards || is.null(target_conc)) {
@@ -45,16 +51,9 @@ qp_dilute.data.frame <- function(x, target_conc = NULL, target_vol = 15,
     target_conc <- min(samples[[conc_col_name]], na.rm = TRUE)
   }
 
-  dils <- mapply(
-    bladdr::dilute, x[[conc_col_name]], target_conc, target_vol,
-    MoreArgs = list(quiet = TRUE),
-    SIMPLIFY = FALSE
-  ) |>
-    tibble::enframe(name = NULL)
-
+  dils <- dilute(x[[conc_col_name]], target_conc, target_vol)
   x |>
     dplyr::bind_cols(dils) |>
-    tidyr::unnest_wider("value") |>
     dplyr::mutate(.target_conc = target_conc, .target_vol = target_vol)
 }
 
