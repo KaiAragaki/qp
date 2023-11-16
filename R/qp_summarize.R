@@ -2,7 +2,7 @@
 #'
 #' @param x A `data.frame` or a `list` containing a `data.frame` named `qp`
 #' @return A `tibble` with the sample `name`, `sample_type`, and the mean of its
-#'   predicted concentration (`.mean_pred_conc`)
+#'   predicted concentration (`.pred_conc_mean`)
 #' @importFrom rlang .data
 #' @export
 qp_summarize <- function(x) {
