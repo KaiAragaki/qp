@@ -254,13 +254,18 @@ dil_summary <- function(qp) {
   target_conc <- qp$.target_conc
   target_vol <- qp$.target_vol
 
-  qp |>
+  qp <- qp |>
     dplyr::summarize(
       .by = c(
         ".sample_name", ".pred_conc_mean", ".target_conc",
         ".target_vol", "sample_type"
       )
-    ) |>
+    )
+
+  target_conc <- qp$.target_conc
+  target_vol <- qp$.target_vol
+
+  qp |>
     qp_dilute(
       target_conc = target_conc,
       target_vol = target_vol
