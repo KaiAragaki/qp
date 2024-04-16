@@ -258,7 +258,10 @@ dil_summary <- function(qp) {
         ".target_vol", "sample_type"
       )
     ) |>
-    qp_dilute() |>
+    qp_dilute(
+      target_conc = .data$.target_conc,
+      tarvet_vol = .data$.target_vol
+    ) |>
     dplyr::filter(.data$sample_type == "unknown") |>
     dplyr::select(
       Name = ".sample_name",
