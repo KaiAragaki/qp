@@ -37,7 +37,7 @@ make_pipette_vol <- function(x) {
 #' @param quiet Logical. If FALSE, will warn when dilution is impossible to do
 #'   without concentrating sample.
 #'
-#' @return a named list, with `sample_to_add` as the volume of sample to add,
+#' @return a data.frame, with `sample_to_add` as the volume of sample to add,
 #'   and `add_to` as the volume to dilute the sample into.
 #'
 #' @examples
@@ -52,6 +52,6 @@ dilute <- function(c1,
   v1 <- (c2 * v2) / c1
   x <- data.frame(sample_to_add = v1, add_to = v2 - v1)
   if (round_for_pipettes)
-    x <- apply(x, 2, make_pipette_vol)
-  x
+    x <- apply(x, 2, make_pipette_vol, simplify = FALSE)
+  as.data.frame(x)
 }

@@ -1,7 +1,3 @@
-test_that("multiplication works", {
-  expect_equal(2 * 2, 4)
-})
-
 test_that("length_is_recyclable works", {
   expect_true(length_is_recyclable(1, iris[1, ]))
   expect_true(length_is_recyclable(1, iris[1:2, ]))
@@ -35,4 +31,12 @@ test_that("NULL target_conc uses lowest concentration", {
   out <- qp_dilute(data, target_vol = 2)
   expect_equal(out$sample_to_add, c(6, 3, 2, 1.5))
   expect_equal(out$add_to, c(-4, -1, 0, 0.5))
+})
+
+test_that("output type same regardless of input len", {
+  short <- data.frame(.pred_conc = 1) |>
+    qp_dilute(target_conc = 1, target_vol = 2)
+  long <- data.frame(.pred_conc = c(1, 2)) |>
+    qp_dilute(target_conc = 1, target_vol = 2)
+  expect_equal(class(short), class(long))
 })
