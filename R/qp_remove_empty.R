@@ -6,8 +6,21 @@
 #' @details This function keeps any columns with positive `.pred_conc` or
 #'   `sample_type == "standard"`
 #'
+#'
 #' @return Same as input
 #' @importFrom rlang .data
+#'
+#' @examples
+#'
+#' df <- expand.grid(
+#'   .pred_conc = 0:1,
+#'   sample_type = c("standard", "unknown")
+#' )
+#'
+#' df
+#'
+#' qp_remove_empty(df)
+#'
 #' @export
 qp_remove_empty <- function(x) {
   UseMethod("qp_remove_empty")

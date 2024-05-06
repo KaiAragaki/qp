@@ -26,3 +26,15 @@ Remove empty wells from data
 This function keeps any columns with positive \code{.pred_conc} or
 \code{sample_type == "standard"}
 }
+\examples{
+
+df <- expand.grid(
+  .pred_conc = 0:1,
+  sample_type = c("standard", "unknown")
+)
+
+df
+
+qp_remove_empty(df)
+
+}
