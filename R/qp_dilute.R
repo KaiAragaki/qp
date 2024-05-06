@@ -51,7 +51,11 @@ qp_dilute.data.frame <- function(x,
     target_conc <- min(samples[[conc_col_name]], na.rm = TRUE)
   }
 
-  dils <- dilute(x[[conc_col_name]], target_conc, target_vol)
+  dils <- dilute(
+    x[[conc_col_name]],
+    target_conc, target_vol,
+    round_for_pipettes = pipette_vol_compat
+  )
   x |>
     dplyr::bind_cols(dils) |>
     dplyr::mutate(.target_conc = target_conc, .target_vol = target_vol)
