@@ -12,6 +12,19 @@
 #'
 #' @return The input `tibble` with an `.is_outlier` column
 #'
+#' @examples
+#'
+#' df <- data.frame(
+#'   sample_type = rep(c("standard", "unknown"), each = 3),
+#'   index = c(1, 1, 1, 2, 2, 2),
+#'   .abs = c(1, 1, 1, 1, 1, 2)
+#' )
+#'
+#' qp_mark_outliers(df, ignore_outliers = "all")
+#' qp_mark_outliers(df, ignore_outliers = "standards")
+#' qp_mark_outliers(df, ignore_outliers = "samples")
+#' qp_mark_outliers(df, ignore_outliers = "none")
+#'
 #' @importFrom rlang .data
 #' @export
 qp_mark_outliers <- function(x,

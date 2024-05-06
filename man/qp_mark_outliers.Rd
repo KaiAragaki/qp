@@ -33,3 +33,17 @@ Input \code{data.frame} must contain the following columns:
 \item \code{.abs}. Numeric. Contains absorbance values.
 }
 }
+\examples{
+
+df <- data.frame(
+  sample_type = rep(c("standard", "unknown"), each = 3),
+  index = c(1, 1, 1, 2, 2, 2),
+  .abs = c(1, 1, 1, 1, 1, 2)
+)
+
+qp_mark_outliers(df, ignore_outliers = "all")
+qp_mark_outliers(df, ignore_outliers = "standards")
+qp_mark_outliers(df, ignore_outliers = "samples")
+qp_mark_outliers(df, ignore_outliers = "none")
+
+}
