@@ -12,6 +12,3 @@ coverage:
         target: auto
         threshold: 1%
         informational: true
-
-ignore:
-  - "qp_report.R"
