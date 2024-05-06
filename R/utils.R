@@ -14,6 +14,7 @@ f_or_na <- function(x) {
 #' make_pipette_vol(9.9211)
 #' # Vectorized:
 #' make_pipette_vol(c(104.13398, 15.3331, 9.9211, NA, -100.1))
+#' @export
 make_pipette_vol <- function(x) {
   a <- abs(x)
   a <- dplyr::case_when(
@@ -45,6 +46,7 @@ make_pipette_vol <- function(x) {
 #' dilute(203, 70, 10, round_for_pipettes = FALSE)
 #' # Vectorized:
 #' dilute(c(8, 10, 12), c(4, 5, 6), c(7, 8, 9))
+#' @export
 dilute <- function(c1,
                    c2 = min(c1),
                    v2,
