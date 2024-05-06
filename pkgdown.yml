@@ -1,9 +1,9 @@
 pandoc: 3.1.11
-pkgdown: 2.0.8
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   quantifying-protein-with-qp: quantifying-protein-with-qp.html
-last_built: 2024-04-16T19:13Z
+last_built: 2024-05-06T15:48Z
 urls:
   reference: https://kaiaragaki.github.io/qp/reference
   article: https://kaiaragaki.github.io/qp/articles
