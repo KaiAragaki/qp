@@ -10,7 +10,6 @@
 #'     with all values set to NA.
 #'   - `.conc`. Numeric. Known concentration of standard.
 #'   - `.log2_abs`. Numeric. The log2 of the absorbances
-#'   The function creates a new column `.log2_conc`, or log2(`.conc` + 0.5)
 #'
 #' @return A list containing:
 #'   - `fit`, an `lm` object fit with the formula `.log2_conc ~ .log2_abs`, fit
