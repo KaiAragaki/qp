@@ -26,3 +26,22 @@ plate}
 \description{
 Add sample names
 }
+\examples{
+
+df <- expand.grid(
+  index = c(1, 1, 2, 2, 2, 3),
+  sample_type = c("standard", "unknown")
+)
+
+df
+
+# You don't get to name standards:
+qp_add_names(df, c("a", "b", "c"))
+
+# If there aren't enough names, will use index
+qp_add_names(df, c("a", "b"))
+
+# No names provided will use index by default
+qp_add_names(df)
+
+}

@@ -7,6 +7,25 @@
 #'   In a standard workflow, the index is the order the sample appears in the
 #'   plate
 #' @param ... Unused
+#'
+#' @examples
+#'
+#' df <- expand.grid(
+#'   index = c(1, 1, 2, 2, 2, 3),
+#'   sample_type = c("standard", "unknown")
+#' )
+#'
+#' df
+#'
+#' # You don't get to name standards:
+#' qp_add_names(df, c("a", "b", "c"))
+#'
+#' # If there aren't enough names, will use index
+#' qp_add_names(df, c("a", "b"))
+#'
+#' # No names provided will use index by default
+#' qp_add_names(df)
+#'
 #' @export
 qp_add_names <- function(x, ...) {
   UseMethod("qp_add_names")
