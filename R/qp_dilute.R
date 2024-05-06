@@ -14,6 +14,21 @@
 #' @return Same as input, with the volumes of lysate and volumes of diluent to
 #'   add.
 #' @importFrom rlang .data
+#'
+#' @examples
+#'
+#' df <- data.frame(.pred_conc = 1)
+#' qp_dilute(df, target_conc = 0.5, target_vol = 30)
+#'
+#'
+#' # Many sample and target concentrations
+#' df2 <- data.frame(.pred_conc = 1:3)
+#' qp_dilute(df2, target_conc = c(0.1, 0.4, 0.8), target_vol = 30)
+#'
+#' # Takes a list, so long as it has a data.frame named qp as one of the items:
+#' ls <- list(qp = data.frame(.pred_conc = 3))
+#' qp_dilute(ls, target_conc = 0.5, target_vol = 30)
+#'
 #' @export
 qp_dilute <- function(x, ...) {
   UseMethod("qp_dilute")

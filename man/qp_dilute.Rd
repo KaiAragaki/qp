@@ -13,6 +13,7 @@ qp_dilute(x, ...)
   target_conc = NULL,
   target_vol = 15,
   remove_standards = FALSE,
+  pipette_vol_compat = TRUE,
   ...
 )
 
@@ -25,8 +26,8 @@ qp_dilute(x, ...)
 )
 }
 \arguments{
-\item{x}{A \code{data.frame} or \code{list} containing a \code{data.frame} named \code{qp} with
-a column named \code{.pred_conc} or \code{.pred_conc_mean}. If both, will favor
+\item{x}{A \code{data.frame} or \code{list} containing a \code{data.frame} named \code{qp} with a
+column named \code{.pred_conc} or \code{.pred_conc_mean}. If both, will favor
 \code{.pred_conc_mean}.}
 
 \item{...}{Unused}
@@ -36,7 +37,10 @@ If length == 1, recycled.}
 
 \item{target_vol}{Target volume in uL. If length == 1, recycled.}
 
-\item{remove_standards}{Should standards be removed from results?}
+\item{remove_standards}{Boolean. Should standards be removed from results?}
+
+\item{pipette_vol_compat}{Boolean. Shold returned numbers be rounded to the
+typically precision of a pipette?}
 }
 \value{
 Same as input, with the volumes of lysate and volumes of diluent to
@@ -44,4 +48,19 @@ add.
 }
 \description{
 Calculate dilutions from predicted concentrations
+}
+\examples{
+
+df <- data.frame(.pred_conc = 1)
+qp_dilute(df, target_conc = 0.5, target_vol = 30)
+
+
+# Many sample and target concentrations
+df2 <- data.frame(.pred_conc = 1:3)
+qp_dilute(df2, target_conc = c(0.1, 0.4, 0.8), target_vol = 30)
+
+# Takes a list, so long as it has a data.frame named qp as one of the items:
+ls <- list(qp = data.frame(.pred_conc = 3))
+qp_dilute(ls, target_conc = 0.5, target_vol = 30)
+
 }
