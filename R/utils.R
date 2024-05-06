@@ -35,8 +35,6 @@ make_pipette_vol <- function(x) {
 #'   TRUE`, assumes volume is uL.
 #' @param round_for_pipettes Logical. If TRUE, rounds values to the accuracy of
 #'   standard pipettes using `make_pipette_vol`.
-#' @param quiet Logical. If FALSE, will warn when dilution is impossible to do
-#'   without concentrating sample.
 #'
 #' @return a data.frame, with `sample_to_add` as the volume of sample to add,
 #'   and `add_to` as the volume to dilute the sample into.

@@ -15,9 +15,6 @@ dilute(c1, c2 = min(c1), v2, round_for_pipettes = TRUE)
 
 \item{round_for_pipettes}{Logical. If TRUE, rounds values to the accuracy of
 standard pipettes using \code{make_pipette_vol}.}
-
-\item{quiet}{Logical. If FALSE, will warn when dilution is impossible to do
-without concentrating sample.}
 }
 \value{
 a data.frame, with \code{sample_to_add} as the volume of sample to add,

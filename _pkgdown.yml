@@ -23,6 +23,8 @@ reference:
     contents:
     - qp_plot_plate
     - qp_plot_standards
+    - qp_pal
+    - abs_to_col
   - title: "Summary functions"
     desc: >
       These functions won't return an augmented version of their input when called - they are necessarily distilled versions of their input.
@@ -34,3 +36,7 @@ reference:
   - title: "Data"
     contents:
     - absorbances
+  - title: "Utilities"
+    contents:
+    - dilute
+    - make_pipette_vol

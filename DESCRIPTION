@@ -25,7 +25,8 @@ Imports:
     mop,
     tidyr,
     cli,
-    tibble
+    gt,
+    purrr
 Remotes:
     KaiAragaki/gplate,
     KaiAragaki/mop

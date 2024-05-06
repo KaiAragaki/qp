@@ -195,6 +195,7 @@ add_dilutions_cols <- function(x) {
     qp_dilute(x$.target_conc, x$.target_vol)
 }
 
+#' @importFrom rlang .env
 add_well_circles_plot_col <- function(x,
                                       sample_type,
                                       select_vars,
