@@ -54,3 +54,9 @@ Note: \code{replicate_orientation}, \code{n_replicates}, and \code{wavelength} w
 be silently ignored if \code{x} is not a \code{spectramax} or path to a
 \code{spectramax}
 }
+\examples{
+
+data <- system.file("extdata", "absorbances.txt", package = "qp")
+qp(data, replicate_orientation = "h")
+
+}

@@ -36,7 +36,6 @@ fitting. If FALSE or NA, used for fitting. If unsupplied, will create one
 with all values set to NA.
 \item \code{.conc}. Numeric. Known concentration of standard.
 \item \code{.log2_abs}. Numeric. The log2 of the absorbances
-The function creates a new column \code{.log2_conc}, or log2(\code{.conc} + 0.5)
 }
 }
 \examples{

@@ -54,3 +54,9 @@ Read in and wrangle protein quantification data
 object, you probably have a custom workflow in mind - therefore, tidying
 will be minimal and mostly focused on checking for validity.
 }
+\examples{
+
+data <- system.file("extdata", "absorbances.txt", package = "qp")
+qp_tidy(data)
+
+}

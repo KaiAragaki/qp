@@ -24,6 +24,12 @@
 #'   `spectramax`
 #'
 #' @return a `tibble`
+#'
+#' @examples
+#'
+#' data <- system.file("extdata", "absorbances.txt", package = "qp")
+#' qp(data, replicate_orientation = "h")
+#'
 #' @export
 #' @importFrom rlang .data
 qp <- function(x,

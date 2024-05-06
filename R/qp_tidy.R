@@ -16,6 +16,12 @@
 #'   will be minimal and mostly focused on checking for validity.
 #'
 #' @return a `data.frame`
+#'
+#' @examples
+#'
+#' data <- system.file("extdata", "absorbances.txt", package = "qp")
+#' qp_tidy(data)
+#'
 #' @export
 #' @importFrom rlang .data
 qp_tidy <- function(x, ...) {
