@@ -12,8 +12,8 @@ qp_calc_conc(x, ignore_outliers = TRUE, group_cols = c("sample_type", "index"))
 \item{ignore_outliers}{Boolean. Should outliers be considered when
 calculating the mean? See details.}
 
-\item{group_cols}{Character vector. Columns to group by before
-taking the mean.}
+\item{group_cols}{Character vector. Columns to group by before taking the
+mean.}
 }
 \value{
 Returns a \code{list} with the input fit and data.frame, with additional

@@ -13,8 +13,8 @@ qp_calc_abs_mean(x, ignore_outliers = c("all", "standards", "samples", "none"))
 \method{qp_calc_abs_mean}{list}(x, ignore_outliers = c("all", "standards", "samples", "none"))
 }
 \arguments{
-\item{x}{A \code{data.frame} or \code{list} containing a \code{data.frame} named \code{qp}.
-See details.}
+\item{x}{A \code{data.frame} or \code{list} containing a \code{data.frame} named \code{qp}. See
+details.}
 
 \item{ignore_outliers}{Which sample types should have outliers ignored from
 their mean calculations? If \code{.is_outlier} column is supplied, this argument

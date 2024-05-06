@@ -9,12 +9,11 @@ qp_report(qp, output_file, other = list())
 \arguments{
 \item{qp}{Likely the output from \code{qp} AND \code{qp_dilute}.}
 
-\item{output_file}{Character. The path of the file to export,
-including \code{.html}}
+\item{output_file}{Character. The path of the file to export, including
+\code{.html}}
 
-\item{other}{Generally used for Shiny application. Assumes a
-named list of key-values that will be used to document report
-parameters.}
+\item{other}{Generally used for Shiny application. Assumes a named list of
+key-values that will be used to document report parameters.}
 }
 \description{
 Create a report for a protein quantificaiton experiment

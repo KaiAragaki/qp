@@ -16,8 +16,8 @@ qp_summarize(x)
 \item{x}{A \code{data.frame} or a \code{list} containing a \code{data.frame} named \code{qp}}
 }
 \value{
-A \code{tibble} with the sample \code{name}, \code{sample_type}, and the mean of
-its predicted concentration (\code{.mean_pred_conc})
+A \code{tibble} with the sample \code{name}, \code{sample_type}, and the mean of its
+predicted concentration (\code{.pred_conc_mean})
 }
 \description{
 Summarize output from qp pipeline

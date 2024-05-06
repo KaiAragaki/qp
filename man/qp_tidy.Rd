@@ -26,8 +26,8 @@ qp_tidy(x, ...)
 \method{qp_tidy}{default}(x, ...)
 }
 \arguments{
-\item{x}{A \code{gp}, \code{data.frame}/\code{tibble}, \code{spectramax}, or character
-path to a raw SPECTRAmax .xls(x)/.txt}
+\item{x}{A \code{gp}, \code{data.frame}/\code{tibble}, \code{spectramax}, or character path to a
+raw SPECTRAmax .xls(x)/.txt}
 
 \item{...}{Arguments passed to relevant methods.}
 
@@ -40,8 +40,8 @@ standards. Does not include replicates.}
 
 \item{n_replicates}{Numeric. The number of replicates per sample.}
 
-\item{wavelength}{Numeric. For SPECTRAmax files and objects, the
-wavelength measured. Otherwise, ignored.}
+\item{wavelength}{Numeric. For SPECTRAmax files and objects, the wavelength
+measured. Otherwise, ignored.}
 }
 \value{
 a \code{data.frame}
@@ -50,7 +50,7 @@ a \code{data.frame}
 Read in and wrangle protein quantification data
 }
 \details{
-\code{qp} assumes that if you read in data not in a \code{spectramax} file
-or object, you probably have a custom workflow in mind - therefore, tidying
+\code{qp} assumes that if you read in data not in a \code{spectramax} file or
+object, you probably have a custom workflow in mind - therefore, tidying
 will be minimal and mostly focused on checking for validity.
 }
