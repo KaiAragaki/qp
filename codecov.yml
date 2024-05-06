@@ -14,4 +14,4 @@ coverage:
         informational: true
 
 ignore:
-  - "R/qp_report.R"
+  - "qp_report.R"
