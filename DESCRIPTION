@@ -16,7 +16,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: https://kaiaragaki.github.io/qp/
+URL: https://kaiaragaki.github.io/qp/, https://github.com/KaiAragaki/qp
 Imports: 
     dplyr (>= 1.1.0),
     ggplot2,
