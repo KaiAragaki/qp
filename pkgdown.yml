@@ -3,7 +3,7 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   quantifying-protein-with-qp: quantifying-protein-with-qp.html
-last_built: 2025-07-31T13:01Z
+last_built: 2025-07-31T13:13Z
 urls:
   reference: https://kaiaragaki.github.io/qp/reference
   article: https://kaiaragaki.github.io/qp/articles
