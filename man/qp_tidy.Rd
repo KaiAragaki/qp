@@ -4,6 +4,7 @@
 \alias{qp_tidy}
 \alias{qp_tidy.character}
 \alias{qp_tidy.spectramax}
+\alias{qp_tidy.synergy2}
 \alias{qp_tidy.gp}
 \alias{qp_tidy.default}
 \title{Read in and wrangle protein quantification data}
@@ -13,6 +14,15 @@ qp_tidy(x, ...)
 \method{qp_tidy}{character}(x, ...)
 
 \method{qp_tidy}{spectramax}(
+  x,
+  replicate_orientation = c("h", "v"),
+  n_standards = 7,
+  n_replicates = 3,
+  wavelength = 562,
+  ...
+)
+
+\method{qp_tidy}{synergy2}(
   x,
   replicate_orientation = c("h", "v"),
   n_standards = 7,

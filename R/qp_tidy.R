@@ -80,6 +80,49 @@ qp_tidy.spectramax <- function(x,
   qp_tidy(x, ...)
 }
 
+#' @export
+#' @rdname qp_tidy
+qp_tidy.synergy2 <- function(x,
+                             replicate_orientation = c("h", "v"),
+                             n_standards = 7,
+                             n_replicates = 3,
+                             wavelength = 562,
+                             ...) {
+  replicate_orientation <- rlang::arg_match(replicate_orientation)
+  df <- x$data
+  x <- gplate::gp(data = df, wells = nrow(df), tidy = TRUE)
+
+
+  if (!has_cols(df, paste0("nm", wavelength)))
+    rlang::abort("Specified wavelength not present in data")
+
+  max_unknowns <- get_max_unknowns(gplate::wells(x), n_replicates, n_standards)
+
+  if (replicate_orientation == "v") {
+    nrow <- nrow2 <- n_replicates
+    ncol <- c(n_standards, max_unknowns)
+    flow <- "row"
+    ncol2 <- 1
+  } else {
+    nrow <- c(n_standards, max_unknowns)
+    ncol <- ncol2 <- n_replicates
+    flow <- "col"
+    nrow2 <- 1
+  }
+  x <- x |>
+    gplate::gp_sec(
+      name = "sample_type", nrow, ncol, wrap = TRUE, flow = flow,
+      labels = c("standard", "unknown"), break_sections = FALSE
+    ) |>
+    gplate::gp_sec(name = "index", nrow2, ncol2, break_sections = FALSE) |>
+    gplate::gp_serve()
+
+  x$index <- as.numeric(x$index)
+  x <- x |>
+    dplyr::rename(.abs = paste0("nm", wavelength)) |>
+    dplyr::arrange(.data$sample_type, .data$index)
+  qp_tidy(x, ...)
+}
 #' @rdname qp_tidy
 #' @export
 qp_tidy.gp <- function(x, ...) {
