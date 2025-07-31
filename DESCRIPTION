@@ -1,6 +1,6 @@
 Package: qp
 Title: A toolkit for analyzing protein quantification results
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: 
     person("Kai", "Aragaki", , "adamaragaki@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9458-0426"))
