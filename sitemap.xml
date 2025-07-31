@@ -1,84 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/404.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/articles/quantifying-protein-with-qp.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/index.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/abs_to_col.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/absorbances.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/dilute.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/make_pipette_vol.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_add_names.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_add_std_conc.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_calc_abs_mean.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_calc_conc.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_dilute.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_fit.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_mark_outliers.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_pal.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_plot_plate.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_plot_standards.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_remove_empty.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_report.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_summarize.html</loc>
-  </url>
-  <url>
-    <loc>https://kaiaragaki.github.io/qp/reference/qp_tidy.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://kaiaragaki.github.io/qp/404.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/LICENSE-text.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/LICENSE.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/articles/index.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/articles/quantifying-protein-with-qp.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/authors.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/index.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/abs_to_col.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/absorbances.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/dilute.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/index.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/make_pipette_vol.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_add_names.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_add_std_conc.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_calc_abs_mean.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_calc_conc.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_dilute.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_fit.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_mark_outliers.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_pal.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_plot_plate.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_plot_standards.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_remove_empty.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_report.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_summarize.html</loc></url>
+<url><loc>https://kaiaragaki.github.io/qp/reference/qp_tidy.html</loc></url>
 </urlset>
+
