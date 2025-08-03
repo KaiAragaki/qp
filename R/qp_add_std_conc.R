@@ -52,7 +52,12 @@ qp_add_std_conc.data.frame <- function(x,
   unk <- x[which(x$sample_type != "standard"), ]
   std <- x[which(x$sample_type == "standard"), ]
 
-  check_scale(standard_scale)
+  if (is.character(standard_scale)) {
+    blank_ids <- which(standard_scale == "BLANK")
+    standard_scale[blank_ids] <- "-Inf"
+    standard_scale <- as.numeric(standard_scale)
+  }
+
   check_std_scale_compat(std, standard_scale)
 
   std$.conc <- standard_scale[std$index]
@@ -64,10 +69,6 @@ qp_add_std_conc.data.frame <- function(x,
 qp_add_std_conc.list <- function(x, standard_scale = c(0, 2^((2:7) - 5)), ...) {
   x$qp <- qp_add_std_conc(x$qp, standard_scale)
   x
-}
-
-check_scale <- function(x) {
-  if (any(x < 0)) rlang::abort("standards cannot be negative")
 }
 
 check_std_scale_compat <- function(std, scale) {

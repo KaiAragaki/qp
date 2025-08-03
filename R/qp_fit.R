@@ -29,6 +29,23 @@ qp_fit <- function(x) {
 #' @export
 qp_fit.data.frame <- function(x) {
 
+  check_has_cols(x, c("sample_type", ".conc"))
+
+  # Terrible kludgy solution - hopefully temporary
+  #
+  # Assume that anything with a -Inf concentration is a blank, subtract its
+  # average from everything
+  if (any(x$.conc == -Inf, na.rm = TRUE)) {
+    blank_ids <- which(x$.conc == -Inf)
+    background <- mean(x$.abs[blank_ids])
+    x$.abs <- x$.abs - background
+    # Trying to avoid it from being part of the fit
+    x$sample_type[blank_ids] <- "unknown"
+    x$.conc[blank_ids] <- NA_real_
+    # Keep it from being grouped with another sample
+    x$index[blank_ids] <- 999
+  }
+
   if (!has_cols(x, ".log2_abs")) {
     rlang::inform("Did not find column `.log2_abs`, calculating.")
     check_has_cols(x, ".abs")
@@ -38,7 +55,6 @@ qp_fit.data.frame <- function(x) {
 
   x <- provide_outliers_if_none(x, "all")
 
-  check_has_cols(x, c("sample_type", ".conc"))
   check_sample_type(x$sample_type)
   check_is_outlier(x$.is_outlier)
   check_conc(x$.conc)
